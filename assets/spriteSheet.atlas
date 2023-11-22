@@ -1,0 +1,187 @@
+spriteSheet.png
+size: 1437, 126
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bar
+  rotate: false
+  xy: 1214, 34
+  size: 192, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1
+chest_open
+  rotate: false
+  xy: 515, 61
+  size: 128, 31
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+coin_blue
+  rotate: false
+  xy: 1208, 68
+  size: 112, 20
+  orig: 128, 32
+  offset: 7, 7
+  index: -1
+coin_red
+  rotate: false
+  xy: 645, 97
+  size: 116, 24
+  orig: 128, 32
+  offset: 5, 5
+  index: -1
+coin_yellow
+  rotate: false
+  xy: 177, 100
+  size: 112, 20
+  orig: 128, 32
+  offset: 7, 7
+  index: -1
+door_open
+  rotate: false
+  xy: 1322, 68
+  size: 96, 47
+  orig: 96, 48
+  offset: 0, 0
+  index: -1
+firefly
+  rotate: false
+  xy: 354, 1
+  size: 316, 58
+  orig: 320, 64
+  offset: 1, 5
+  index: -1
+frog_death
+  rotate: false
+  xy: 1, 35
+  size: 319, 63
+  orig: 320, 64
+  offset: 0, 1
+  index: -1
+frog_hit
+  rotate: false
+  xy: 989, 1
+  size: 222, 32
+  orig: 256, 32
+  offset: 31, 0
+  index: -1
+frog_hurt
+  rotate: false
+  xy: 839, 66
+  size: 127, 32
+  orig: 127, 32
+  offset: 0, 0
+  index: -1
+frog_idle
+  rotate: false
+  xy: 968, 68
+  size: 126, 31
+  orig: 128, 32
+  offset: 1, 0
+  index: -1
+frog_jump
+  rotate: false
+  xy: 1208, 90
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+frog_walk
+  rotate: false
+  xy: 322, 61
+  size: 191, 32
+  orig: 192, 32
+  offset: 0, 0
+  index: -1
+hearts
+  rotate: false
+  xy: 1096, 94
+  size: 64, 31
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+key
+  rotate: false
+  xy: 1096, 68
+  size: 110, 24
+  orig: 128, 32
+  offset: 7, 5
+  index: -1
+mouse_death
+  rotate: false
+  xy: 1213, 1
+  size: 223, 31
+  orig: 224, 32
+  offset: 0, 0
+  index: -1
+mouse_hit
+  rotate: false
+  xy: 672, 1
+  size: 315, 63
+  orig: 320, 64
+  offset: 5, 0
+  index: -1
+mouse_idle
+  rotate: false
+  xy: 515, 94
+  size: 128, 31
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+mushroom_checkpoint
+  rotate: false
+  xy: 1274, 90
+  size: 30, 29
+  orig: 32, 32
+  offset: 1, 0
+  index: -1
+Mushroom_grow
+  rotate: false
+  xy: 1, 1
+  size: 351, 32
+  orig: 352, 32
+  offset: 1, 0
+  index: -1
+numbers
+  rotate: false
+  xy: 1, 100
+  size: 174, 18
+  orig: 192, 32
+  offset: 1, 7
+  index: -1
+pot_smash
+  rotate: false
+  xy: 322, 95
+  size: 191, 29
+  orig: 192, 32
+  offset: 1, 0
+  index: -1
+rocks
+  rotate: false
+  xy: 763, 97
+  size: 64, 27
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+sign
+  rotate: true
+  xy: 1162, 94
+  size: 31, 32
+  orig: 32, 32
+  offset: 1, 0
+  index: -1
+snail_death
+  rotate: false
+  xy: 989, 35
+  size: 223, 31
+  orig: 224, 32
+  offset: 0, 0
+  index: -1
+snail_walk
+  rotate: false
+  xy: 645, 66
+  size: 192, 29
+  orig: 192, 32
+  offset: 0, 0
+  index: -1

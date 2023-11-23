@@ -27,7 +27,7 @@ public class GameScreen extends ScreenAdapter {
     public GameScreen(OrthographicCamera camera) {
         this.camera = camera;
         this.batch = new SpriteBatch();
-        this.world = new World(new Vector2(0, -9.81f), false);
+        this.world = new World(new Vector2(0, -20), false);
         this.debugRenderer = new Box2DDebugRenderer();
         TileMapHelper tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();

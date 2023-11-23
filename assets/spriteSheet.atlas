@@ -1,39 +1,39 @@
 spriteSheet.png
-size: 64, 198
+size: 128, 167
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 coin_yellow
   rotate: false
-  xy: 33, 131
+  xy: 100, 69
   size: 18, 20
   orig: 32, 32
   offset: 7, 7
   index: 1
 coin_yellow
   rotate: false
-  xy: 33, 175
+  xy: 97, 146
   size: 14, 20
   orig: 32, 32
   offset: 9, 7
   index: 2
 coin_yellow
   rotate: false
-  xy: 33, 153
+  xy: 100, 91
   size: 18, 20
   orig: 32, 32
   offset: 7, 7
   index: 3
 coin_yellow
   rotate: false
-  xy: 49, 175
+  xy: 113, 146
   size: 14, 20
   orig: 32, 32
   offset: 9, 7
   index: 4
 frog_hit
   rotate: false
-  xy: 1, 69
+  xy: 67, 102
   size: 30, 32
   orig: 64, 32
   offset: 31, 0
@@ -47,7 +47,7 @@ frog_hit
   index: 2
 frog_hit
   rotate: false
-  xy: 1, 35
+  xy: 59, 1
   size: 56, 32
   orig: 64, 32
   offset: 5, 0
@@ -61,29 +61,85 @@ frog_hit
   index: 4
 frog_idle
   rotate: false
-  xy: 1, 137
+  xy: 33, 103
   size: 30, 31
   orig: 32, 32
   offset: 1, 0
   index: 1
 frog_idle
   rotate: false
-  xy: 33, 69
+  xy: 33, 136
   size: 30, 29
   orig: 32, 32
   offset: 1, 0
   index: 2
 frog_idle
   rotate: false
-  xy: 1, 170
+  xy: 65, 136
   size: 30, 27
   orig: 32, 32
   offset: 1, 0
   index: 3
 frog_idle
   rotate: false
-  xy: 33, 100
+  xy: 1, 137
   size: 30, 29
   orig: 32, 32
   offset: 1, 0
   index: 4
+frog_jump
+  rotate: false
+  xy: 35, 35
+  size: 31, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+frog_jump
+  rotate: false
+  xy: 68, 35
+  size: 31, 32
+  orig: 32, 32
+  offset: 1, 0
+  index: 2
+frog_walk
+  rotate: false
+  xy: 1, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+frog_walk
+  rotate: false
+  xy: 67, 69
+  size: 31, 31
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+frog_walk
+  rotate: false
+  xy: 101, 35
+  size: 26, 32
+  orig: 32, 32
+  offset: 3, 0
+  index: 3
+frog_walk
+  rotate: false
+  xy: 1, 69
+  size: 31, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+frog_walk
+  rotate: false
+  xy: 99, 113
+  size: 28, 31
+  orig: 32, 32
+  offset: 1, 0
+  index: 5
+frog_walk
+  rotate: false
+  xy: 34, 69
+  size: 31, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6

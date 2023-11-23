@@ -28,7 +28,7 @@ public class GameScreen extends ScreenAdapter {
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0, 0), false);
         this.debugRenderer = new Box2DDebugRenderer();
-        TileMapHelper tileMapHelper = new TileMapHelper();
+        TileMapHelper tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
     }
 
@@ -69,5 +69,9 @@ public class GameScreen extends ScreenAdapter {
 
         batch.end();
         debugRenderer.render(world, camera.combined.scl(PPM)); //render the box2D bodies
+    }
+
+    public World getWorld() {
+        return world;
     }
 }

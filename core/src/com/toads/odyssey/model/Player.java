@@ -110,18 +110,16 @@ public class Player extends Entity {
         if (upPressed && isOnGround) {
             startJumpY = body.getPosition().y;
             maxJumpHeight = startJumpY + 2;
-            body.applyLinearImpulse(new Vector2(0, 10f), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
         } else if (rightPressed && body.getLinearVelocity().x <= 2) {
-            body.applyLinearImpulse(new Vector2(1f, 0), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(1.5f, 1), body.getWorldCenter(), true);
         } else if (leftPressed && body.getLinearVelocity().x >= -2) {
-            body.applyLinearImpulse(new Vector2(-1f, 0), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(-1.5f, 1), body.getWorldCenter(), true);
         }
         if (!leftPressed && !rightPressed) {
             body.setLinearVelocity(0, body.getLinearVelocity().y);
         }
-        if (!upPressed && body.getLinearVelocity().y > 0) {
-            body.setLinearVelocity(body.getLinearVelocity().x, body.getLinearVelocity().y * 0.5f);
-        }
+
     }
     public void draw(SpriteBatch batch) {
         update(Gdx.graphics.getDeltaTime());

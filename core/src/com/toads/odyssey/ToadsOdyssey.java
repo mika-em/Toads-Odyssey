@@ -8,7 +8,7 @@ import com.toads.odyssey.view.Level1;
 public class ToadsOdyssey extends Game {
     public static final float PPM = 100f;
     public static final int SCREEN_WIDTH = 1280;
-    public static final int SCREEN_HEIGHT = 340;
+    public static final int SCREEN_HEIGHT = 720;
     public SpriteBatch batch;
     public AssetsLoader assetsLoader;
     @Override

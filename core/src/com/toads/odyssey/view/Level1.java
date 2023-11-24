@@ -4,7 +4,9 @@ package com.toads.odyssey.view;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -16,6 +18,8 @@ import com.toads.odyssey.model.Player;
 import com.toads.odyssey.util.LevelManager;
 
 public class Level1 extends LevelBase {
+    public TiledMap tiledMap;
+
     public Level1(final ToadsOdyssey game) {
         super(game);
     }
@@ -28,7 +32,7 @@ public class Level1 extends LevelBase {
     @Override
     protected void loadEntities() {
         loadPlatform();
-        player = new Player(world, new Vector2(32 / ToadsOdyssey.PPM, 400 / ToadsOdyssey.PPM));
+        player = new Player(world, new Vector2(16/ ToadsOdyssey.PPM, 400 / ToadsOdyssey.PPM));
     }
     @Override
     protected void setLevel() {
@@ -44,12 +48,12 @@ public class Level1 extends LevelBase {
             if (object instanceof PolygonMapObject) {
                 PolygonMapObject polygonObject = (PolygonMapObject) object;
                 Polygon polygon = polygonObject.getPolygon();
-                platformBodyDef.position.set(polygon.getX() / ToadsOdyssey.PPM, polygon.getY() / ToadsOdyssey.PPM);
+                platformBodyDef.position.set((polygon.getX() * 2)/ ToadsOdyssey.PPM, (polygon.getY() * 2) / ToadsOdyssey.PPM);
                 Body platform = world.createBody(platformBodyDef);
                 float[] vertices = polygon.getVertices();
                 for (int i = 0; i < vertices.length; i += 2) {
-                    vertices[i] /= ToadsOdyssey.PPM;
-                    vertices[i + 1] /= ToadsOdyssey.PPM;
+                    vertices[i] = (vertices[i] * 2 ) / ToadsOdyssey.PPM;
+                    vertices[i + 1] = (vertices[i + 1] * 2) / ToadsOdyssey.PPM;
                 }
                 ChainShape platformShape = new ChainShape();
                 platformShape.createChain(vertices);
@@ -59,6 +63,5 @@ public class Level1 extends LevelBase {
             }
         }
     }
-
 
 }

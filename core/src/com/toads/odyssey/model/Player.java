@@ -133,44 +133,66 @@ public class Player extends Entity {
             return PlayerMode.IDLE;
         }
     }
+//    public void handleKeyPressed() {
+//        boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.LEFT);
+//        boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
+//        boolean upPressed = Gdx.input.isKeyPressed(Input.Keys.UP);
+//
+//        float currentY = body.getPosition().y;
+//
+//        float maxJumpHeight = Gdx.graphics.getHeight() / (ToadsOdyssey.PPM);
+//        if (upPressed && currentY < maxJumpHeight) {
+//            body.applyLinearImpulse(new Vector2(0, 5), body.getWorldCenter(), true); //y is the jump height
+//        }
+//        float desiredVelocityX = 0;
+//        if (leftPressed) {
+//            desiredVelocityX = -2; //leftward velocity
+//        } else if (rightPressed) {
+//            desiredVelocityX = 2; // rightward velocity
+//        }
+//        float impulseX = desiredVelocityX - body.getLinearVelocity().x;
+//        body.applyLinearImpulse(new Vector2(impulseX, 0), body.getWorldCenter(), true);
+//
+//        // limits the speed of the player
+//        float maxVelocityX = 2; // max velocity in x direction
+//        float clampedVelocityX = MathUtils.clamp(body.getLinearVelocity().x, -maxVelocityX, maxVelocityX);
+//        body.setLinearVelocity(clampedVelocityX, body.getLinearVelocity().y);
+//
+//        if (body.getLinearVelocity().y > 0 && !upPressed) {
+//            body.setLinearVelocity(body.getLinearVelocity().x, body.getLinearVelocity().y);
+//        }
+//        if (!leftPressed && !rightPressed) {
+//            body.setLinearVelocity(0, body.getLinearVelocity().y);
+//        }
+//    }
+
+
     public void handleKeyPressed() {
         boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
         boolean upPressed = Gdx.input.isKeyPressed(Input.Keys.UP);
-
+        boolean isOnGround = CollisionDetection.instance.isOnGround();
         float currentY = body.getPosition().y;
-
-        float maxJumpHeight = Gdx.graphics.getHeight() / (ToadsOdyssey.PPM);
+            maxJumpHeight = Gdx.graphics.getHeight() / (2*ToadsOdyssey.PPM);
+        //System.out.println("isOnGround: " + isOnGround);
         if (upPressed && currentY < maxJumpHeight) {
-            body.applyLinearImpulse(new Vector2(0, 5), body.getWorldCenter(), true); //y is the jump height
+            startJumpY = body.getPosition().y;
+            body.applyLinearImpulse(new Vector2(0, 5), body.getWorldCenter(), true);
+        } else if (rightPressed && body.getLinearVelocity().x <= 2) {
+            body.applyLinearImpulse(new Vector2(1f, 0), body.getWorldCenter(), true);
+        } else if (leftPressed && body.getLinearVelocity().x >= -2) {
+            body.applyLinearImpulse(new Vector2(-1f, 0), body.getWorldCenter(), true);
         }
-        float desiredVelocityX = 0;
-        if (leftPressed) {
-            desiredVelocityX = -2; //leftward velocity
-        } else if (rightPressed) {
-            desiredVelocityX = 2; // rightward velocity
-        }
-        float impulseX = desiredVelocityX - body.getLinearVelocity().x;
-        body.applyLinearImpulse(new Vector2(impulseX, 0), body.getWorldCenter(), true);
-
-        // limits the speed of the player
-        float maxVelocityX = 2; // max velocity in x direction
-        float clampedVelocityX = MathUtils.clamp(body.getLinearVelocity().x, -maxVelocityX, maxVelocityX);
-        body.setLinearVelocity(clampedVelocityX, body.getLinearVelocity().y);
-
-        if (body.getLinearVelocity().y > 0 && !upPressed) {
-            body.setLinearVelocity(body.getLinearVelocity().x, body.getLinearVelocity().y);
-        }
-
-
         if (!leftPressed && !rightPressed) {
             body.setLinearVelocity(0, body.getLinearVelocity().y);
         }
-
+        if (!upPressed && body.getLinearVelocity().y > 0) {
+            body.setLinearVelocity(body.getLinearVelocity().x, body.getLinearVelocity().y * 0.5f);
+        }
         if (upPressed && rightPressed) {
-            body.applyLinearImpulse(new Vector2(0f, 0f), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(0f, 10), body.getWorldCenter(), true);
         } else if (upPressed && leftPressed) {
-            body.applyLinearImpulse(new Vector2(-0f, 0f), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(-0f, 10f), body.getWorldCenter(), true);
         }
     }
 

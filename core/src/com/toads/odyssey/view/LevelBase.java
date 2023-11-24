@@ -39,7 +39,7 @@ public abstract class LevelBase implements Screen {
         loadMap();
         renderer = new OrthogonalTiledMapRenderer(map, 2 / ToadsOdyssey.PPM); //change to 2 to make the map bigger
         camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
-        world = new World(new Vector2(0, -9), true);
+        world = new World(new Vector2(0, -20), true); //y is gravity
         world.setContactListener(CollisionDetection.instance);
         debugRenderer = new Box2DDebugRenderer();
         loadEntities();

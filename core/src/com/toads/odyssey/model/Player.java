@@ -4,87 +4,52 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.toads.odyssey.ToadsOdyssey;
 import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.CollisionDetection;
-
-import javax.print.attribute.standard.PagesPerMinute;
 
 public class Player extends Entity {
     private PlayerMode currentState;
     private PlayerMode previousState;
     private float stateTimer;
     private boolean moveRight;
+    private float maxJumpHeight;
     private float startJumpY;
-    private Body body;
-    private final float centerX;
-    private final float centerY;
-    private int jumpCount = 0;           // Keep track of the number of jumps
-    private int maxJumpCount = 5;        // Maximum number of jumps allowed
-    private float jumpHeight = 5f;     // Initial jump height
-    private float maxJumpHeight = 0;     // Maximum jump height reached
-    private float reducedJumpHeight = 1.0f; // Reduced jump height after a certain duration
-    private float jumpDurationThreshold = 2f; // Threshold for reducing jump height
-    private float jumpTimer = 0;         // Timer for tracking jump duration
-
-
 
     public Player(World world, Vector2 position) {
         super(world, position);
-
-        jumpCount = 0;
-        jumpTimer = 0;
-
-        float centerXInPixels = Gdx.graphics.getWidth();
-        float centerYInPixels = Gdx.graphics.getHeight();
-
-
-        float centerX = centerXInPixels / (2 * ToadsOdyssey.PPM) ;
-        float centerY = centerYInPixels / (2*ToadsOdyssey.PPM);
-
-        this.centerX = centerX;
-        this.centerY = centerY;
-
         currentState = PlayerMode.IDLE;
         previousState = PlayerMode.IDLE;
         stateTimer = 0;
         moveRight = true;
         setBounds(0, 0, 32 / ToadsOdyssey.PPM, 32 / ToadsOdyssey.PPM);
         setRegion(AssetsLoader.instance.playerAssets.idleAnimation.getKeyFrame(stateTimer, true));
-
-        spritePosition.set(centerX, centerY);
-        define();
     }
     @Override
     public void define() {
         BodyDef bodyDef = new BodyDef();
-        bodyDef.position.set(spritePosition.x, spritePosition.y);
+        bodyDef.position.set(spritePosition);
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         body = world.createBody(bodyDef);
-
         FixtureDef fixtureDef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-
-        shape.setAsBox(14 / ToadsOdyssey.PPM, 14 / ToadsOdyssey.PPM); //changed from 16 so that the player can fit through the gaps
-
+        CircleShape shape = new CircleShape();
+        shape.setRadius(17 / ToadsOdyssey.PPM);
         fixtureDef.shape = shape;
-        fixtureDef.friction = 1f; // friction with other objects
+        fixtureDef.friction = 0f;
         body.createFixture(fixtureDef).setUserData(this);
-
-        shape.dispose();
     }
-
     @Override
     public void update(float delta) {
-        this.spritePosition.set(body.getPosition().x, body.getPosition().y);
+        this.spritePosition = body.getPosition();
         setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(delta));
         setJumpHeightLimit();
     }
-
 
     private void setJumpHeightLimit() {
         if (body.getPosition().y >= maxJumpHeight) {
@@ -133,82 +98,34 @@ public class Player extends Entity {
             return PlayerMode.IDLE;
         }
     }
-//    public void handleKeyPressed() {
-//        boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.LEFT);
-//        boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
-//        boolean upPressed = Gdx.input.isKeyPressed(Input.Keys.UP);
-//
-//        float currentY = body.getPosition().y;
-//
-//        float maxJumpHeight = Gdx.graphics.getHeight() / (ToadsOdyssey.PPM);
-//        if (upPressed && currentY < maxJumpHeight) {
-//            body.applyLinearImpulse(new Vector2(0, 5), body.getWorldCenter(), true); //y is the jump height
-//        }
-//        float desiredVelocityX = 0;
-//        if (leftPressed) {
-//            desiredVelocityX = -2; //leftward velocity
-//        } else if (rightPressed) {
-//            desiredVelocityX = 2; // rightward velocity
-//        }
-//        float impulseX = desiredVelocityX - body.getLinearVelocity().x;
-//        body.applyLinearImpulse(new Vector2(impulseX, 0), body.getWorldCenter(), true);
-//
-//        // limits the speed of the player
-//        float maxVelocityX = 2; // max velocity in x direction
-//        float clampedVelocityX = MathUtils.clamp(body.getLinearVelocity().x, -maxVelocityX, maxVelocityX);
-//        body.setLinearVelocity(clampedVelocityX, body.getLinearVelocity().y);
-//
-//        if (body.getLinearVelocity().y > 0 && !upPressed) {
-//            body.setLinearVelocity(body.getLinearVelocity().x, body.getLinearVelocity().y);
-//        }
-//        if (!leftPressed && !rightPressed) {
-//            body.setLinearVelocity(0, body.getLinearVelocity().y);
-//        }
-//    }
-
-
+    public Vector2 getPosition() {
+        return body.getPosition();
+    }
     public void handleKeyPressed() {
         boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
         boolean upPressed = Gdx.input.isKeyPressed(Input.Keys.UP);
         boolean isOnGround = CollisionDetection.instance.isOnGround();
-        float currentY = body.getPosition().y;
-            maxJumpHeight = Gdx.graphics.getHeight() / (2*ToadsOdyssey.PPM);
         //System.out.println("isOnGround: " + isOnGround);
-        if (upPressed && currentY < maxJumpHeight) {
+        if (upPressed && isOnGround) {
             startJumpY = body.getPosition().y;
-            body.applyLinearImpulse(new Vector2(0, 5), body.getWorldCenter(), true);
+            maxJumpHeight = startJumpY + 2;
+            body.applyLinearImpulse(new Vector2(0, 4f), body.getWorldCenter(), true);
         } else if (rightPressed && body.getLinearVelocity().x <= 2) {
-            body.applyLinearImpulse(new Vector2(1f, 0), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(1.5f, 1), body.getWorldCenter(), true);
         } else if (leftPressed && body.getLinearVelocity().x >= -2) {
-            body.applyLinearImpulse(new Vector2(-1f, 0), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(-1.5f, 1), body.getWorldCenter(), true);
         }
         if (!leftPressed && !rightPressed) {
             body.setLinearVelocity(0, body.getLinearVelocity().y);
         }
-        if (!upPressed && body.getLinearVelocity().y > 0) {
-            body.setLinearVelocity(body.getLinearVelocity().x, body.getLinearVelocity().y * 0.5f);
-        }
-        if (upPressed && rightPressed) {
-            body.applyLinearImpulse(new Vector2(0f, 10), body.getWorldCenter(), true);
-        } else if (upPressed && leftPressed) {
-            body.applyLinearImpulse(new Vector2(-0f, 10f), body.getWorldCenter(), true);
-        }
+
     }
-
-
     public void draw(SpriteBatch batch) {
         update(Gdx.graphics.getDeltaTime());
         super.draw(batch);
     }
 
-    public Vector2 getSpritePosition() {
-        return this.spritePosition;
-    }
-
-    public Body getBody() {
-        return this.body;
-    }
 
 
 }

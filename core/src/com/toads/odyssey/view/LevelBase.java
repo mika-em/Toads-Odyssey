@@ -78,7 +78,7 @@ public abstract class LevelBase implements Screen {
         player.draw(game.batch);
         game.batch.end();
 
-//        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined);
     }
     @Override
     public void resize(final int width, final int height) {

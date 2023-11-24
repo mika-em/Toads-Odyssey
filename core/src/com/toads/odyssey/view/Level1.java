@@ -3,14 +3,14 @@ package com.toads.odyssey.view;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.toads.odyssey.ToadsOdyssey;
 import com.toads.odyssey.model.Player;
 import com.toads.odyssey.util.LevelManager;
@@ -23,7 +23,7 @@ public class Level1 extends LevelBase {
     @Override
     protected void loadMap() {
         TmxMapLoader mapLoader = new TmxMapLoader();
-        map = mapLoader.load("map/level1.tmx");
+        map = mapLoader.load("maps/map.tmx");
     }
     @Override
     protected void loadEntities() {
@@ -37,19 +37,28 @@ public class Level1 extends LevelBase {
     private void loadPlatform() {
         BodyDef platformBodyDef = new BodyDef();
         platformBodyDef.type = BodyDef.BodyType.StaticBody;
-        PolygonShape platformShape = new PolygonShape();
         FixtureDef platformFixtureDef = new FixtureDef();
-        platformFixtureDef.shape = platformShape;
-        MapLayer platformLayer = map.getLayers().get("platform");
+        MapLayer platformLayer = map.getLayers().get("objects");
+
         for (MapObject object : platformLayer.getObjects()) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            platformBodyDef.position.set((rect.getX() + rect.getWidth() / 2) / ToadsOdyssey.PPM, (rect.getY()
-                    + rect.getHeight() / 2) / ToadsOdyssey.PPM);
-            Body platform = world.createBody(platformBodyDef);
-            platformShape.setAsBox(rect.getWidth() / 2 / ToadsOdyssey.PPM, rect.getHeight() / 2 / ToadsOdyssey.PPM);
-            platform.createFixture(platformFixtureDef).setUserData("Platform");
+            if (object instanceof PolygonMapObject) {
+                PolygonMapObject polygonObject = (PolygonMapObject) object;
+                Polygon polygon = polygonObject.getPolygon();
+                platformBodyDef.position.set(polygon.getX() / ToadsOdyssey.PPM, polygon.getY() / ToadsOdyssey.PPM);
+                Body platform = world.createBody(platformBodyDef);
+                float[] vertices = polygon.getVertices();
+                for (int i = 0; i < vertices.length; i += 2) {
+                    vertices[i] /= ToadsOdyssey.PPM;
+                    vertices[i + 1] /= ToadsOdyssey.PPM;
+                }
+                ChainShape platformShape = new ChainShape();
+                platformShape.createChain(vertices);
+                platformFixtureDef.shape = platformShape;
+                platform.createFixture(platformFixtureDef).setUserData("Platform");
+                platformShape.dispose();
+            }
         }
-        platformShape.dispose();
     }
+
 
 }

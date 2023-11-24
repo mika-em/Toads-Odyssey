@@ -140,21 +140,16 @@ public class Player extends Entity {
 
         float currentY = body.getPosition().y;
 
-        float maxJumpHeight = Gdx.graphics.getHeight();
-
-
+        float maxJumpHeight = Gdx.graphics.getHeight() / (ToadsOdyssey.PPM);
         if (upPressed && currentY < maxJumpHeight) {
             body.applyLinearImpulse(new Vector2(0, 5), body.getWorldCenter(), true); //y is the jump height
         }
-
         float desiredVelocityX = 0;
-
         if (leftPressed) {
             desiredVelocityX = -2; //leftward velocity
         } else if (rightPressed) {
             desiredVelocityX = 2; // rightward velocity
         }
-
         float impulseX = desiredVelocityX - body.getLinearVelocity().x;
         body.applyLinearImpulse(new Vector2(impulseX, 0), body.getWorldCenter(), true);
 

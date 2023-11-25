@@ -1,34 +1,29 @@
 package com.toads.odyssey;
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.Gdx;
+import com.toads.odyssey.util.AssetsLoader;
+import com.toads.odyssey.view.Level1;
 
-public class ToadsOdyssey extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("forest.jpg");
-	}
-
-	@Override
-	public void render () {
-		ScreenUtils.clear(1, 1, 1, 1);
-		batch.begin();
-		float screenWidth = Gdx.graphics.getWidth();
-		float screenHeight = Gdx.graphics.getHeight();
-		batch.draw(img, 0, 0, screenWidth, screenHeight);
-
-		batch.end();
-	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
-	}
+public class ToadsOdyssey extends Game {
+    public static final float PPM = 100f;
+    public static final int SCREEN_WIDTH = 1280;
+    public static final int SCREEN_HEIGHT = 720;
+    public SpriteBatch batch;
+    public AssetsLoader assetsLoader;
+    @Override
+    public void create() {
+        batch = new SpriteBatch();
+        assetsLoader = new AssetsLoader();
+        setScreen(new Level1(this));
+    }
+    @Override
+    public void render() {
+        super.render();
+    }
+    @Override
+    public void dispose() {
+        batch.dispose();
+        assetsLoader.dispose();
+    }
 }

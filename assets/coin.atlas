@@ -1,0 +1,33 @@
+coins.png
+size: 62, 32
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+coin_yellow_1
+  rotate: false
+  xy: 1, 1
+  size: 18, 20
+  orig: 32, 32
+  offset: 7, 7
+  index: -1
+coin_yellow_2
+  rotate: true
+  xy: 41, 1
+  size: 14, 20
+  orig: 32, 32
+  offset: 9, 7
+  index: -1
+coin_yellow_3
+  rotate: false
+  xy: 21, 1
+  size: 18, 20
+  orig: 32, 32
+  offset: 7, 7
+  index: -1
+coin_yellow_4
+  rotate: true
+  xy: 41, 17
+  size: 14, 20
+  orig: 32, 32
+  offset: 9, 7
+  index: -1

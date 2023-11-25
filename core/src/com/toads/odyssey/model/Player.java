@@ -5,10 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.toads.odyssey.ToadsOdyssey;
 import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.CollisionDetection;
@@ -20,6 +17,7 @@ public class Player extends Entity {
     private boolean moveRight;
     private float maxJumpHeight;
     private float startJumpY;
+    public Body body;
 
     public Player(World world, Vector2 position) {
         super(world, position);
@@ -126,6 +124,7 @@ public class Player extends Entity {
         super.draw(batch);
     }
 
-
-
+    public Body getBody() {
+        return body;
+    }
 }

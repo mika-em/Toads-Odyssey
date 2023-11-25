@@ -55,17 +55,13 @@ public abstract class LevelBase implements Screen {
     protected abstract void loadMap();
     protected abstract void loadEntities();
     protected abstract void setLevel();
-
     private void update(float deltaTime) {
         LevelManager.instance.update(deltaTime);
-        Vector2 playerPosition = player.getBody().getPosition();
-        camera.position.set(playerPosition.x, gamePort.getWorldHeight()/2, 0);
+        camera.position.set(player.getPosition().x, gamePort.getWorldHeight() / 2, 0);
+        float cameraX = Math.max(player.getPosition().x, gamePort.getWorldWidth() / 2);
+        camera.position.set(cameraX, gamePort.getWorldHeight() / 2, 0);
         camera.update();
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit(); // Exit the game if escape is pressed
-        }
     }
-
     @Override
     public void show() {
     }

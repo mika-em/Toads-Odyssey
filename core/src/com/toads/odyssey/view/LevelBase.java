@@ -92,7 +92,7 @@ public abstract class LevelBase implements Screen {
         TextureRegion coinTexture = CoinAssets.getCoinTexture();
         game.batch.draw(coinTexture, 10, 10);
         game.batch.end();
-        debugRenderer.render(world, camera.combined);
+//        debugRenderer.render(world, camera.combined);
     }
 
 

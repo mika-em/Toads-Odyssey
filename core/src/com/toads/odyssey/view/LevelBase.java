@@ -4,17 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.toads.odyssey.ToadsOdyssey;
+import com.toads.odyssey.model.Coin;
 import com.toads.odyssey.model.Player;
+import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.CollisionDetection;
 import com.toads.odyssey.util.LevelManager;
+import com.toads.odyssey.util.AssetsLoader.CoinAssets;
+
+import java.util.Iterator;
 
 public abstract class LevelBase implements Screen {
     private ToadsOdyssey game;
@@ -25,6 +33,8 @@ public abstract class LevelBase implements Screen {
     protected Box2DDebugRenderer debugRenderer;
     protected World world;
     private Viewport gamePort;
+    protected Array<Coin> coins;
+    private int coinCount = 0;
     public LevelBase(ToadsOdyssey game) {
         this.game = game;
         camera = new OrthographicCamera();
@@ -35,6 +45,7 @@ public abstract class LevelBase implements Screen {
         world = new World(new Vector2(0, -20), true);
         world.setContactListener(CollisionDetection.instance);
         debugRenderer = new Box2DDebugRenderer();
+        coins = new Array<>();
         loadEntities();
         setLevel();
     }
@@ -65,9 +76,21 @@ public abstract class LevelBase implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         player.draw(game.batch);
+//        Array<Coin> coinsToRemove = new Array<>();
+        Iterator<Coin> coinIterator = coins.iterator();
+        while (coinIterator.hasNext()) {
+            Coin coin = coinIterator.next();
+            coin.update(delta);
+            if (coin.isCollision(player.getBody())) {
+                coinIterator.remove();
+                coinCount = coin.getCoinCount();
+            } else {
+                coin.draw(game.batch);
+            }
+        }
+        TextureRegion coinTexture = CoinAssets.getCoinTexture();
+        game.batch.draw(coinTexture, 10, 10);
         game.batch.end();
-
-        debugRenderer.render(world, camera.combined);
     }
     @Override
     public void resize(final int width, final int height) {
@@ -84,6 +107,12 @@ public abstract class LevelBase implements Screen {
     }
     @Override
     public void dispose() {
+        for (int i = 0; i < coins.size; i++) {
+            Coin coin = coins.get(i);
+            coin.dispose();
+        }
+
+
     }
     public ToadsOdyssey getGame() {
         return game;

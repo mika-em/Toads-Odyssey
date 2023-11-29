@@ -7,13 +7,6 @@ import com.toads.odyssey.ToadsOdyssey;
 import com.toads.odyssey.model.Player;
 import com.toads.odyssey.view.LevelBase;
 
-/**
- * LevelManager is a singleton class that manages the level.
- * It is used to update the level and handle user input.
- * It also loads and renders the TiledMap
- * It is used to set the levelBase
- */
-
 public class LevelManager {
     public static final LevelManager instance = new LevelManager();
     private ToadsOdyssey game;

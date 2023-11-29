@@ -19,9 +19,6 @@ import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.LevelManager;
 
 public class Level1 extends LevelBase {
-    public TiledMap tiledMap;
-    private Body playerBody;
-    private int coinCount = 0;
 
     public Level1(final ToadsOdyssey game) {
         super(game);
@@ -36,7 +33,7 @@ public class Level1 extends LevelBase {
         loadPlatform();
         loadCoins(world);
         player = new Player(world, new Vector2(16/ ToadsOdyssey.PPM, 400 / ToadsOdyssey.PPM));
-        playerBody = player.getBody();
+        Body playerBody = player.getBody();
     }
     @Override
     protected void setLevel() {

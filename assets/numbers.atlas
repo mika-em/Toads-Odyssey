@@ -1,0 +1,82 @@
+numbers.png
+size: 16, 220
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+numbers-1
+  rotate: false
+  xy: 1, 1
+  size: 14, 18
+  orig: 16, 25
+  offset: 1, 0
+  index: -1
+numbers-2
+  rotate: false
+  xy: 1, 21
+  size: 14, 18
+  orig: 16, 25
+  offset: 1, 0
+  index: -1
+numbers-3
+  rotate: false
+  xy: 1, 41
+  size: 14, 18
+  orig: 16, 25
+  offset: 1, 0
+  index: -1
+numbers-4
+  rotate: false
+  xy: 1, 61
+  size: 14, 18
+  orig: 16, 25
+  offset: 1, 0
+  index: -1
+numbers-5
+  rotate: false
+  xy: 1, 81
+  size: 14, 18
+  orig: 16, 25
+  offset: 1, 0
+  index: -1
+numbers-6
+  rotate: false
+  xy: 1, 101
+  size: 14, 18
+  orig: 16, 25
+  offset: 1, 0
+  index: -1
+numbers-7
+  rotate: false
+  xy: 1, 121
+  size: 14, 18
+  orig: 16, 25
+  offset: 1, 0
+  index: -1
+numbers-8
+  rotate: false
+  xy: 1, 141
+  size: 14, 18
+  orig: 16, 25
+  offset: 1, 0
+  index: -1
+numbers-9
+  rotate: false
+  xy: 1, 161
+  size: 14, 18
+  orig: 16, 25
+  offset: 1, 0
+  index: -1
+numbers-0
+  rotate: false
+  xy: 1, 181
+  size: 14, 18
+  orig: 16, 25
+  offset: 1, 0
+  index: -1
+numbers-/
+  rotate: false
+  xy: 1, 201
+  size: 14, 18
+  orig: 16, 25
+  offset: 1, 0
+  index: -1

@@ -35,14 +35,16 @@ public abstract class LevelBase implements Screen {
     protected TiledMap map;
     protected Box2DDebugRenderer debugRenderer;
     protected World world;
-    private Viewport gamePort;
+    private final Viewport gamePort;
     protected Array<Coin> coins;
+    protected Hud hud;
     private int coinCount = 0;
     public LevelBase(ToadsOdyssey game) {
         this.game = game;
         camera = new OrthographicCamera();
         gamePort = new StretchViewport(ToadsOdyssey.SCREEN_WIDTH / ToadsOdyssey.PPM, ToadsOdyssey.SCREEN_HEIGHT / ToadsOdyssey.PPM, camera);
         loadMap();
+        hud = new Hud(AssetsLoader.instance, game.batch);
         renderer = new OrthogonalTiledMapRenderer(map, 2 / ToadsOdyssey.PPM); //change to 2 to make the map bigger
         camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
         world = new World(new Vector2(0, -20), true); //y is gravity
@@ -71,29 +73,42 @@ public abstract class LevelBase implements Screen {
         Gdx.gl.glClearColor((199/255f), (219/255f), (238/255f), 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
-        //Gdx.app.log("camera position " + camera.position);
         renderer.setView(camera);
         renderer.render();
+
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         player.draw(game.batch);
-//        Array<Coin> coinsToRemove = new Array<>();
+
         Iterator<Coin> coinIterator = coins.iterator();
         while (coinIterator.hasNext()) {
             Coin coin = coinIterator.next();
             coin.update(delta);
             if (coin.isCollision(player.getBody())) {
-                coinIterator.remove();
-                coinCount = coin.getCoinCount();
+                coinCount++; // Increment the coin count
+                coinIterator.remove(); // Correctly remove the coin
+
+                // Update HUD (if necessary)
             } else {
                 coin.draw(game.batch);
+                if (hud != null) {
+                    hud.updateCoinCount(coinCount);
+                }
             }
         }
+
         TextureRegion coinTexture = CoinAssets.getCoinTexture();
         game.batch.draw(coinTexture, 10, 10);
         game.batch.end();
-//        debugRenderer.render(world, camera.combined);
+
+        // Render HUD outside of the coin loop
+        if (hud != null) {
+            hud.render();
+        }
+
+        // debugRenderer.render(world, camera.combined);
     }
+
 
 
     @Override

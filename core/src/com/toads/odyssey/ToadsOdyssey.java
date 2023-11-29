@@ -3,7 +3,7 @@ package com.toads.odyssey;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.toads.odyssey.util.AssetsLoader;
-import com.toads.odyssey.view.Level1;
+import com.toads.odyssey.view.StartScreen;
 
 public class ToadsOdyssey extends Game {
     public static final float PPM = 100f;
@@ -15,7 +15,7 @@ public class ToadsOdyssey extends Game {
     public void create() {
         batch = new SpriteBatch();
         assetsLoader = new AssetsLoader();
-        setScreen(new Level1(this));
+        setScreen(new StartScreen(this));
     }
     @Override
     public void render() {

@@ -1,0 +1,145 @@
+intro-0.png
+size: 12980, 4060
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+frame
+  rotate: false
+  xy: 7213, 1
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 0
+frame
+  rotate: false
+  xy: 8655, 1
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 1
+frame
+  rotate: false
+  xy: 10097, 1
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 2
+frame
+  rotate: false
+  xy: 11539, 1
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 3
+frame
+  rotate: false
+  xy: 7213, 813
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 4
+frame
+  rotate: false
+  xy: 8655, 813
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 5
+frame
+  rotate: false
+  xy: 10097, 813
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 6
+frame
+  rotate: false
+  xy: 11539, 813
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 7
+frame
+  rotate: false
+  xy: 7213, 1625
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 8
+frame
+  rotate: false
+  xy: 8655, 1625
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 9
+frame
+  rotate: false
+  xy: 10097, 1625
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 10
+frame
+  rotate: false
+  xy: 11539, 1625
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 11
+frame
+  rotate: false
+  xy: 7213, 2437
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 12
+frame
+  rotate: false
+  xy: 8655, 2437
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 13
+frame
+  rotate: false
+  xy: 10097, 2437
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 14
+frame
+  rotate: false
+  xy: 11539, 2437
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 15
+frame
+  rotate: false
+  xy: 7213, 3249
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 16
+frame
+  rotate: false
+  xy: 8655, 3249
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 17
+frame
+  rotate: false
+  xy: 10097, 3249
+  size: 1440, 810
+  orig: 1440, 810
+  offset: 0, 0
+  index: 18
+intro-0
+  rotate: false
+  xy: 1, 1
+  size: 7210, 3248
+  orig: 7210, 3248
+  offset: 0, 0
+  index: -1

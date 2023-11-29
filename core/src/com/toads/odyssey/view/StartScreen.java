@@ -1,55 +1,74 @@
 package com.toads.odyssey.view;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.toads.odyssey.ToadsOdyssey;
+import com.toads.odyssey.util.AssetsLoader;
 
 public class StartScreen implements Screen {
     private ToadsOdyssey game;
     private Viewport viewport;
-    private OrthographicCamera camera;
-
+    private TextureRegion region;
+    private float stateTimer;
     public StartScreen(ToadsOdyssey game) {
         this.game = game;
-        this.camera = new OrthographicCamera();
-        this.viewport = new StretchViewport(ToadsOdyssey.SCREEN_WIDTH / ToadsOdyssey.PPM, ToadsOdyssey.SCREEN_HEIGHT / ToadsOdyssey.PPM, camera);
+        this.viewport = new StretchViewport(ToadsOdyssey.SCREEN_WIDTH / ToadsOdyssey.PPM, ToadsOdyssey.SCREEN_HEIGHT / ToadsOdyssey.PPM);
+        viewport.apply();
+        stateTimer = 0;
+        region = AssetsLoader.instance.introScreenAssets.introAnimation.getKeyFrame(stateTimer, true);
+    }
+    private TextureRegion getFrame(float delta) {
+        stateTimer += delta;
+        return AssetsLoader.instance.introScreenAssets.introAnimation.getKeyFrame(stateTimer, true);
+    }
 
+    private void update(float deltaTime) {
+        region = getFrame(deltaTime);
+        handleKeyPressed();
+        game.batch.begin();
+        game.batch.draw(region, 0, 0, ToadsOdyssey.SCREEN_WIDTH, ToadsOdyssey.SCREEN_HEIGHT);
+        game.batch.end();
+    }
+
+    private void handleKeyPressed() {
+        boolean spacePressed = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+        if (spacePressed) {
+            game.setScreen(new Level1(game));
+            dispose();
+        }
     }
 
     @Override
     public void show() {
-
     }
 
     @Override
     public void render(float delta) {
-
+        update(delta);
     }
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }

@@ -11,16 +11,20 @@ public class AssetsLoader implements Disposable {
     public AssetManager manager;
     public final PlayerAssets playerAssets;
     public final CoinAssets coinAssets;
+    public final IntroScreenAssets introScreenAssets;
     public static final AssetsLoader instance = new AssetsLoader();
     public AssetsLoader() {
         this.manager = new AssetManager();
         manager.load("spriteSheet.atlas", TextureAtlas.class);
         manager.load("coin.atlas", TextureAtlas.class);
+        manager.load("screens/intro.atlas", TextureAtlas.class);
         manager.finishLoading();
         TextureAtlas atlas = manager.get("spriteSheet.atlas", TextureAtlas.class);
         TextureAtlas coinAtlas = manager.get("coin.atlas", TextureAtlas.class);
+        TextureAtlas introAtlas = manager.get("screens/intro.atlas", TextureAtlas.class);
         playerAssets = new PlayerAssets(atlas);
         coinAssets = new CoinAssets(coinAtlas);
+        introScreenAssets = new IntroScreenAssets(introAtlas);
     }
     public static class PlayerAssets {
         public final Animation<TextureAtlas.AtlasRegion> idleAnimation;
@@ -66,6 +70,17 @@ public class AssetsLoader implements Disposable {
     public CoinAssets getCoinAssets() {
         TextureAtlas atlas = manager.get("spriteSheet.atlas", TextureAtlas.class);
         return new CoinAssets(atlas);
+    }
+
+    public static class IntroScreenAssets {
+        public final Animation<TextureAtlas.AtlasRegion> introAnimation;
+        public IntroScreenAssets(final TextureAtlas atlas) {
+            Array<TextureAtlas.AtlasRegion> introFrames = new Array<>();
+            for (int i = 0; i <= 18; i++) {
+                introFrames.add(atlas.findRegion("frame", i));
+            }
+            introAnimation = new Animation<>(0.3f, introFrames, Animation.PlayMode.LOOP);
+        }
     }
 
 

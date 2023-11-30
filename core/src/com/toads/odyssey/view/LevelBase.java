@@ -118,7 +118,7 @@ public abstract class LevelBase implements Screen {
 
         if (awaitingRespawn) {
             respawnTimer += delta;
-            float respawnDelay = 0.5f;
+            float respawnDelay = 0.3f;
             if (respawnTimer >= respawnDelay) {
                 if (player.isAlive()) {
                     respawnPlayer();

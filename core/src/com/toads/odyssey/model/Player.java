@@ -165,7 +165,7 @@ public class Player extends Entity {
     }
 
 
-    public String getLives() {
-        return String.valueOf(lives);
+    public int getLives() {
+        return this.lives;
     }
 }

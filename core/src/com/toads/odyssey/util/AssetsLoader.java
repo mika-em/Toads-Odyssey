@@ -1,6 +1,7 @@
 package com.toads.odyssey.util;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,6 +13,8 @@ public class AssetsLoader implements Disposable {
     public final PlayerAssets playerAssets;
     public final CoinAssets coinAssets;
     public final TextureAtlas numberAtlas;;
+    private Texture fullHeartTexture;
+    private Texture emptyHeartTexture;
     public static final AssetsLoader instance = new AssetsLoader();
     public AssetsLoader() {
         this.manager = new AssetManager();
@@ -24,8 +27,8 @@ public class AssetsLoader implements Disposable {
         playerAssets = new PlayerAssets(atlas);
         coinAssets = new CoinAssets(coinAtlas);
         numberAtlas = manager.get("atlas_files/numbers.atlas", TextureAtlas.class);
-
-
+        fullHeartTexture = new Texture("assets/tiles/full_heart.png");
+        emptyHeartTexture = new Texture("assets/tiles/empty_heart.png");
     }
     public static class PlayerAssets {
         public final Animation<TextureAtlas.AtlasRegion> idleAnimation;
@@ -82,10 +85,15 @@ public class AssetsLoader implements Disposable {
         }
         return digits;
     }
+    public Texture getHeartTexture(boolean full) {
+        return full ? fullHeartTexture : emptyHeartTexture;
+    }
 
     @Override
     public void dispose() {
         manager.dispose();
+        if (fullHeartTexture != null) fullHeartTexture.dispose();
+        if (emptyHeartTexture != null) emptyHeartTexture.dispose();
     }
 
 }

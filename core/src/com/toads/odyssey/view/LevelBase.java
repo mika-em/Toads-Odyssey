@@ -105,7 +105,6 @@ public abstract class LevelBase implements Screen {
         camera.update();
         if (gameState == GameState.RUNNING) {
             update(delta);
-            System.out.println("lives" + player.getLives());
 
             if (CollisionDetection.instance.hasPlayerFallen()) {
                 System.out.println("Player has fallen");
@@ -121,7 +120,6 @@ public abstract class LevelBase implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 
-        // Iterate and draw coins
         Iterator<Coin> coinIterator = coins.iterator();
         while (coinIterator.hasNext()) {
             Coin coin = coinIterator.next();
@@ -148,10 +146,10 @@ public abstract class LevelBase implements Screen {
         game.batch.end();
 
         if (hud != null) {
-            hud.render();
+            hud.render(player.getLives(), 3);
         }
 
-        debugRenderer.render(world, camera.combined);
+//        debugRenderer.render(world, camera.combined);
     }
 
     @Override

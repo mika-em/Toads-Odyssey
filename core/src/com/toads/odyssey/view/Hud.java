@@ -3,6 +3,7 @@ package com.toads.odyssey.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,7 +25,6 @@ public class Hud {
     private final ShapeRenderer shapeRenderer;
     private int coinCount;
     private boolean isPaused = false;
-
     public Hud(AssetsLoader assetsLoader, SpriteBatch spriteBatch) {
         this.assetsLoader = assetsLoader;
         maxCoinCountWidth = calculateMaxWidth();
@@ -56,7 +56,7 @@ public class Hud {
         return getTotalWidth(maxDigits) * numberScale;
     }
 
-    public void render() {
+    public void render(int playerLives, int maxLives) {
         spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Array<TextureRegion> digitTextures = assetsLoader.getNumberTextures(coinCount);
         float padding = 50;
@@ -81,15 +81,18 @@ public class Hud {
             x += scaledWidth + digitSpacing;
         }
 
-        spriteBatch.end();
+        float heartSize = 45;
+        float heartSpacing = 10;
+        float startX = Gdx.graphics.getWidth() - (heartSize + heartSpacing) * maxLives;
 
-        if (Gdx.gl.glGetError() != GL20.GL_NO_ERROR) {
-            Gdx.app.log("Hud", "OpenGL error during rendering");
+        for (int i = 0; i < maxLives; i++) {
+            Texture heartTexture = assetsLoader.getHeartTexture(i < playerLives);
+            spriteBatch.draw(new TextureRegion(heartTexture), startX + i * (heartSize + heartSpacing) - 30, Gdx.graphics.getHeight() - heartSize - 35, heartSize, heartSize);
         }
+
+
+        spriteBatch.end();
         pauseTextBounds.set(textX, textY - layout.height, pauseTextWidth, layout.height);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.LIGHT_GRAY);
-        shapeRenderer.rect(pauseTextBounds.x, pauseTextBounds.y, pauseTextBounds.width, pauseTextBounds.height);
         shapeRenderer.end();
     }
 
@@ -105,11 +108,8 @@ public class Hud {
     public boolean checkPausePressed() {
         if (Gdx.input.justTouched()) {
             Vector3 touchPos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-            Gdx.app.log("Hud", "Touch coordinates: " + touchPos.x + ", " + touchPos.y);
-            Gdx.app.log("Hud", "Bounds: " + pauseTextBounds);
             if (pauseTextBounds.contains(touchPos.x, Gdx.graphics.getHeight() - touchPos.y)) {
                 isPaused = !isPaused;
-                Gdx.app.log("Hud", "Pause button pressed. isPaused: " + isPaused);
                 return true;
             }
         }

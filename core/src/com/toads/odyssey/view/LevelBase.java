@@ -92,10 +92,10 @@ public abstract class LevelBase implements Screen {
         if (hud != null && hud.checkPausePressed()) {
             if (gameState == GameState.RUNNING) {
                 gameState = GameState.PAUSED;
-                player.setCanMove(false); // Disable player movement
+                player.setCanMove(false);
             } else {
                 gameState = GameState.RUNNING;
-                player.setCanMove(true); // Enable player movement
+                player.setCanMove(true);
             }
         }
 
@@ -107,9 +107,8 @@ public abstract class LevelBase implements Screen {
         camera.update();
 
         if (gameState == GameState.RUNNING) {
-            update(delta); // Update the game world only if the game is running
+            update(delta);
         }
-
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 
@@ -129,16 +128,12 @@ public abstract class LevelBase implements Screen {
                 hud.updateCoinCount(coinCount);
             }
         }
-
-        // Always draw the player, but only update if the game is running
         player.draw(game.batch);
-
-        // Draw the coin texture
         TextureRegion coinTexture = CoinAssets.getCoinTexture();
         game.batch.draw(coinTexture, 10, 10);
 
         if (gameState == GameState.PAUSED) {
-            game.batch.draw(grayTexture, 0, 0); // Draw the gray overlay when paused
+            game.batch.draw(grayTexture, 0, 0);
         }
 
         game.batch.end();
@@ -146,10 +141,9 @@ public abstract class LevelBase implements Screen {
         if (hud != null) {
             hud.render();
         }
+
+        debugRenderer.render(world, camera.combined);
     }
-
-
-
 
     @Override
     public void resize(final int width, final int height) {

@@ -87,7 +87,6 @@ public abstract class LevelBase implements Screen {
     @Override
     public void show() {
     }
-
     @Override
     public void render(float delta) {
         if (hud != null && hud.checkPausePressed()) {
@@ -98,7 +97,6 @@ public abstract class LevelBase implements Screen {
             }
         }
 
-
         Gdx.gl.glClearColor((199 / 255f), (219 / 255f), (238 / 255f), 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -106,47 +104,45 @@ public abstract class LevelBase implements Screen {
         renderer.render();
         camera.update();
         update(delta);
-        if (gameState == GameState.PAUSED) {
-            game.batch.begin();
-            game.batch.draw(grayTexture, 0, 0);
-            game.batch.end();
-        }
-            if (gameState == GameState.RUNNING) {
-                // Update the game logic only when it's running
 
+        game.batch.setProjectionMatrix(camera.combined);
+        game.batch.begin();
 
-                game.batch.setProjectionMatrix(camera.combined);
-                game.batch.begin();
-
-
-                player.draw(game.batch);
-
-                Iterator<Coin> coinIterator = coins.iterator();
-                while (coinIterator.hasNext()) {
-                    Coin coin = coinIterator.next();
-                    coin.update(delta);
-                    if (coin.isCollision(player.getBody())) {
-                        coinCount++;
-                        coinIterator.remove();
-                    } else {
-                        coin.draw(game.batch);
-                        if (hud != null) {
-                            hud.updateCoinCount(coinCount);
-                        }
-                    }
+        // Render the coins regardless of the game state
+        Iterator<Coin> coinIterator = coins.iterator();
+        while (coinIterator.hasNext()) {
+            Coin coin = coinIterator.next();
+            coin.update(delta);
+            if (coin.isCollision(player.getBody())) {
+                coinCount++;
+                coinIterator.remove();
+            } else {
+                coin.draw(game.batch);
+                if (hud != null) {
+                    hud.updateCoinCount(coinCount);
                 }
-
-                TextureRegion coinTexture = CoinAssets.getCoinTexture();
-                game.batch.draw(coinTexture, 10, 10);
-                game.batch.end();
             }
+        }
+
+        // Render the player when the game is running
+        if (gameState == GameState.RUNNING) {
+            player.draw(game.batch);
+            TextureRegion coinTexture = CoinAssets.getCoinTexture();
+            game.batch.draw(coinTexture, 10, 10);
+        }
+
+        // Draw the gray overlay if the game is paused
+        if (gameState == GameState.PAUSED) {
+            game.batch.draw(grayTexture, 0, 0);
+        }
+
+        game.batch.end();
 
         if (hud != null) {
             hud.render();
         }
+    }
 
-
-        }
 
 
     @Override

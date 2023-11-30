@@ -43,8 +43,6 @@ public class Hud {
         float x = 20;
         float y = Gdx.graphics.getHeight() - 20;
         pauseTextBounds = new Rectangle(x + 20, y - pauseTextHeight - 40, pauseTextWidth + 20, pauseTextHeight + 20);
-
-
     }
 
     public void updateCoinCount(int newCount) {

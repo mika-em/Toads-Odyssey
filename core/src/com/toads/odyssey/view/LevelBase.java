@@ -161,7 +161,7 @@ public abstract class LevelBase implements Screen {
             hud.render(player.getLives(), 3);
         }
 
-//        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined);
     }
 
     @Override

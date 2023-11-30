@@ -7,23 +7,23 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.toads.odyssey.util.AssetsLoader;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Hud {
     private final AssetsLoader assetsLoader;
     private final SpriteBatch spriteBatch;
-    private int coinCount;
     private final float numberScale = 1.3f;
     private final float digitSpacing = 2;
     private final float maxCoinCountWidth;
     private final BitmapFont pauseFont;
     private final Rectangle pauseTextBounds;
-    private boolean isPaused = false;
     private final ShapeRenderer shapeRenderer;
+    private int coinCount;
+    private boolean isPaused = false;
 
     public Hud(AssetsLoader assetsLoader, SpriteBatch spriteBatch) {
         this.assetsLoader = assetsLoader;
@@ -55,6 +55,7 @@ public class Hud {
         Array<TextureRegion> maxDigits = assetsLoader.getNumberTextures(999);
         return getTotalWidth(maxDigits) * numberScale;
     }
+
     public void render() {
         spriteBatch.getProjectionMatrix().setToOrtho2D(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Array<TextureRegion> digitTextures = assetsLoader.getNumberTextures(coinCount);

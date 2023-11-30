@@ -1,11 +1,9 @@
 package com.toads.odyssey.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -18,9 +16,10 @@ import com.toads.odyssey.ToadsOdyssey;
 import com.toads.odyssey.model.Coin;
 import com.toads.odyssey.model.Player;
 import com.toads.odyssey.util.AssetsLoader;
+import com.toads.odyssey.util.AssetsLoader.CoinAssets;
 import com.toads.odyssey.util.CollisionDetection;
 import com.toads.odyssey.util.LevelManager;
-import com.toads.odyssey.util.AssetsLoader.CoinAssets;
+
 import java.util.Iterator;
 
 /**
@@ -29,22 +28,20 @@ import java.util.Iterator;
  */
 public abstract class LevelBase implements Screen {
     private final ToadsOdyssey game;
-    protected Player player;
     private final OrthographicCamera camera;
     private final OrthogonalTiledMapRenderer renderer;
+    private final Viewport gamePort;
+    public Vector2 originalPlayerPosition;
+    protected Player player;
     protected TiledMap map;
     protected Box2DDebugRenderer debugRenderer;
     protected World world;
-    private final Viewport gamePort;
     protected Array<Coin> coins;
     protected Hud hud;
     private int coinCount = 0;
     private boolean isPaused = false;
     private Texture grayTexture;
-
     private GameState gameState = GameState.RUNNING;
-
-
 
 
     public LevelBase(ToadsOdyssey game) {
@@ -61,7 +58,7 @@ public abstract class LevelBase implements Screen {
         coins = new Array<>();
         loadEntities();
         setLevel();
-
+        originalPlayerPosition = new Vector2(16 / ToadsOdyssey.PPM, 400 / ToadsOdyssey.PPM);
         Pixmap grayPixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
         Color grayColor = new Color(0.5f, 0.5f, 0.5f, 0.3f);
         grayPixmap.setColor(grayColor);
@@ -87,6 +84,7 @@ public abstract class LevelBase implements Screen {
     @Override
     public void show() {
     }
+
     @Override
     public void render(float delta) {
         if (hud != null && hud.checkPausePressed()) {
@@ -105,9 +103,20 @@ public abstract class LevelBase implements Screen {
         renderer.setView(camera);
         renderer.render();
         camera.update();
-
         if (gameState == GameState.RUNNING) {
             update(delta);
+            System.out.println("lives" + player.getLives());
+
+            if (CollisionDetection.instance.hasPlayerFallen()) {
+                System.out.println("Player has fallen");
+                player.loseLife();
+                if (player.isAlive()) {
+                    respawnPlayer();
+                } else {
+                    endGame();
+                }
+                CollisionDetection.instance.resetPlayerFallen();
+            }
         }
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
@@ -149,15 +158,19 @@ public abstract class LevelBase implements Screen {
     public void resize(final int width, final int height) {
         gamePort.update(width, height);
     }
+
     @Override
     public void pause() {
     }
+
     @Override
     public void resume() {
     }
+
     @Override
     public void hide() {
     }
+
     @Override
     public void dispose() {
         for (int i = 0; i < coins.size; i++) {
@@ -166,19 +179,33 @@ public abstract class LevelBase implements Screen {
         }
         grayTexture.dispose();
     }
+
     public ToadsOdyssey getGame() {
         return game;
     }
+
     public OrthographicCamera getCamera() {
         return camera;
     }
+
     public OrthogonalTiledMapRenderer getRenderer() {
         return renderer;
     }
+
     public World getWorld() {
         return world;
     }
+
     public Player getPlayer() {
         return player;
     }
+
+    private void respawnPlayer() {
+        player.resetPosition(originalPlayerPosition);
+    }
+
+    private void endGame() {
+        // load game over screen
+    }
+
 }

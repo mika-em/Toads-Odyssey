@@ -15,8 +15,10 @@ public class LevelManager {
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     private Player player;
+
     private LevelManager() {
     }
+
     public void setLevelBase(LevelBase levelBase) {
         instance.levelBase = levelBase;
         instance.game = levelBase.getGame();
@@ -25,11 +27,13 @@ public class LevelManager {
         instance.camera = levelBase.getCamera();
         instance.player = levelBase.getPlayer();
     }
+
     public void update(float deltaTime) {
         handleUserInput(deltaTime);
         world.step(1 / 60f, 60, 2);
         player.update(deltaTime);
     }
+
     public void handleUserInput(float deltaTime) {
         player.handleKeyPressed();
     }

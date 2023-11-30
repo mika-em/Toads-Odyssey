@@ -39,7 +39,7 @@ public class Level1 extends LevelBase {
         loadPlatform();
         loadCoins(world);
         loadFallZones();
-        player = new Player(world, new Vector2(16 / ToadsOdyssey.PPM, 400 / ToadsOdyssey.PPM));
+        player = new Player(world, new Vector2(42 / ToadsOdyssey.PPM, 400 / ToadsOdyssey.PPM));
         Body playerBody = player.getBody();
     }
 

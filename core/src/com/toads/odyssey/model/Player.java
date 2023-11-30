@@ -49,7 +49,6 @@ public class Player extends Entity {
     @Override
     public void update(float delta) {
         if (canMove) {
-
             this.spritePosition = body.getPosition();
             setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
             setRegion(getFrame(delta));

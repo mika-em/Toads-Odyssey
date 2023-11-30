@@ -60,7 +60,7 @@ public abstract class LevelBase implements Screen {
         coins = new Array<>();
         loadEntities();
         setLevel();
-        originalPlayerPosition = new Vector2(16 / ToadsOdyssey.PPM, 400 / ToadsOdyssey.PPM);
+        originalPlayerPosition = new Vector2(42 / ToadsOdyssey.PPM, 400 / ToadsOdyssey.PPM);
         Pixmap grayPixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
         Color grayColor = new Color(0.5f, 0.5f, 0.5f, 0.3f);
         grayPixmap.setColor(grayColor);

@@ -39,9 +39,11 @@ public abstract class LevelBase implements Screen {
     protected Array<Coin> coins;
     protected Hud hud;
     private int coinCount = 0;
-    private boolean isPaused = false;
-    private Texture grayTexture;
+    private final boolean isPaused = false;
+    private final Texture grayTexture;
     private GameState gameState = GameState.RUNNING;
+    private float respawnTimer = 0.0f;
+    private boolean awaitingRespawn = false;
 
 
     public LevelBase(ToadsOdyssey game) {
@@ -105,18 +107,28 @@ public abstract class LevelBase implements Screen {
         camera.update();
         if (gameState == GameState.RUNNING) {
             update(delta);
+        }
 
-            if (CollisionDetection.instance.hasPlayerFallen()) {
-                System.out.println("Player has fallen");
-                player.loseLife();
+        if (CollisionDetection.instance.hasPlayerFallen() && !awaitingRespawn) {
+            player.loseLife();
+            awaitingRespawn = true;
+            respawnTimer = 0.0f;
+            CollisionDetection.instance.resetPlayerFallen();
+        }
+
+        if (awaitingRespawn) {
+            respawnTimer += delta;
+            float respawnDelay = 0.5f;
+            if (respawnTimer >= respawnDelay) {
                 if (player.isAlive()) {
                     respawnPlayer();
                 } else {
                     endGame();
                 }
-                CollisionDetection.instance.resetPlayerFallen();
+                awaitingRespawn = false;
             }
         }
+
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 

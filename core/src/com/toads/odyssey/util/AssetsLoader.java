@@ -11,16 +11,21 @@ public class AssetsLoader implements Disposable {
     public AssetManager manager;
     public final PlayerAssets playerAssets;
     public final CoinAssets coinAssets;
+    public final TextureAtlas numberAtlas;;
     public static final AssetsLoader instance = new AssetsLoader();
     public AssetsLoader() {
         this.manager = new AssetManager();
-        manager.load("spriteSheet.atlas", TextureAtlas.class);
-        manager.load("coin.atlas", TextureAtlas.class);
+        manager.load("atlas_files/spriteSheet.atlas", TextureAtlas.class);
+        manager.load("atlas_files/coin.atlas", TextureAtlas.class);
+        manager.load("atlas_files/numbers.atlas", TextureAtlas.class);
         manager.finishLoading();
-        TextureAtlas atlas = manager.get("spriteSheet.atlas", TextureAtlas.class);
-        TextureAtlas coinAtlas = manager.get("coin.atlas", TextureAtlas.class);
+        TextureAtlas atlas = manager.get("atlas_files/spriteSheet.atlas", TextureAtlas.class);
+        TextureAtlas coinAtlas = manager.get("atlas_files/coin.atlas", TextureAtlas.class);
         playerAssets = new PlayerAssets(atlas);
         coinAssets = new CoinAssets(coinAtlas);
+        numberAtlas = manager.get("atlas_files/numbers.atlas", TextureAtlas.class);
+
+
     }
     public static class PlayerAssets {
         public final Animation<TextureAtlas.AtlasRegion> idleAnimation;
@@ -64,10 +69,19 @@ public class AssetsLoader implements Disposable {
     }
 
     public CoinAssets getCoinAssets() {
-        TextureAtlas atlas = manager.get("spriteSheet.atlas", TextureAtlas.class);
+        TextureAtlas atlas = manager.get("atlas_files/spriteSheet.atlas", TextureAtlas.class);
         return new CoinAssets(atlas);
     }
 
+    public Array<TextureRegion> getNumberTextures(int number) {
+        Array<TextureRegion> digits = new Array<>();
+        String numberStr = String.valueOf(number);
+        for (char digit : numberStr.toCharArray()) {
+            String regionName = "numbers-" + digit;
+            digits.add(numberAtlas.findRegion(regionName));
+        }
+        return digits;
+    }
 
     @Override
     public void dispose() {

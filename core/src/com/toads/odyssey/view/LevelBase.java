@@ -3,9 +3,9 @@ package com.toads.odyssey.view;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -28,21 +28,31 @@ import java.util.Iterator;
  * It includes the camera, renderer, world, and player.
  */
 public abstract class LevelBase implements Screen {
-    private ToadsOdyssey game;
+    private final ToadsOdyssey game;
     protected Player player;
-    private OrthographicCamera camera;
-    private OrthogonalTiledMapRenderer renderer;
+    private final OrthographicCamera camera;
+    private final OrthogonalTiledMapRenderer renderer;
     protected TiledMap map;
     protected Box2DDebugRenderer debugRenderer;
     protected World world;
-    private Viewport gamePort;
+    private final Viewport gamePort;
     protected Array<Coin> coins;
+    protected Hud hud;
     private int coinCount = 0;
+    private boolean isPaused = false;
+    private Texture grayTexture;
+
+    private GameState gameState = GameState.RUNNING;
+
+
+
+
     public LevelBase(ToadsOdyssey game) {
         this.game = game;
         camera = new OrthographicCamera();
         gamePort = new StretchViewport(ToadsOdyssey.SCREEN_WIDTH / ToadsOdyssey.PPM, ToadsOdyssey.SCREEN_HEIGHT / ToadsOdyssey.PPM, camera);
         loadMap();
+        hud = new Hud(AssetsLoader.instance, game.batch);
         renderer = new OrthogonalTiledMapRenderer(map, 2 / ToadsOdyssey.PPM); //change to 2 to make the map bigger
         camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
         world = new World(new Vector2(0, -20), true); //y is gravity
@@ -51,10 +61,21 @@ public abstract class LevelBase implements Screen {
         coins = new Array<>();
         loadEntities();
         setLevel();
+
+        Pixmap grayPixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGBA8888);
+        Color grayColor = new Color(0.5f, 0.5f, 0.5f, 0.3f);
+        grayPixmap.setColor(grayColor);
+        grayPixmap.fill();
+        grayTexture = new Texture(grayPixmap);
+        grayPixmap.dispose();
     }
+
     protected abstract void loadMap();
+
     protected abstract void loadEntities();
+
     protected abstract void setLevel();
+
     private void update(float deltaTime) {
         LevelManager.instance.update(deltaTime);
         camera.position.set(player.getPosition().x, gamePort.getWorldHeight() / 2, 0);
@@ -62,39 +83,67 @@ public abstract class LevelBase implements Screen {
         camera.position.set(cameraX, gamePort.getWorldHeight() / 2, 0);
         camera.update();
     }
+
     @Override
     public void show() {
     }
     @Override
     public void render(float delta) {
-        update(delta);
-        Gdx.gl.glClearColor((199/255f), (219/255f), (238/255f), 1);
+        if (hud != null && hud.checkPausePressed()) {
+            if (gameState == GameState.RUNNING) {
+                gameState = GameState.PAUSED;
+                player.setCanMove(false);
+            } else {
+                gameState = GameState.RUNNING;
+                player.setCanMove(true);
+            }
+        }
+
+        Gdx.gl.glClearColor((199 / 255f), (219 / 255f), (238 / 255f), 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
-        //Gdx.app.log("camera position " + camera.position);
+
         renderer.setView(camera);
         renderer.render();
+        camera.update();
+
+        if (gameState == GameState.RUNNING) {
+            update(delta);
+        }
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        player.draw(game.batch);
-//        Array<Coin> coinsToRemove = new Array<>();
+
+        // Iterate and draw coins
         Iterator<Coin> coinIterator = coins.iterator();
         while (coinIterator.hasNext()) {
             Coin coin = coinIterator.next();
-            coin.update(delta);
-            if (coin.isCollision(player.getBody())) {
-                coinIterator.remove();
-                coinCount = coin.getCoinCount();
-            } else {
-                coin.draw(game.batch);
+            if (gameState == GameState.RUNNING) {
+                coin.update(delta);
+                if (coin.isCollision(player.getBody())) {
+                    coinCount++;
+                    coinIterator.remove();
+                }
+            }
+            coin.draw(game.batch);
+            if (hud != null) {
+                hud.updateCoinCount(coinCount);
             }
         }
+        player.draw(game.batch);
         TextureRegion coinTexture = CoinAssets.getCoinTexture();
         game.batch.draw(coinTexture, 10, 10);
-        game.batch.end();
-//        debugRenderer.render(world, camera.combined);
-    }
 
+        if (gameState == GameState.PAUSED) {
+            game.batch.draw(grayTexture, 0, 0);
+        }
+
+        game.batch.end();
+
+        if (hud != null) {
+            hud.render();
+        }
+
+        debugRenderer.render(world, camera.combined);
+    }
 
     @Override
     public void resize(final int width, final int height) {
@@ -115,8 +164,7 @@ public abstract class LevelBase implements Screen {
             Coin coin = coins.get(i);
             coin.dispose();
         }
-
-
+        grayTexture.dispose();
     }
     public ToadsOdyssey getGame() {
         return game;

@@ -18,6 +18,7 @@ public class Player extends Entity {
     private float maxJumpHeight;
     private float startJumpY;
     public Body body;
+    private boolean canMove = true;
 
     public Player(World world, Vector2 position) {
         super(world, position);
@@ -43,10 +44,13 @@ public class Player extends Entity {
     }
     @Override
     public void update(float delta) {
-        this.spritePosition = body.getPosition();
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        setRegion(getFrame(delta));
-        setJumpHeightLimit();
+        if (canMove) {
+
+            this.spritePosition = body.getPosition();
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+            setRegion(getFrame(delta));
+            setJumpHeightLimit();
+        }
     }
 
     private void setJumpHeightLimit() {
@@ -100,6 +104,9 @@ public class Player extends Entity {
         return body.getPosition();
     }
     public void handleKeyPressed() {
+        if (!canMove) {
+            return;
+        }
         boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
         boolean upPressed = Gdx.input.isKeyPressed(Input.Keys.UP);
@@ -127,4 +134,8 @@ public class Player extends Entity {
     public Body getBody() {
         return body;
     }
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
+    }
+
 }

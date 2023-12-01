@@ -215,7 +215,7 @@ public abstract class LevelBase implements Screen {
     }
 
     private void endGame() {
-        // load game over screen
+        game.setScreen(new GameOverScreen(game));
     }
 
 }

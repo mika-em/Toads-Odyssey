@@ -12,7 +12,22 @@ public class AssetsLoader implements Disposable {
     public AssetManager manager;
     public final PlayerAssets playerAssets;
     public final CoinAssets coinAssets;
+<<<<<<< HEAD
     public final IntroScreenAssets introScreenAssets;
+    public static final AssetsLoader instance = new AssetsLoader();
+    public AssetsLoader() {
+        this.manager = new AssetManager();
+        manager.load("spriteSheet.atlas", TextureAtlas.class);
+        manager.load("coin.atlas", TextureAtlas.class);
+        manager.load("screens/intro.atlas", TextureAtlas.class);
+        manager.finishLoading();
+        TextureAtlas atlas = manager.get("spriteSheet.atlas", TextureAtlas.class);
+        TextureAtlas coinAtlas = manager.get("coin.atlas", TextureAtlas.class);
+        TextureAtlas introAtlas = manager.get("screens/intro.atlas", TextureAtlas.class);
+        playerAssets = new PlayerAssets(atlas);
+        coinAssets = new CoinAssets(coinAtlas);
+        introScreenAssets = new IntroScreenAssets(introAtlas);
+=======
     public final TextureAtlas numberAtlas;;
     private Texture fullHeartTexture;
     private Texture emptyHeartTexture;
@@ -22,17 +37,15 @@ public class AssetsLoader implements Disposable {
         manager.load("atlas_files/spriteSheet.atlas", TextureAtlas.class);
         manager.load("atlas_files/coin.atlas", TextureAtlas.class);
         manager.load("atlas_files/numbers.atlas", TextureAtlas.class);
-		 manager.load("screens/intro.atlas", TextureAtlas.class);
         manager.finishLoading();
         TextureAtlas atlas = manager.get("atlas_files/spriteSheet.atlas", TextureAtlas.class);
         TextureAtlas coinAtlas = manager.get("atlas_files/coin.atlas", TextureAtlas.class);
-		TextureAtlas introAtlas = manager.get("screens/intro.atlas", TextureAtlas.class);
         playerAssets = new PlayerAssets(atlas);
         coinAssets = new CoinAssets(coinAtlas);
-        introScreenAssets = new IntroScreenAssets(introAtlas);
         numberAtlas = manager.get("atlas_files/numbers.atlas", TextureAtlas.class);
         fullHeartTexture = new Texture("assets/tiles/full_heart.png");
         emptyHeartTexture = new Texture("assets/tiles/empty_heart.png");
+>>>>>>> dev
     }
     public static class PlayerAssets {
         public final Animation<TextureAtlas.AtlasRegion> idleAnimation;
@@ -80,6 +93,7 @@ public class AssetsLoader implements Disposable {
         return new CoinAssets(atlas);
     }
 
+<<<<<<< HEAD
     public static class IntroScreenAssets {
         public final Animation<TextureAtlas.AtlasRegion> introAnimation;
         public IntroScreenAssets(final TextureAtlas atlas) {
@@ -91,6 +105,7 @@ public class AssetsLoader implements Disposable {
         }
     }
 
+=======
     public Array<TextureRegion> getNumberTextures(int number) {
         Array<TextureRegion> digits = new Array<>();
         String numberStr = String.valueOf(number);
@@ -103,6 +118,7 @@ public class AssetsLoader implements Disposable {
     public Texture getHeartTexture(boolean full) {
         return full ? fullHeartTexture : emptyHeartTexture;
     }
+>>>>>>> dev
 
     @Override
     public void dispose() {

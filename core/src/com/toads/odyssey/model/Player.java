@@ -11,13 +11,16 @@ import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.CollisionDetection;
 
 public class Player extends Entity {
+    public Body body;
     private PlayerMode currentState;
     private PlayerMode previousState;
     private float stateTimer;
     private boolean moveRight;
     private float maxJumpHeight;
     private float startJumpY;
-    public Body body;
+    private boolean canMove = true;
+    private int lives = 3;
+
 
     public Player(World world, Vector2 position) {
         super(world, position);
@@ -28,6 +31,7 @@ public class Player extends Entity {
         setBounds(0, 0, 32 / ToadsOdyssey.PPM, 32 / ToadsOdyssey.PPM);
         setRegion(AssetsLoader.instance.playerAssets.idleAnimation.getKeyFrame(stateTimer, true));
     }
+
     @Override
     public void define() {
         BodyDef bodyDef = new BodyDef();
@@ -41,12 +45,15 @@ public class Player extends Entity {
         fixtureDef.friction = 0f;
         body.createFixture(fixtureDef).setUserData(this);
     }
+
     @Override
     public void update(float delta) {
-        this.spritePosition = body.getPosition();
-        setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
-        setRegion(getFrame(delta));
-        setJumpHeightLimit();
+        if (canMove) {
+            this.spritePosition = body.getPosition();
+            setPosition(body.getPosition().x - getWidth() / 2, body.getPosition().y - getHeight() / 2);
+            setRegion(getFrame(delta));
+            setJumpHeightLimit();
+        }
     }
 
     private void setJumpHeightLimit() {
@@ -56,9 +63,9 @@ public class Player extends Entity {
             }
         }
     }
+
     private TextureRegion getFrame(float delta) {
         currentState = getState();
-        //System.out.println(currentState);
         TextureRegion region;
         switch (currentState) {
             case MOVE:
@@ -87,6 +94,7 @@ public class Player extends Entity {
         previousState = currentState;
         return region;
     }
+
     private PlayerMode getState() {
         if (body.getLinearVelocity().y > 0) {
             return PlayerMode.JUMP;
@@ -96,15 +104,19 @@ public class Player extends Entity {
             return PlayerMode.IDLE;
         }
     }
+
     public Vector2 getPosition() {
         return body.getPosition();
     }
+
     public void handleKeyPressed() {
+        if (!canMove) {
+            return;
+        }
         boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
         boolean upPressed = Gdx.input.isKeyPressed(Input.Keys.UP);
         boolean isOnGround = CollisionDetection.instance.isOnGround();
-        //System.out.println("isOnGround: " + isOnGround);
         if (upPressed && isOnGround) {
             startJumpY = body.getPosition().y;
             maxJumpHeight = startJumpY + 2;
@@ -119,6 +131,7 @@ public class Player extends Entity {
         }
 
     }
+
     public void draw(SpriteBatch batch) {
         update(Gdx.graphics.getDeltaTime());
         super.draw(batch);
@@ -126,5 +139,32 @@ public class Player extends Entity {
 
     public Body getBody() {
         return body;
+    }
+
+    public void setCanMove(boolean canMove) {
+        this.canMove = canMove;
+    }
+
+    public void loseLife() {
+        lives--;
+        System.out.println("Lives: " + lives);
+        if (lives <= 0) {
+            System.out.println("Game Over");
+
+        }
+    }
+
+    public boolean isAlive() {
+        return lives > 0;
+    }
+
+    public void resetPosition(Vector2 newPosition) {
+        body.setTransform(newPosition, 0);
+        body.setLinearVelocity(0, 0);
+    }
+
+
+    public int getLives() {
+        return this.lives;
     }
 }

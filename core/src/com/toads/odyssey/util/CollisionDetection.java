@@ -21,6 +21,9 @@ public class CollisionDetection implements ContactListener {
         if (isPlayerDeathZoneContact(fa, fb)) {
             playerHasFallen = true;
         }
+        if (isPlayerMushroomContact(fa, fb)) {
+            playerHasFallen = true;
+        }
     }
 
     @Override
@@ -44,6 +47,11 @@ public class CollisionDetection implements ContactListener {
     private boolean isPlayerDeathZoneContact(Fixture a, Fixture b) {
         return (a.getUserData() instanceof Player && "DeathZone".equals(b.getUserData())) ||
                 (b.getUserData() instanceof Player && "DeathZone".equals(a.getUserData()));
+    }
+
+    private boolean isPlayerMushroomContact(Fixture a, Fixture b) {
+        return (a.getUserData() instanceof Player && "mushroom".equals(b.getUserData())) ||
+                (b.getUserData() instanceof Player && "mushroom".equals(a.getUserData()));
     }
 
     @Override

@@ -61,6 +61,7 @@ public class Hud {
         float x = Gdx.graphics.getWidth() - padding - maxCoinCountWidth;
 
         TextureRegion coinTexture = AssetsLoader.CoinAssets.getCoinTexture();
+        TextureRegion mushroomTexture = AssetsLoader.MushroomAssets.getMushroomTexture();
         float coinX = x - coinTexture.getRegionWidth() * numberScale - digitSpacing;
         float coinY = padding - 1;
         spriteBatch.begin();
@@ -71,6 +72,7 @@ public class Hud {
         float textY = Gdx.graphics.getHeight() - padding;
         pauseFont.draw(spriteBatch, pauseText, textX, textY);
         spriteBatch.draw(coinTexture, coinX, coinY, coinTexture.getRegionWidth() * 1.1f, coinTexture.getRegionHeight() * 1.1f);
+
 
         for (TextureRegion digit : digitTextures) {
             float scaledWidth = digit.getRegionWidth() * numberScale;

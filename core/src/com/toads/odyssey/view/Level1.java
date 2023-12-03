@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.toads.odyssey.ToadsOdyssey;
 import com.toads.odyssey.model.Coin;
+import com.toads.odyssey.model.Mushroom;
 import com.toads.odyssey.model.Player;
 import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.LevelManager;
@@ -37,6 +38,7 @@ public class Level1 extends LevelBase {
     @Override
     protected void loadEntities() {
         loadPlatform();
+        loadMushrooms(world);
         loadCoins(world);
         loadFallZones();
         player = new Player(world, new Vector2(42 / ToadsOdyssey.PPM, 400 / ToadsOdyssey.PPM));
@@ -47,6 +49,34 @@ public class Level1 extends LevelBase {
     protected void setLevel() {
         LevelManager.instance.setLevelBase(this);
     }
+
+    private void loadMushrooms(World world) {
+        AssetsLoader assetsLoader = AssetsLoader.instance;
+        AssetsLoader.MushroomAssets mushroomAssets = assetsLoader.getMushroomAssets();
+        MapLayer mushroomLayer = map.getLayers().get("mushroom");
+
+        if (mushroomLayer == null || mushroomLayer.getObjects().getCount() == 0) return;
+
+        for (MapObject object : mushroomLayer.getObjects()) {
+            if (object instanceof RectangleMapObject) {
+                RectangleMapObject rectangleObject = (RectangleMapObject) object;
+                Rectangle rectangle = rectangleObject.getRectangle();
+
+                // Adjusting for unit scale and converting pixels to world units
+                float x = ((rectangle.x) * 2/ PPM); // Multiply by the unit scale
+                float y = ((rectangle.y) / PPM) * 2; // Multiply by the unit scale
+                float originalWidth = rectangle.width / PPM;
+                float originalHeight = rectangle.height / PPM;
+                float width = originalWidth * 2; // Make mushroom twice as wide
+                float height = originalHeight * 2; // Make mushroom twice as tall
+
+                Mushroom mushroom = new Mushroom(mushroomAssets.mushroomAnimation, world, x, y, width, height);
+                mushrooms.add(mushroom);
+            }
+        }
+    }
+
+
 
     private void loadCoins(World world) {
         AssetsLoader assetsLoader = AssetsLoader.instance;
@@ -64,8 +94,8 @@ public class Level1 extends LevelBase {
 
                 float x = ((rectangle.x + 4) * 2) / PPM; // add 4 to center the coin
                 float y = ((rectangle.y + 5) * 2) / PPM; // add 5 to be slightly above the ground
-                float width = ((rectangle.width * 2) / PPM / 2); // divide by 2 to make the box smaller
-                float height = ((rectangle.height * 2) / PPM / 2);
+                float width = ((rectangle.width * 2) / PPM ); // divide by 2 to make the box smaller
+                float height = ((rectangle.height * 2) / PPM);
 
                 Coin coin = new Coin(coinAssets.coinAnimation, world, x, y);
                 coins.add(coin);

@@ -19,7 +19,7 @@ public class Player extends Entity {
     private float maxJumpHeight;
     private float startJumpY;
     private boolean canMove = true;
-    private int lives = 3;
+    private static int lives = 3;
 
 
     public Player(World world, Vector2 position) {
@@ -145,7 +145,7 @@ public class Player extends Entity {
         this.canMove = canMove;
     }
 
-    public void loseLife() {
+    public static void loseLife() {
         lives--;
         System.out.println("Lives: " + lives);
         if (lives <= 0) {
@@ -154,7 +154,7 @@ public class Player extends Entity {
         }
     }
 
-    public boolean isAlive() {
+    public static boolean isAlive() {
         return lives > 0;
     }
 

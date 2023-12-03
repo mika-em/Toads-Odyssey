@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.toads.odyssey.ToadsOdyssey;
 import com.toads.odyssey.model.Coin;
+import com.toads.odyssey.model.Mushroom;
 import com.toads.odyssey.model.Player;
 import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.AssetsLoader.CoinAssets;
@@ -37,6 +38,7 @@ public abstract class LevelBase implements Screen {
     protected Box2DDebugRenderer debugRenderer;
     protected World world;
     protected Array<Coin> coins;
+    protected Array<Mushroom> mushrooms;
     protected Hud hud;
     private int coinCount = 0;
     private final boolean isPaused = false;
@@ -44,6 +46,7 @@ public abstract class LevelBase implements Screen {
     private GameState gameState = GameState.RUNNING;
     private float respawnTimer = 0.0f;
     private boolean awaitingRespawn = false;
+    private float stateTime = 0;
 
 
     public LevelBase(ToadsOdyssey game) {
@@ -58,6 +61,7 @@ public abstract class LevelBase implements Screen {
         world.setContactListener(CollisionDetection.instance);
         debugRenderer = new Box2DDebugRenderer();
         coins = new Array<>();
+        mushrooms = new Array<>();
         loadEntities();
         setLevel();
         originalPlayerPosition = new Vector2(42 / ToadsOdyssey.PPM, 400 / ToadsOdyssey.PPM);
@@ -89,6 +93,8 @@ public abstract class LevelBase implements Screen {
 
     @Override
     public void render(float delta) {
+        stateTime += delta;
+
         if (hud != null && hud.checkPausePressed()) {
             if (gameState == GameState.RUNNING) {
                 gameState = GameState.PAUSED;
@@ -132,6 +138,13 @@ public abstract class LevelBase implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 
+        for (Mushroom mushroom : mushrooms) {
+            if (gameState == GameState.RUNNING) {
+                mushroom.update(delta);
+            }
+            mushroom.draw(game.batch);
+        }
+
         Iterator<Coin> coinIterator = coins.iterator();
         while (coinIterator.hasNext()) {
             Coin coin = coinIterator.next();
@@ -161,7 +174,7 @@ public abstract class LevelBase implements Screen {
             hud.render(player.getLives(), 3);
         }
 
-        debugRenderer.render(world, camera.combined);
+//        debugRenderer.render(world, camera.combined);
     }
 
     @Override

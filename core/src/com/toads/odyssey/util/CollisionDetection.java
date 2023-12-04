@@ -1,12 +1,14 @@
 package com.toads.odyssey.util;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.toads.odyssey.model.Door;
 import com.toads.odyssey.model.Player;
 
 public class CollisionDetection implements ContactListener {
     public static final CollisionDetection instance = new CollisionDetection();
     private int groundContacts = 0;
     private boolean playerHasFallen = false;
+    private boolean playerHasReachedDoor = false;
 
     private CollisionDetection() {
     }
@@ -20,6 +22,9 @@ public class CollisionDetection implements ContactListener {
         }
         if (isPlayerDeathZoneContact(fa, fb)) {
             playerHasFallen = true;
+        }
+        if (isPlayerDoorContact(fa, fb)) {
+            playerHasReachedDoor = true;
         }
     }
 
@@ -45,6 +50,12 @@ public class CollisionDetection implements ContactListener {
         return (a.getUserData() instanceof Player && "DeathZone".equals(b.getUserData())) ||
                 (b.getUserData() instanceof Player && "DeathZone".equals(a.getUserData()));
     }
+
+    private boolean isPlayerDoorContact(Fixture a, Fixture b) {
+        return (a.getUserData() instanceof Player && b.getUserData() instanceof Door) ||
+                (b.getUserData() instanceof Player && a.getUserData() instanceof Door);
+    }
+
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {

@@ -1,0 +1,26 @@
+door.png
+size: 32, 144
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+door_open
+  rotate: false
+  xy: 0, 0
+  size: 32, 48
+  orig: 32, 48
+  offset: 0, 0
+  index: 1
+door_open
+  rotate: false
+  xy: 0, 48
+  size: 32, 48
+  orig: 32, 48
+  offset: 0, 0
+  index: 2
+door_open
+  rotate: false
+  xy: 0, 96
+  size: 32, 48
+  orig: 32, 48
+  offset: 0, 0
+  index: 3

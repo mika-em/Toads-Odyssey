@@ -15,6 +15,7 @@ public class AssetsLoader implements Disposable {
     public final IntroScreenAssets introScreenAssets;
     public final GameOverScreenAssets gameOverScreenAssets;
     public final GameWonScreenAssets gameWonScreenAssets;
+    public final DoorAssets doorAssets;
     public final TextureAtlas numberAtlas;;
     private Texture fullHeartTexture;
     private Texture emptyHeartTexture;
@@ -27,17 +28,20 @@ public class AssetsLoader implements Disposable {
         manager.load("screens/intro.atlas", TextureAtlas.class);
         manager.load("screens/gameover.atlas", TextureAtlas.class);
         manager.load("screens/gamewon.atlas", TextureAtlas.class);
+        manager.load("atlas_files/door.atlas", TextureAtlas.class);
         manager.finishLoading();
         TextureAtlas atlas = manager.get("atlas_files/spriteSheet.atlas", TextureAtlas.class);
         TextureAtlas coinAtlas = manager.get("atlas_files/coin.atlas", TextureAtlas.class);
 		TextureAtlas introAtlas = manager.get("screens/intro.atlas", TextureAtlas.class);
         TextureAtlas gameOverAtlas = manager.get("screens/gameover.atlas", TextureAtlas.class);
         TextureAtlas gameWonAtlas = manager.get("screens/gamewon.atlas", TextureAtlas.class);
+        TextureAtlas doorAtlas = manager.get("atlas_files/door.atlas", TextureAtlas.class);
         playerAssets = new PlayerAssets(atlas);
         coinAssets = new CoinAssets(coinAtlas);
         introScreenAssets = new IntroScreenAssets(introAtlas);
         gameOverScreenAssets = new GameOverScreenAssets(gameOverAtlas);
         gameWonScreenAssets = new GameWonScreenAssets(gameWonAtlas);
+        doorAssets = new DoorAssets(doorAtlas);
         numberAtlas = manager.get("atlas_files/numbers.atlas", TextureAtlas.class);
         fullHeartTexture = new Texture("assets/tiles/full_heart.png");
         emptyHeartTexture = new Texture("assets/tiles/empty_heart.png");
@@ -118,6 +122,17 @@ public class AssetsLoader implements Disposable {
                 gameWonFrames.add(atlas.findRegion("frame", i));
             }
             gameWonAnimation = new Animation<>(0.3f, gameWonFrames, Animation.PlayMode.NORMAL);
+        }
+    }
+
+    public static class DoorAssets {
+        public final Animation<TextureAtlas.AtlasRegion> doorAnimation;
+        public DoorAssets(final TextureAtlas atlas) {
+            Array<TextureAtlas.AtlasRegion> doorFrames = new Array<>();
+            for (int i = 1; i <= 3; i++) {
+                doorFrames.add(atlas.findRegion("door_open", i));
+            }
+            doorAnimation = new Animation<>(0.3f, doorFrames, Animation.PlayMode.NORMAL);
         }
     }
 

@@ -128,7 +128,7 @@ public class Player extends Entity {
         }
         boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
-        boolean upPressed = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+        boolean upPressed = Gdx.input.isKeyPressed(Input.Keys.UP);
         boolean isOnGround = CollisionDetection.instance.isOnGround();
         if (upPressed && isOnGround) {
             startJumpY = body.getPosition().y;

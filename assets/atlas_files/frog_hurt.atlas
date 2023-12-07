@@ -1,0 +1,33 @@
+frog_hurt.png
+size: 135, 34
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+frog_hurt1
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+frog_hurt2
+  rotate: false
+  xy: 35, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+frog_hurt3
+  rotate: false
+  xy: 69, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+frog_hurt4
+  rotate: false
+  xy: 103, 1
+  size: 31, 32
+  orig: 31, 32
+  offset: 0, 0
+  index: -1

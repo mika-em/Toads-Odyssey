@@ -1,5 +1,6 @@
 package com.toads.odyssey.util;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -16,11 +17,12 @@ public class AssetsLoader implements Disposable {
     public final GameOverScreenAssets gameOverScreenAssets;
     public final GameWonScreenAssets gameWonScreenAssets;
     public final TextureAtlas numberAtlas;
-    ;
     public final MushroomAssets mushroomAssets;
     public AssetManager manager;
     private Texture fullHeartTexture;
     private Texture emptyHeartTexture;
+
+    public PlayerHurtAssets playerHurtAssets;
 
     public AssetsLoader() {
         this.manager = new AssetManager();
@@ -31,6 +33,7 @@ public class AssetsLoader implements Disposable {
         manager.load("screens/gameover.atlas", TextureAtlas.class);
         manager.load("screens/gamewon.atlas", TextureAtlas.class);
         manager.load("atlas_files/mushroom.atlas", TextureAtlas.class);
+        manager.load("atlas_files/frog_hurt.atlas", TextureAtlas.class);
         manager.finishLoading();
         TextureAtlas atlas = manager.get("atlas_files/spriteSheet.atlas", TextureAtlas.class);
         TextureAtlas coinAtlas = manager.get("atlas_files/coin.atlas", TextureAtlas.class);
@@ -38,6 +41,7 @@ public class AssetsLoader implements Disposable {
         TextureAtlas gameOverAtlas = manager.get("screens/gameover.atlas", TextureAtlas.class);
         TextureAtlas gameWonAtlas = manager.get("screens/gamewon.atlas", TextureAtlas.class);
         TextureAtlas mushroomAtlas = manager.get("atlas_files/mushroom.atlas", TextureAtlas.class);
+        TextureAtlas hurtAtlas = manager.get("atlas_files/frog_hurt.atlas", TextureAtlas.class);
         numberAtlas = manager.get("atlas_files/numbers.atlas", TextureAtlas.class);
         playerAssets = new PlayerAssets(atlas);
         coinAssets = new CoinAssets(coinAtlas);
@@ -45,6 +49,7 @@ public class AssetsLoader implements Disposable {
         gameOverScreenAssets = new GameOverScreenAssets(gameOverAtlas);
         gameWonScreenAssets = new GameWonScreenAssets(gameWonAtlas);
         mushroomAssets = new MushroomAssets(mushroomAtlas);
+        playerHurtAssets = new PlayerHurtAssets(hurtAtlas);
         fullHeartTexture = new Texture("assets/tiles/full_heart.png");
         emptyHeartTexture = new Texture("assets/tiles/empty_heart.png");
     }
@@ -80,7 +85,26 @@ public class AssetsLoader implements Disposable {
         if (emptyHeartTexture != null) emptyHeartTexture.dispose();
     }
 
+    public static class PlayerHurtAssets {
+        public final Animation<TextureAtlas.AtlasRegion> hurtAnimation;
+
+        public PlayerHurtAssets(final TextureAtlas atlas) {
+            Array<TextureAtlas.AtlasRegion> hurtFrames = new Array<>();
+            for (int i = 1; i <= 4; i++) {
+                TextureAtlas.AtlasRegion region = atlas.findRegion("frog_hurt" + i);
+                if (region != null) {
+                    hurtFrames.add(region);
+                    System.out.println("Hurt frame " + i + " found.");
+                } else {
+                    System.out.println("Hurt frame " + i + " not found.");
+                }
+            }
+            hurtAnimation = new Animation<>(0.5f, hurtFrames, Animation.PlayMode.LOOP);
+        }
+    }
+
     public static class PlayerAssets {
+
         public final Animation<TextureAtlas.AtlasRegion> idleAnimation;
         public final Animation<TextureAtlas.AtlasRegion> moveAnimation;
         public final Animation<TextureAtlas.AtlasRegion> jumpAnimation;
@@ -90,19 +114,19 @@ public class AssetsLoader implements Disposable {
             for (int i = 1; i <= 4; i++) {
                 idleFrames.add(atlas.findRegion("frog_idle", i));
             }
-            idleAnimation = new Animation<>(0.1f, idleFrames, Animation.PlayMode.LOOP);
+            idleAnimation = new Animation<>(0.4f, idleFrames, Animation.PlayMode.LOOP);
 
             Array<TextureAtlas.AtlasRegion> moveFrames = new Array<>();
             for (int i = 1; i <= 6; i++) {
                 moveFrames.add(atlas.findRegion("frog_walk", i));
             }
-            moveAnimation = new Animation<>(0.1f, moveFrames, Animation.PlayMode.LOOP);
+            moveAnimation = new Animation<>(0.4f, moveFrames, Animation.PlayMode.LOOP);
 
             Array<TextureAtlas.AtlasRegion> jumpFrames = new Array<>();
             for (int i = 1; i <= 2; i++) {
                 jumpFrames.add(atlas.findRegion("frog_jump", i));
             }
-            jumpAnimation = new Animation<>(0.1f, jumpFrames, Animation.PlayMode.LOOP);
+            jumpAnimation = new Animation<>(0.4f, jumpFrames, Animation.PlayMode.LOOP);
         }
     }
 

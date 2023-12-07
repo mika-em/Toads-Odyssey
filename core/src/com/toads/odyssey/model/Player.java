@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Timer;
 import com.toads.odyssey.ToadsOdyssey;
 import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.CollisionDetection;
@@ -19,7 +20,8 @@ public class Player extends Entity {
     private float maxJumpHeight;
     private float startJumpY;
     private boolean canMove = true;
-    private static int lives = 3;
+    public static int lives = 3;
+    public boolean isHit;
 
 
     public Player(World world, Vector2 position) {
@@ -30,6 +32,7 @@ public class Player extends Entity {
         moveRight = true;
         setBounds(0, 0, 32 / ToadsOdyssey.PPM, 32 / ToadsOdyssey.PPM);
         setRegion(AssetsLoader.instance.playerAssets.idleAnimation.getKeyFrame(stateTimer, true));
+        isHit = false;
     }
 
     @Override
@@ -54,6 +57,7 @@ public class Player extends Entity {
             setRegion(getFrame(delta));
             setJumpHeightLimit();
         }
+
     }
 
     private void setJumpHeightLimit() {
@@ -68,6 +72,13 @@ public class Player extends Entity {
         currentState = getState();
         TextureRegion region;
         switch (currentState) {
+            case HIT:
+                region = AssetsLoader.instance.playerHurtAssets.hurtAnimation.getKeyFrame(stateTimer, false);
+                if (currentState == PlayerMode.HIT && AssetsLoader.instance.playerHurtAssets.hurtAnimation.isAnimationFinished(stateTimer)) {
+                    isHit = false;
+                    currentState = PlayerMode.IDLE;
+                }
+                break;
             case MOVE:
                 region = AssetsLoader.instance.playerAssets.moveAnimation.getKeyFrame(stateTimer, true);
                 break;
@@ -100,6 +111,8 @@ public class Player extends Entity {
             return PlayerMode.JUMP;
         } else if (body.getLinearVelocity().x != 0) {
             return PlayerMode.MOVE;
+        } if (isHit) {
+            return PlayerMode.HIT;
         } else {
             return PlayerMode.IDLE;
         }
@@ -115,7 +128,7 @@ public class Player extends Entity {
         }
         boolean leftPressed = Gdx.input.isKeyPressed(Input.Keys.LEFT);
         boolean rightPressed = Gdx.input.isKeyPressed(Input.Keys.RIGHT);
-        boolean upPressed = Gdx.input.isKeyPressed(Input.Keys.UP);
+        boolean upPressed = Gdx.input.isKeyPressed(Input.Keys.SPACE);
         boolean isOnGround = CollisionDetection.instance.isOnGround();
         if (upPressed && isOnGround) {
             startJumpY = body.getPosition().y;
@@ -165,6 +178,37 @@ public class Player extends Entity {
 
 
     public int getLives() {
-        return this.lives;
+        return lives;
     }
+
+    public void hitByMushroom(boolean hit) {
+        if (hit) {
+            isHit = true;
+            currentState = PlayerMode.HIT;
+            applyKnockback();
+//            disableMovementTemporarily();
+        }
+    }
+
+    private void applyKnockback() {
+        Vector2 knockbackDirection = new Vector2(-1, 1);
+        float knockbackIntensity = 7f;
+        body.applyLinearImpulse(knockbackDirection.scl(knockbackIntensity), body.getWorldCenter(), true);
+    }
+
+    private void disableMovementTemporarily() {
+        canMove = false;
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                canMove = true;
+            }
+        }, 0.5f);
+    }
+
+
+
+
+
+
 }

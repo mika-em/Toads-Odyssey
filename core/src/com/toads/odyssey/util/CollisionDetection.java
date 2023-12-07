@@ -1,6 +1,7 @@
 package com.toads.odyssey.util;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.toads.odyssey.model.Mushroom;
 import com.toads.odyssey.model.Player;
 
 public class CollisionDetection implements ContactListener {
@@ -22,9 +23,14 @@ public class CollisionDetection implements ContactListener {
             playerHasFallen = true;
         }
         if (isPlayerMushroomContact(fa, fb)) {
-            playerHasFallen = true;
+            Player player = getPlayerFromFixture(fa, fb);
+            if (player != null) {
+                player.hitByMushroom(true);
+
+            }
         }
     }
+
 
     @Override
     public void endContact(Contact contact) {
@@ -50,8 +56,22 @@ public class CollisionDetection implements ContactListener {
     }
 
     private boolean isPlayerMushroomContact(Fixture a, Fixture b) {
-        return (a.getUserData() instanceof Player && "mushroom".equals(b.getUserData())) ||
-                (b.getUserData() instanceof Player && "mushroom".equals(a.getUserData()));
+        boolean aIsPlayer = a.getUserData() instanceof Player;
+        boolean bIsPlayer = b.getUserData() instanceof Player;
+        boolean aIsMushroom = "Mushroom".equals(a.getUserData());
+        boolean bIsMushroom = "Mushroom".equals(b.getUserData());
+
+        return (aIsPlayer && bIsMushroom) || (bIsPlayer && aIsMushroom);
+    }
+
+
+    private Player getPlayerFromFixture(Fixture a, Fixture b) {
+        if (a.getUserData() instanceof Player) {
+            return (Player) a.getUserData();
+        } else if (b.getUserData() instanceof Player) {
+            return (Player) b.getUserData();
+        }
+        return null;
     }
 
     @Override

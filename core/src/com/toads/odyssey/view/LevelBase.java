@@ -23,10 +23,8 @@ import com.toads.odyssey.util.LevelManager;
 
 import java.util.Iterator;
 
-/**
- * LevelBase is an abstract class that is used to create the levels.
- * It includes the camera, renderer, world, and player.
- */
+import static com.toads.odyssey.model.Player.lives;
+
 public abstract class LevelBase implements Screen {
     private final ToadsOdyssey game;
     private final OrthographicCamera camera;
@@ -122,17 +120,25 @@ public abstract class LevelBase implements Screen {
             CollisionDetection.instance.resetPlayerFallen();
         }
 
+//        if (player.needsRespawn() && !awaitingRespawn) {
+//            awaitingRespawn = true;
+//            respawnTimer = 0.0f;
+//        }
+
         if (awaitingRespawn) {
             respawnTimer += delta;
-            float respawnDelay = 0.3f;
+            float respawnDelay = 0.4f;
             if (respawnTimer >= respawnDelay) {
                 if (player.isAlive()) {
                     respawnPlayer();
-                } else {
-                    endGame();
+//                    player.resetRespawnFlag();
                 }
                 awaitingRespawn = false;
             }
+        }
+
+        if (!player.isAlive()) {
+            endGame();
         }
 
         game.batch.setProjectionMatrix(camera.combined);
@@ -160,6 +166,7 @@ public abstract class LevelBase implements Screen {
                 hud.updateCoinCount(coinCount);
             }
         }
+        player.update(delta);
         player.draw(game.batch);
         TextureRegion coinTexture = CoinAssets.getCoinTexture();
         game.batch.draw(coinTexture, 10, 10);
@@ -174,7 +181,7 @@ public abstract class LevelBase implements Screen {
             hud.render(player.getLives(), 3);
         }
 
-//        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined);
     }
 
     @Override
@@ -201,6 +208,11 @@ public abstract class LevelBase implements Screen {
             coin.dispose();
         }
         grayTexture.dispose();
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        debugRenderer.dispose();
+        hud.dispose();
     }
 
     public ToadsOdyssey getGame() {
@@ -227,8 +239,9 @@ public abstract class LevelBase implements Screen {
         player.resetPosition(originalPlayerPosition);
     }
 
-    private void endGame() {
+    public void endGame() {
         game.setScreen(new GameOverScreen(game));
     }
+
 
 }

@@ -186,6 +186,7 @@ public class Player extends Entity {
             isHit = true;
             currentState = PlayerMode.HIT;
             applyKnockback();
+            lives--;
 //            disableMovementTemporarily();
         }
     }

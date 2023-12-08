@@ -11,7 +11,9 @@ import com.toads.odyssey.ToadsOdyssey;
 import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.CollisionDetection;
 
-public class Player extends Entity {
+import java.io.Serializable;
+
+public class Player extends Entity implements Serializable {
     public Body body;
     private PlayerMode currentState;
     private PlayerMode previousState;

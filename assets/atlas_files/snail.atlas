@@ -1,0 +1,47 @@
+snail.png
+size: 102, 60
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+snail_walk-0
+  rotate: false
+  xy: 1, 1
+  size: 32, 27
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+snail_walk-1
+  rotate: false
+  xy: 35, 1
+  size: 32, 27
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+snail_walk-2
+  rotate: false
+  xy: 1, 30
+  size: 32, 29
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+snail_walk-3
+  rotate: false
+  xy: 35, 30
+  size: 32, 29
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+snail_walk-4
+  rotate: false
+  xy: 69, 30
+  size: 32, 29
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+snail_walk-5
+  rotate: false
+  xy: 69, 1
+  size: 32, 27
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

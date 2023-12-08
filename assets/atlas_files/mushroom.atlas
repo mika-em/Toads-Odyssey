@@ -1,0 +1,82 @@
+mushroom.png
+size: 64, 170
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+mushroom1
+  rotate: false
+  xy: 35, 35
+  size: 28, 27
+  orig: 32, 32
+  offset: 1, 0
+  index: -1
+mushroom2
+  rotate: false
+  xy: 35, 64
+  size: 28, 25
+  orig: 32, 32
+  offset: 1, 0
+  index: -1
+mushroom3
+  rotate: false
+  xy: 35, 91
+  size: 28, 25
+  orig: 32, 32
+  offset: 1, 0
+  index: -1
+mushroom4
+  rotate: false
+  xy: 35, 91
+  size: 28, 25
+  orig: 32, 32
+  offset: 1, 0
+  index: -1
+mushroom5
+  rotate: false
+  xy: 35, 1
+  size: 28, 32
+  orig: 32, 32
+  offset: 1, 0
+  index: -1
+mushroom6
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+mushroom7
+  rotate: false
+  xy: 1, 35
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+mushroom8
+  rotate: false
+  xy: 1, 69
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+mushroom9
+  rotate: false
+  xy: 1, 103
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+mushroom10
+  rotate: false
+  xy: 1, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+mushroom11
+  rotate: false
+  xy: 1, 137
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

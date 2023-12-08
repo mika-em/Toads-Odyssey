@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -20,7 +21,6 @@ import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.AssetsLoader.CoinAssets;
 import com.toads.odyssey.util.CollisionDetection;
 import com.toads.odyssey.util.LevelManager;
-
 import java.util.Iterator;
 
 import static com.toads.odyssey.model.Player.lives;
@@ -77,13 +77,39 @@ public abstract class LevelBase implements Screen {
 
     protected abstract void setLevel();
 
+//    private void update(float deltaTime) {
+//        LevelManager.instance.update(deltaTime);
+//        camera.position.set(player.getPosition().x, gamePort.getWorldHeight() / 2, 0);
+//        float cameraX = Math.max(player.getPosition().x, gamePort.getWorldWidth() / 2);
+//        camera.position.set(cameraX, gamePort.getWorldHeight() / 2, 0);
+//        camera.update();
+//    }
+
     private void update(float deltaTime) {
         LevelManager.instance.update(deltaTime);
-        camera.position.set(player.getPosition().x, gamePort.getWorldHeight() / 2, 0);
-        float cameraX = Math.max(player.getPosition().x, gamePort.getWorldWidth() / 2);
+
+        // Explicitly set the width of a single tile (in pixels) and the total width of the map in tiles
+        float tileWidthInPixels = 16; // Replace with your tile width in pixels
+        int totalTilesWidth = 113; // Total width of your map in tiles
+
+        // Calculate the maximum width of the map in game units
+        float mapWidthInUnits = totalTilesWidth * tileWidthInPixels * 2; // Multiply by 2 for the unit scale
+
+        // Camera bounds
+        float cameraHalfWidth = gamePort.getWorldWidth() / 2;
+        float minCameraX = cameraHalfWidth;
+        float maxCameraX = mapWidthInUnits - cameraHalfWidth;
+
+        // Camera's X coordinate follows the player, but is clamped within map boundaries
+        float cameraX = MathUtils.clamp(player.getPosition().x, minCameraX, maxCameraX);
+
+        // Set camera position
         camera.position.set(cameraX, gamePort.getWorldHeight() / 2, 0);
         camera.update();
     }
+
+
+
 
     @Override
     public void show() {
@@ -120,18 +146,13 @@ public abstract class LevelBase implements Screen {
             CollisionDetection.instance.resetPlayerFallen();
         }
 
-//        if (player.needsRespawn() && !awaitingRespawn) {
-//            awaitingRespawn = true;
-//            respawnTimer = 0.0f;
-//        }
 
         if (awaitingRespawn) {
             respawnTimer += delta;
-            float respawnDelay = 0.4f;
+            float respawnDelay = 1f;
             if (respawnTimer >= respawnDelay) {
                 if (player.isAlive()) {
                     respawnPlayer();
-//                    player.resetRespawnFlag();
                 }
                 awaitingRespawn = false;
             }

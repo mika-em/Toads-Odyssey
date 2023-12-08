@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -21,9 +20,8 @@ import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.AssetsLoader.CoinAssets;
 import com.toads.odyssey.util.CollisionDetection;
 import com.toads.odyssey.util.LevelManager;
-import java.util.Iterator;
 
-import static com.toads.odyssey.model.Player.lives;
+import java.util.Iterator;
 
 public abstract class LevelBase implements Screen {
     private final ToadsOdyssey game;
@@ -133,7 +131,7 @@ public abstract class LevelBase implements Screen {
         }
 
         if (!player.isAlive()) {
-            endGame();
+            setGameOver();
         }
 
         game.batch.setProjectionMatrix(camera.combined);
@@ -168,6 +166,9 @@ public abstract class LevelBase implements Screen {
 
         if (gameState == GameState.PAUSED) {
             game.batch.draw(grayTexture, 0, 0);
+        }
+        if (CollisionDetection.instance.isDoorReached()) {
+            setGameWon();
         }
 
         game.batch.end();
@@ -234,8 +235,12 @@ public abstract class LevelBase implements Screen {
         player.resetPosition(originalPlayerPosition);
     }
 
-    public void endGame() {
+    public void setGameOver() {
         game.setScreen(new GameOverScreen(game));
+    }
+
+    public void setGameWon() {
+        game.setScreen(new GameWonScreen(game));
     }
 
 

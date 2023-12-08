@@ -38,6 +38,7 @@ public class Level1 extends LevelBase {
     @Override
     protected void loadEntities() {
         loadPlatform();
+        loadDoor();
         loadMushrooms(world);
         loadCoins(world);
         loadFallZones();
@@ -76,8 +77,6 @@ public class Level1 extends LevelBase {
         }
     }
 
-
-
     private void loadCoins(World world) {
         AssetsLoader assetsLoader = AssetsLoader.instance;
         AssetsLoader.CoinAssets coinAssets = assetsLoader.getCoinAssets();
@@ -107,7 +106,6 @@ public class Level1 extends LevelBase {
         }
     }
 
-
     private void loadPlatform() {
         BodyDef platformBodyDef = new BodyDef();
         platformBodyDef.type = BodyDef.BodyType.StaticBody;
@@ -130,6 +128,31 @@ public class Level1 extends LevelBase {
                 platformFixtureDef.shape = platformShape;
                 platform.createFixture(platformFixtureDef).setUserData("Platform");
                 platformShape.dispose();
+            }
+        }
+    }
+    private void loadDoor() {
+        MapLayer doorLayer = map.getLayers().get("door");
+        for (MapObject object : doorLayer.getObjects()) {
+            if (object instanceof PolygonMapObject) {
+                PolygonMapObject polygonObject = (PolygonMapObject) object;
+                Polygon polygon = polygonObject.getPolygon();
+                float[] vertices = polygon.getTransformedVertices();
+                Vector2[] worldVertices = new Vector2[vertices.length / 2];
+                for (int i = 0; i < vertices.length / 2; ++i) {
+                    worldVertices[i] = new Vector2(vertices[i * 2] / PPM, vertices[i * 2 + 1] / PPM);
+                }
+                BodyDef bodyDef = new BodyDef();
+                bodyDef.type = BodyDef.BodyType.StaticBody;
+                bodyDef.position.set(polygon.getX() / PPM, polygon.getY() / PPM);
+                Body doorBody = world.createBody(bodyDef);
+                PolygonShape shape = new PolygonShape();
+                shape.set(worldVertices);
+                FixtureDef fixtureDef = new FixtureDef();
+                fixtureDef.shape = shape;
+                Fixture fixture = doorBody.createFixture(fixtureDef);
+                fixture.setUserData("Door");
+                shape.dispose();
             }
         }
     }

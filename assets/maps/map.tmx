@@ -700,9 +700,9 @@
   <object id="308" x="1648" y="320">
    <polygon points="0,0 0,-144 512,-144 512,0"/>
   </object>
-  <object id="309" x="1696" y="176">
-   <polygon points="0,0 0,-32 32,-32 32,0"/>
-  </object>
+<!--   <object id="309" x="1696" y="176"> -->
+<!--    <polygon points="0,0 0,-32 32,-32 32,0"/> -->
+<!--   </object> -->
   <object id="314" x="0" y="240">
    <polygon points="0,0 144,0 144,80 0,80"/>
   </object>
@@ -753,7 +753,12 @@
  <objectgroup id="58" name="mushroom">
   <object id="268" x="1360" y="240" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="59" name="door">
-  <object id="310" x="1696" y="128" width="32" height="48"/>
- </objectgroup>
+<!--  <objectgroup id="59" name="door"> -->
+<!--   <object id="310" x="1696" y="128" width="32" height="48"/> -->
+<!--  </objectgroup> -->
+  <objectgroup id="59" name="door">
+   <object id="280" x="1696" y="176">
+    <polygon points="0,0 0,-80 64,-80 64,0"/>
+   </object>
+  </objectgroup>
 </map>

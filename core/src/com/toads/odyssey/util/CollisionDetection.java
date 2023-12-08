@@ -1,13 +1,13 @@
 package com.toads.odyssey.util;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.toads.odyssey.model.Mushroom;
 import com.toads.odyssey.model.Player;
 
 public class CollisionDetection implements ContactListener {
     public static final CollisionDetection instance = new CollisionDetection();
     private int groundContacts = 0;
     private boolean playerHasFallen = false;
+    private boolean isDoorReached = false;
 
     private CollisionDetection() {
     }
@@ -26,11 +26,12 @@ public class CollisionDetection implements ContactListener {
             Player player = getPlayerFromFixture(fa, fb);
             if (player != null) {
                 player.hitByMushroom(true);
-
             }
         }
+        if (isPlayerDoorContact(fa, fb)) {
+            isDoorReached = true;
+        }
     }
-
 
     @Override
     public void endContact(Contact contact) {
@@ -50,6 +51,11 @@ public class CollisionDetection implements ContactListener {
                 (b.getUserData() instanceof Player && "Platform".equals(a.getUserData()));
     }
 
+    private boolean isPlayerDoorContact(Fixture a, Fixture b) {
+        return (a.getUserData() instanceof Player && "Door".equals(b.getUserData())) ||
+                (b.getUserData() instanceof Player && "Door".equals(a.getUserData()));
+    }
+
     private boolean isPlayerDeathZoneContact(Fixture a, Fixture b) {
         return (a.getUserData() instanceof Player && "DeathZone".equals(b.getUserData())) ||
                 (b.getUserData() instanceof Player && "DeathZone".equals(a.getUserData()));
@@ -64,7 +70,6 @@ public class CollisionDetection implements ContactListener {
         return (aIsPlayer && bIsMushroom) || (bIsPlayer && aIsMushroom);
     }
 
-
     private Player getPlayerFromFixture(Fixture a, Fixture b) {
         if (a.getUserData() instanceof Player) {
             return (Player) a.getUserData();
@@ -76,7 +81,6 @@ public class CollisionDetection implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
-
     }
 
     @Override
@@ -89,6 +93,10 @@ public class CollisionDetection implements ContactListener {
 
     public void resetPlayerFallen() {
         playerHasFallen = false;
+    }
+
+    public boolean isDoorReached() {
+        return isDoorReached;
     }
 }
 

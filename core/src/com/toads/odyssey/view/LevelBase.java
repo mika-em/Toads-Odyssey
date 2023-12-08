@@ -77,39 +77,13 @@ public abstract class LevelBase implements Screen {
 
     protected abstract void setLevel();
 
-//    private void update(float deltaTime) {
-//        LevelManager.instance.update(deltaTime);
-//        camera.position.set(player.getPosition().x, gamePort.getWorldHeight() / 2, 0);
-//        float cameraX = Math.max(player.getPosition().x, gamePort.getWorldWidth() / 2);
-//        camera.position.set(cameraX, gamePort.getWorldHeight() / 2, 0);
-//        camera.update();
-//    }
-
     private void update(float deltaTime) {
         LevelManager.instance.update(deltaTime);
-
-        // Explicitly set the width of a single tile (in pixels) and the total width of the map in tiles
-        float tileWidthInPixels = 16; // Replace with your tile width in pixels
-        int totalTilesWidth = 113; // Total width of your map in tiles
-
-        // Calculate the maximum width of the map in game units
-        float mapWidthInUnits = totalTilesWidth * tileWidthInPixels * 2; // Multiply by 2 for the unit scale
-
-        // Camera bounds
-        float cameraHalfWidth = gamePort.getWorldWidth() / 2;
-        float minCameraX = cameraHalfWidth;
-        float maxCameraX = mapWidthInUnits - cameraHalfWidth;
-
-        // Camera's X coordinate follows the player, but is clamped within map boundaries
-        float cameraX = MathUtils.clamp(player.getPosition().x, minCameraX, maxCameraX);
-
-        // Set camera position
+        camera.position.set(player.getPosition().x, gamePort.getWorldHeight() / 2, 0);
+        float cameraX = Math.max(player.getPosition().x, gamePort.getWorldWidth() / 2);
         camera.position.set(cameraX, gamePort.getWorldHeight() / 2, 0);
         camera.update();
     }
-
-
-
 
     @Override
     public void show() {

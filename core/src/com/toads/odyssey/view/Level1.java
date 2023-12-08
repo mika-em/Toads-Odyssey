@@ -167,26 +167,34 @@ public class Level1 extends LevelBase {
             System.out.println("door layer is empty");
             return;
         }
+
         for (MapObject object : doorLayer.getObjects()) {
             if (object instanceof PolygonMapObject) {
                 PolygonMapObject polygonObject = (PolygonMapObject) object;
                 Polygon polygon = polygonObject.getPolygon();
 
+                float[] vertices = polygon.getTransformedVertices();
+                Vector2[] worldVertices = new Vector2[vertices.length / 2];
+
+                for (int i = 0; i < vertices.length / 2; ++i) {
+                    worldVertices[i] = new Vector2(vertices[i * 2] / PPM, vertices[i * 2 + 1] / PPM);
+                }
+
                 BodyDef bodyDef = new BodyDef();
                 bodyDef.type = BodyDef.BodyType.StaticBody;
-                bodyDef.position.set((polygon.getX() * 2) / PPM, (polygon.getY() * 2) / PPM);
+                bodyDef.position.set(polygon.getX() / PPM, polygon.getY() / PPM);
 
                 Body doorBody = world.createBody(bodyDef);
-                ChainShape doorShape = new ChainShape();
-                doorShape.createChain(polygon.getTransformedVertices());
+                PolygonShape shape = new PolygonShape();
+                shape.set(worldVertices);
 
                 FixtureDef fixtureDef = new FixtureDef();
-                fixtureDef.shape = doorShape;
+                fixtureDef.shape = shape;
                 Fixture fixture = doorBody.createFixture(fixtureDef);
                 fixture.setUserData("Door");
-
-                doorShape.dispose();
+                shape.dispose();
             }
+
         }
     }
 

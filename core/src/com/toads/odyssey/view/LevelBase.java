@@ -173,6 +173,10 @@ public abstract class LevelBase implements Screen {
             game.batch.draw(grayTexture, 0, 0);
         }
 
+        if (CollisionDetection.instance.isDoorReached()) {
+            setGameWon();
+        }
+
         game.batch.end();
 
         if (hud != null) {
@@ -239,6 +243,10 @@ public abstract class LevelBase implements Screen {
 
     public void setGameOver() {
         game.setScreen(new GameOverScreen(game));
+    }
+
+    public void setGameWon() {
+        game.setScreen(new GameWonScreen(game));
     }
 
 

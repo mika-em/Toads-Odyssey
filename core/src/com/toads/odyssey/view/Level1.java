@@ -1,6 +1,5 @@
 package com.toads.odyssey.view;
 
-
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
@@ -38,6 +37,7 @@ public class Level1 extends LevelBase {
     @Override
     protected void loadEntities() {
         loadPlatform();
+        loadDoor();
         loadMushrooms(world);
         loadCoins(world);
         loadFallZones();
@@ -76,8 +76,6 @@ public class Level1 extends LevelBase {
         }
     }
 
-
-
     private void loadCoins(World world) {
         AssetsLoader assetsLoader = AssetsLoader.instance;
         AssetsLoader.CoinAssets coinAssets = assetsLoader.getCoinAssets();
@@ -106,7 +104,6 @@ public class Level1 extends LevelBase {
             }
         }
     }
-
 
     private void loadPlatform() {
         BodyDef platformBodyDef = new BodyDef();
@@ -156,6 +153,39 @@ public class Level1 extends LevelBase {
                 fixtureDef.shape = shape;
                 sensorBody.createFixture(fixtureDef).setUserData("DeathZone");
                 shape.dispose();
+            }
+        }
+    }
+
+    private void loadDoor() {
+        MapLayer doorLayer = map.getLayers().get("door");
+        if (doorLayer == null) {
+            System.out.println("door layer is null");
+            return;
+        }
+        if (doorLayer.getObjects().getCount() == 0) {
+            System.out.println("door layer is empty");
+            return;
+        }
+        for (MapObject object : doorLayer.getObjects()) {
+            if (object instanceof PolygonMapObject) {
+                PolygonMapObject polygonObject = (PolygonMapObject) object;
+                Polygon polygon = polygonObject.getPolygon();
+
+                BodyDef bodyDef = new BodyDef();
+                bodyDef.type = BodyDef.BodyType.StaticBody;
+                bodyDef.position.set((polygon.getX() * 2) / PPM, (polygon.getY() * 2) / PPM);
+
+                Body doorBody = world.createBody(bodyDef);
+                ChainShape doorShape = new ChainShape();
+                doorShape.createChain(polygon.getTransformedVertices());
+
+                FixtureDef fixtureDef = new FixtureDef();
+                fixtureDef.shape = doorShape;
+                Fixture fixture = doorBody.createFixture(fixtureDef);
+                fixture.setUserData("Door");
+
+                doorShape.dispose();
             }
         }
     }

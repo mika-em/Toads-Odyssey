@@ -23,8 +23,6 @@ import com.toads.odyssey.util.LevelManager;
 
 import java.util.Iterator;
 
-import static com.toads.odyssey.model.Player.lives;
-
 public abstract class LevelBase implements Screen {
     private final ToadsOdyssey game;
     private final OrthographicCamera camera;
@@ -138,7 +136,7 @@ public abstract class LevelBase implements Screen {
         }
 
         if (!player.isAlive()) {
-            endGame();
+            setGameOver();
         }
 
         game.batch.setProjectionMatrix(camera.combined);
@@ -239,7 +237,7 @@ public abstract class LevelBase implements Screen {
         player.resetPosition(originalPlayerPosition);
     }
 
-    public void endGame() {
+    public void setGameOver() {
         game.setScreen(new GameOverScreen(game));
     }
 

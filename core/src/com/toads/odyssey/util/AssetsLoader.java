@@ -129,12 +129,7 @@ public final class AssetsLoader implements Disposable {
             Array<TextureAtlas.AtlasRegion> hurtFrames = new Array<>();
             for (int i = 1; i <= Constants.FOUR; i++) {
                 TextureAtlas.AtlasRegion region = atlas.findRegion("frog_hurt" + i);
-                if (region != null) {
                     hurtFrames.add(region);
-                    System.out.println("Hurt frame " + i + " found.");
-                } else {
-                    System.out.println("Hurt frame " + i + " not found.");
-                }
             }
             hurtAnimation = new Animation<>(Constants.SLOWER_FRAME_DURATION, hurtFrames, Animation.PlayMode.LOOP);
         }

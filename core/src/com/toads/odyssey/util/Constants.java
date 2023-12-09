@@ -1,6 +1,15 @@
 package com.toads.odyssey.util;
 
+/**
+ * Constants used throughout the game.
+ *
+ * @author Mika, Joanne
+ * @version 2023
+ */
 public final class Constants {
+    /**
+     * private constructor to prevent instantiation.
+     */
     private Constants() {
     }
 
@@ -28,6 +37,16 @@ public final class Constants {
             FULL_HEART_TEXTURE_PATH,
             EMPTY_HEART_TEXTURE_PATH
     };
+    public static final float FAST_FRAME_DURATION = 0.15f;
+    public static final float MEDIUM_FRAME_DURATION = 0.4f;
+    public static final float SLOWER_FRAME_DURATION = 0.5f;
+    public static final int FOUR = 4;
+    public static final int FIVE = 5;
+    public static final int SIX = 6;
+    public static final int ELEVEN = 11;
+    public static final int FIFTEEN = 15;
+    public static final int EIGHTEEN = 18;
+
 
 
 }

@@ -4,7 +4,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+
 
 /**
  * Represents a mushroom.
@@ -27,12 +32,13 @@ public final class Mushroom {
 
     /**
      * Constructs a mushroom.
+     *
      * @param animation the animation of the mushroom
-     * @param world the Box2D world
-     * @param x the x coordinate of the mushroom
-     * @param y the y coordinate of the mushroom
-     * @param width the width of the mushroom
-     * @param height the height of the mushroom
+     * @param world     the Box2D world
+     * @param x         the x coordinate of the mushroom
+     * @param y         the y coordinate of the mushroom
+     * @param width     the width of the mushroom
+     * @param height    the height of the mushroom
      */
     public Mushroom(final Animation<TextureAtlas.AtlasRegion> animation, final World world, final float x,
                     final float y, final float width, final float height) {
@@ -75,6 +81,7 @@ public final class Mushroom {
 
     /**
      * Updates the mushroom per unit of time.
+     *
      * @param deltaTime the time between frames
      */
     public void update(final float deltaTime) {
@@ -83,6 +90,7 @@ public final class Mushroom {
 
     /**
      * Draws the mushroom.
+     *
      * @param batch the sprite batch
      */
     public void draw(final SpriteBatch batch) {

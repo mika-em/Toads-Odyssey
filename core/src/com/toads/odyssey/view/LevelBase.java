@@ -176,6 +176,8 @@ public abstract class LevelBase implements Screen {
         if (hud != null) {
             hud.render(player.getLives(), 3);
         }
+
+        debugRenderer.render(world, camera.combined);
     }
 
     @Override

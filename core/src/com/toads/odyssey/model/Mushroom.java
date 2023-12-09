@@ -4,94 +4,54 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
-
-/**
- * A mushroom that will damage the player.
- *
- * @author Joanne, Mika
- * @version 2023
- */
+import com.badlogic.gdx.physics.box2d.*;
 
 public class Mushroom {
 
-    private static final float DENSITY = 1.0f;
-    private static final boolean IS_SENSOR = true;
-    private static final float FRICTION = 0.5f;
-    private static final float RESTITUTION = 0.2f;
-    private static final String USER_DATA = "Mushroom";
-
     private final Animation<TextureAtlas.AtlasRegion> animation;
-    private final float x;
-    private final float y;
+    private final Body body;
+    private float stateTime = 0;
     private final float width;
     private final float height;
-    private float stateTime = 0;
+    private final float x;
+    private final float y;
+    private final boolean isAlive = true;
+    private final World world;
 
-    /**
-     * Constructs a mushroom.
-     *
-     * @param animation the animation of the mushroom
-     * @param world     the Box2D world
-     * @param x         the x coordinate of the mushroom
-     * @param y         the y coordinate of the mushroom
-     * @param width     the width of the mushroom
-     * @param height    the height of the mushroom
-     */
-    public Mushroom(final Animation<TextureAtlas.AtlasRegion> animation, final World world,
-                    final float x, final float y, final float width, final float height) {
+    private boolean isColliding = false;
+    public Mushroom(Animation<TextureAtlas.AtlasRegion> animation, World world, float x, float y, float width, float height) {
         this.animation = animation;
+        this.world = world;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
 
-        initializeMushroomBody(world);
-    }
-
-    /**
-     * Initializes the physical properties of the mushroom's body.
-     *
-     * @param world the Box2D world
-     */
-    private void initializeMushroomBody(final World world) {
         BodyDef mushroomBodyDef = new BodyDef();
         mushroomBodyDef.type = BodyDef.BodyType.StaticBody;
         mushroomBodyDef.position.set(x + width / 2, y + height / 2);
-        Body body = world.createBody(mushroomBodyDef);
+        body = world.createBody(mushroomBodyDef);
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2, height / 2);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        fixtureDef.density = DENSITY;
-        fixtureDef.isSensor = IS_SENSOR;
-        fixtureDef.friction = FRICTION;
-        fixtureDef.restitution = RESTITUTION;
-        body.createFixture(fixtureDef).setUserData(USER_DATA);
+        fixtureDef.density = 1.0f;
+        fixtureDef.isSensor = true;
+        fixtureDef.friction = 0.5f;
+        fixtureDef.restitution = 0.2f;
+        body.createFixture(fixtureDef).setUserData("Mushroom");
         shape.dispose();
+
     }
 
-    /**
-     * Updates the mushroom's state time.
-     *
-     * @param deltaTime the time between frames
-     */
-    public void update(final float deltaTime) {
+    public void update(float deltaTime) {
         stateTime += deltaTime;
     }
 
-    /**
-     * Draws the mushroom.
-     *
-     * @param batch the sprite batch
-     */
-    public void draw(final SpriteBatch batch) {
+    public void draw(SpriteBatch batch) {
         TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
         batch.draw(currentFrame, x, y, width, height);
     }
+
 }

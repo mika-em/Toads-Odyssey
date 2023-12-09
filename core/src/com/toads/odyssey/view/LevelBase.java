@@ -54,7 +54,7 @@ public abstract class LevelBase implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map, 2 / ToadsOdyssey.PPM); //change to 2 to make the map bigger
         camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
         world = new World(new Vector2(0, -20), true); //y is gravity
-        world.setContactListener(CollisionDetection.instance);
+        world.setContactListener(CollisionDetection.getInstance());
         debugRenderer = new Box2DDebugRenderer();
         coins = new Array<>();
         mushrooms = new Array<>();
@@ -111,11 +111,11 @@ public abstract class LevelBase implements Screen {
             update(delta);
         }
 
-        if (CollisionDetection.instance.hasPlayerFallen() && !awaitingRespawn) {
+        if (CollisionDetection.getInstance().hasPlayerFallen() && !awaitingRespawn) {
             player.loseLife();
             awaitingRespawn = true;
             respawnTimer = 0.0f;
-            CollisionDetection.instance.resetPlayerFallen();
+            CollisionDetection.getInstance().resetPlayerFallen();
         }
 
 
@@ -167,7 +167,7 @@ public abstract class LevelBase implements Screen {
         if (gameState == GameState.PAUSED) {
             game.batch.draw(grayTexture, 0, 0);
         }
-        if (CollisionDetection.instance.isDoorReached()) {
+        if (CollisionDetection.getInstance().isDoorReached()) {
             setGameWon();
         }
 

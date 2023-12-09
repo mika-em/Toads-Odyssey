@@ -48,7 +48,7 @@ public class Level1 extends LevelBase {
 
     @Override
     protected void setLevel() {
-        LevelManager.instance.setLevelBase(this);
+        LevelManager.getInstance().setLevelBase(this);
     }
 
     private void loadMushrooms(World world) {

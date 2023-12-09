@@ -76,7 +76,7 @@ public abstract class LevelBase implements Screen {
     protected abstract void setLevel();
 
     private void update(float deltaTime) {
-        LevelManager.instance.update(deltaTime);
+        LevelManager.getInstance().update(deltaTime);
         camera.position.set(player.getPosition().x, gamePort.getWorldHeight() / 2, 0);
         float cameraX = Math.max(player.getPosition().x, gamePort.getWorldWidth() / 2);
         camera.position.set(cameraX, gamePort.getWorldHeight() / 2, 0);

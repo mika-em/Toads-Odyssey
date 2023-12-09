@@ -72,15 +72,6 @@ public final class AssetsLoader implements Disposable {
     }
 
     /**
-     * Returns the MushroomAssets.
-     * @return the MushroomAssets
-     */
-    public MushroomAssets getMushroomAssets() {
-        TextureAtlas atlas = manager.get(Constants.MUSHROOM_ATLAS_PATH, TextureAtlas.class);
-        return new MushroomAssets(atlas);
-    }
-
-    /**
      * Returns the TextureRegion for the number HUD.
      * @param number the number to get the TextureRegion for
      * @return the TextureRegion for the number
@@ -121,7 +112,6 @@ public final class AssetsLoader implements Disposable {
             emptyHeartTexture.dispose();
         }
     }
-
     /**
      * Hurt Assets for the Player.
      */
@@ -220,7 +210,14 @@ public final class AssetsLoader implements Disposable {
         public static TextureRegion getCoinTexture() {
             return coinAnimation.getKeyFrame(0);
         }
+    }
 
+    /**
+     * Returns the TextureRegion for the Coin.
+     * @return the TextureRegion for the Coin
+     */
+    public Animation<TextureAtlas.AtlasRegion> getCoinAnimation() {
+        return CoinAssets.coinAnimation;
     }
 
     /**
@@ -247,14 +244,6 @@ public final class AssetsLoader implements Disposable {
                 }
             }
             mushroomAnimation = new Animation<>(Constants.FAST_FRAME_DURATION, mushroomFrames, Animation.PlayMode.LOOP);
-        }
-
-        /**
-         * Returns the TextureRegion for the Mushroom.
-         * @return the TextureRegion for the Mushroom
-         */
-        public static TextureRegion getMushroomTexture() {
-            return mushroomAnimation.getKeyFrame(0);
         }
     }
 

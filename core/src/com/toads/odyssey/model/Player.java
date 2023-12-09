@@ -45,7 +45,7 @@ public class Player extends Entity {
         stateTimer = 0;
         moveRight = true;
         setBounds(0, 0, Constants.THIRTY_TWO / ToadsOdyssey.PPM, Constants.THIRTY_TWO / ToadsOdyssey.PPM);
-        setRegion(AssetsLoader.instance.getPlayerAssets().idleAnimation.getKeyFrame(stateTimer, true));
+        setRegion(AssetsLoader.getInstance().getPlayerAssets().idleAnimation.getKeyFrame(stateTimer, true));
         isHit = false;
     }
 
@@ -101,22 +101,22 @@ public class Player extends Entity {
         TextureRegion region;
         switch (currentState) {
             case HIT:
-                region = AssetsLoader.instance.getPlayerHurtAssets().hurtAnimation.getKeyFrame(stateTimer, false);
+                region = AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.getKeyFrame(stateTimer, false);
                 if (currentState == PlayerMode.HIT
-                        && AssetsLoader.instance.getPlayerHurtAssets().hurtAnimation.isAnimationFinished(stateTimer)) {
+                        && AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.isAnimationFinished(stateTimer)) {
                     isHit = false;
                     currentState = PlayerMode.IDLE;
                 }
                 break;
             case MOVE:
-                region = AssetsLoader.instance.getPlayerAssets().moveAnimation.getKeyFrame(stateTimer, true);
+                region = AssetsLoader.getInstance().getPlayerAssets().moveAnimation.getKeyFrame(stateTimer, true);
                 break;
             case JUMP:
-                region = AssetsLoader.instance.getPlayerAssets().jumpAnimation.getKeyFrame(stateTimer, true);
+                region = AssetsLoader.getInstance().getPlayerAssets().jumpAnimation.getKeyFrame(stateTimer, true);
                 break;
             case IDLE:
             default:
-                region = AssetsLoader.instance.getPlayerAssets().idleAnimation.getKeyFrame(stateTimer, true);
+                region = AssetsLoader.getInstance().getPlayerAssets().idleAnimation.getKeyFrame(stateTimer, true);
                 break;
         }
         if ((body.getLinearVelocity().x > 0 || moveRight) && !region.isFlipX()) {

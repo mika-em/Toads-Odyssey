@@ -14,7 +14,7 @@ public class ToadsOdyssey extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        assetsLoader = new AssetsLoader();
+        assetsLoader = AssetsLoader.getInstance();
         setScreen(new StartScreen(this));
     }
     @Override

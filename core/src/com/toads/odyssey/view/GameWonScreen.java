@@ -33,7 +33,7 @@ public class GameWonScreen implements Screen {
                 ToadsOdyssey.SCREEN_HEIGHT / ToadsOdyssey.PPM);
         viewport.apply();
         stateTimer = 0;
-        region = AssetsLoader.instance.getGameWonScreenAssets().gameWonAnimation.getKeyFrame(stateTimer, false);
+        region = AssetsLoader.getInstance().getGameWonScreenAssets().gameWonAnimation.getKeyFrame(stateTimer, false);
     }
 
     /**
@@ -43,7 +43,7 @@ public class GameWonScreen implements Screen {
      */
     private TextureRegion getFrame(final float delta) {
         stateTimer += delta;
-        return AssetsLoader.instance.getGameWonScreenAssets().gameWonAnimation.getKeyFrame(stateTimer, false);
+        return AssetsLoader.getInstance().getGameWonScreenAssets().gameWonAnimation.getKeyFrame(stateTimer, false);
     }
 
     /**

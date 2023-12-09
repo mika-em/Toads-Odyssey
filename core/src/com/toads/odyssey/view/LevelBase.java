@@ -50,7 +50,7 @@ public abstract class LevelBase implements Screen {
         camera = new OrthographicCamera();
         gamePort = new StretchViewport(ToadsOdyssey.SCREEN_WIDTH / ToadsOdyssey.PPM, ToadsOdyssey.SCREEN_HEIGHT / ToadsOdyssey.PPM, camera);
         loadMap();
-        hud = new Hud(AssetsLoader.instance, game.batch);
+        hud = new Hud(AssetsLoader.getInstance(), game.batch);
         renderer = new OrthogonalTiledMapRenderer(map, 2 / ToadsOdyssey.PPM); //change to 2 to make the map bigger
         camera.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
         world = new World(new Vector2(0, -20), true); //y is gravity

@@ -31,7 +31,7 @@ public class GameOverScreen implements Screen {
                 ToadsOdyssey.SCREEN_HEIGHT / ToadsOdyssey.PPM);
         viewport.apply();
         stateTimer = 0;
-        region = AssetsLoader.instance.getGameOverScreenAssets().gameOverAnimation.getKeyFrame(stateTimer, false);
+        region = AssetsLoader.getInstance().getGameOverScreenAssets().gameOverAnimation.getKeyFrame(stateTimer, false);
     }
 
     /**
@@ -41,7 +41,7 @@ public class GameOverScreen implements Screen {
      */
     private TextureRegion getFrame(final float delta) {
         stateTimer += delta;
-        return AssetsLoader.instance.getGameOverScreenAssets().gameOverAnimation.getKeyFrame(stateTimer, false);
+        return AssetsLoader.getInstance().getGameOverScreenAssets().gameOverAnimation.getKeyFrame(stateTimer, false);
     }
 
     /**

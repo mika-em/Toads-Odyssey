@@ -14,8 +14,11 @@ import com.badlogic.gdx.utils.Disposable;
  * @author Mika, Joanne
  * @version 2023
  */
-public class AssetsLoader implements Disposable {
-    public static final AssetsLoader instance = new AssetsLoader();
+public final class AssetsLoader implements Disposable {
+    /**
+     * An AssetsLoader instance.
+     */
+    private static final AssetsLoader LOADER = new AssetsLoader();
     private final PlayerAssets playerAssets;
     private final CoinAssets coinAssets;
     private final IntroScreenAssets introScreenAssets;
@@ -31,7 +34,7 @@ public class AssetsLoader implements Disposable {
     /**
      * Constructs the AssetsLoader.
      */
-    public AssetsLoader() {
+    private AssetsLoader() {
         this.manager = new AssetManager();
         for (String path : Constants.ATLAS_PATHS) {
             manager.load(path, TextureAtlas.class);
@@ -49,6 +52,14 @@ public class AssetsLoader implements Disposable {
         numberAtlas = manager.get(Constants.NUMBERS_ATLAS_PATH, TextureAtlas.class);
         fullHeartTexture = new Texture(Constants.FULL_HEART_TEXTURE_PATH);
         emptyHeartTexture = new Texture(Constants.EMPTY_HEART_TEXTURE_PATH);
+    }
+
+    /**
+     * Returns the AssetsLoader instance.
+     * @return the AssetsLoader instance
+     */
+    public static AssetsLoader getInstance() {
+        return LOADER;
     }
 
     /**

@@ -52,7 +52,7 @@ public class Level1 extends LevelBase {
     }
 
     private void loadMushrooms(World world) {
-        AssetsLoader assetsLoader = AssetsLoader.instance;
+        AssetsLoader assetsLoader = AssetsLoader.getInstance();
         AssetsLoader.MushroomAssets mushroomAssets = assetsLoader.getMushroomAssets();
         MapLayer mushroomLayer = map.getLayers().get("mushroom");
 
@@ -78,7 +78,7 @@ public class Level1 extends LevelBase {
     }
 
     private void loadCoins(World world) {
-        AssetsLoader assetsLoader = AssetsLoader.instance;
+        AssetsLoader assetsLoader = AssetsLoader.getInstance();
         AssetsLoader.CoinAssets coinAssets = assetsLoader.getCoinAssets();
         MapLayer coinLayer = map.getLayers().get("coins");
 

@@ -31,7 +31,7 @@ public class StartScreen implements Screen {
                 ToadsOdyssey.SCREEN_HEIGHT / ToadsOdyssey.PPM);
         viewport.apply();
         stateTimer = 0;
-        region = AssetsLoader.instance.getIntroScreenAssets().introAnimation.getKeyFrame(stateTimer, true);
+        region = AssetsLoader.getInstance().getIntroScreenAssets().introAnimation.getKeyFrame(stateTimer, true);
     }
 
     /**
@@ -41,7 +41,7 @@ public class StartScreen implements Screen {
      */
     private TextureRegion getFrame(final float delta) {
         stateTimer += delta;
-        return AssetsLoader.instance.getIntroScreenAssets().introAnimation.getKeyFrame(stateTimer, true);
+        return AssetsLoader.getInstance().getIntroScreenAssets().introAnimation.getKeyFrame(stateTimer, true);
     }
 
     /**

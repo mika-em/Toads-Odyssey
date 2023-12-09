@@ -100,7 +100,7 @@ public abstract class LevelBase implements Screen {
         gamePort = new StretchViewport(SCREEN_WIDTH / PPM,
                 SCREEN_HEIGHT / PPM, camera);
         loadMap();
-        hud = new Hud(AssetsLoader.getInstance(), game.batch);
+        hud = new Hud(AssetsLoader.getInstance(), game.getBatch());
         renderer = new OrthogonalTiledMapRenderer(map, 2 / PPM);
         world = new World(new Vector2(0, GRAVITY_Y), true);
         world.setContactListener(CollisionDetection.getInstance());
@@ -260,15 +260,15 @@ public abstract class LevelBase implements Screen {
      * @param delta The time in seconds since the last render.
      */
     private void renderEntities(final float delta) {
-        game.batch.setProjectionMatrix(camera.combined);
-        game.batch.begin();
+        game.getBatch().setProjectionMatrix(camera.combined);
+        game.getBatch().begin();
         renderMushroom(delta);
         renderCoins(delta);
         player.update(delta);
-        player.draw(game.batch);
+        player.draw(game.getBatch());
         renderPauseOverlay();
         checkIfGameWon();
-        game.batch.end();
+        game.getBatch().end();
     }
 
     /**
@@ -282,7 +282,7 @@ public abstract class LevelBase implements Screen {
             if (gameState == GameState.RUNNING) {
                 mushroom.update(delta);
             }
-            mushroom.draw(game.batch);
+            mushroom.draw(game.getBatch());
         }
     }
 
@@ -302,10 +302,10 @@ public abstract class LevelBase implements Screen {
                     continue;
                 }
             }
-            coin.draw(game.batch);
+            coin.draw(game.getBatch());
         }
         TextureRegion coinTexture = CoinAssets.getCoinTexture();
-        game.batch.draw(coinTexture, COIN_TEXTURE_X, COIN_TEXTURE_Y);
+        game.getBatch().draw(coinTexture, COIN_TEXTURE_X, COIN_TEXTURE_Y);
     }
 
 
@@ -314,7 +314,7 @@ public abstract class LevelBase implements Screen {
      */
     private void renderPauseOverlay() {
         if (gameState == GameState.PAUSED) {
-            game.batch.draw(grayTexture, 0, 0);
+            game.getBatch().draw(grayTexture, 0, 0);
         }
     }
 

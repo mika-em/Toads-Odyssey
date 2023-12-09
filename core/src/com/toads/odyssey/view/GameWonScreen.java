@@ -53,9 +53,9 @@ public class GameWonScreen implements Screen {
     private void update(final float deltaTime) {
         region = getFrame(deltaTime);
         handleKeyPressed();
-        game.batch.begin();
-        game.batch.draw(region, 0, 0, ToadsOdyssey.SCREEN_WIDTH, ToadsOdyssey.SCREEN_HEIGHT);
-        game.batch.end();
+        game.getBatch().begin();
+        game.getBatch().draw(region, 0, 0, ToadsOdyssey.SCREEN_WIDTH, ToadsOdyssey.SCREEN_HEIGHT);
+        game.getBatch().end();
     }
 
     /**

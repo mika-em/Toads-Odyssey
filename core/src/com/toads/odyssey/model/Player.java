@@ -5,8 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.toads.odyssey.ToadsOdyssey;
 import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.CollisionDetection;
@@ -92,40 +95,14 @@ public class Player extends Entity {
     }
 
     /**
-     * Returns the animation frame of the player.
+     * Returns the animation frame of the player per unit time.
      * @param delta the time between frames
      * @return the animation frame of the player.
      */
     private TextureRegion getFrame(final float delta) {
         currentState = getState();
-        TextureRegion region;
-        switch (currentState) {
-            case HIT:
-                region = AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.getKeyFrame(stateTimer, false);
-                if (currentState == PlayerMode.HIT
-                        && AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.isAnimationFinished(stateTimer)) {
-                    isHit = false;
-                    currentState = PlayerMode.IDLE;
-                }
-                break;
-            case MOVE:
-                region = AssetsLoader.getInstance().getPlayerAssets().moveAnimation.getKeyFrame(stateTimer, true);
-                break;
-            case JUMP:
-                region = AssetsLoader.getInstance().getPlayerAssets().jumpAnimation.getKeyFrame(stateTimer, true);
-                break;
-            case IDLE:
-            default:
-                region = AssetsLoader.getInstance().getPlayerAssets().idleAnimation.getKeyFrame(stateTimer, true);
-                break;
-        }
-        if ((body.getLinearVelocity().x > 0 || moveRight) && !region.isFlipX()) {
-            region.flip(true, false);
-            moveRight = true;
-        } else if ((body.getLinearVelocity().x < 0 || !moveRight) && region.isFlipX()) {
-            region.flip(true, false);
-            moveRight = false;
-        }
+        TextureRegion region = getCurrentAnimationFrame();
+        flipPlayerTextureOnDirection(region);
         if (currentState == previousState) {
             stateTimer += delta;
         } else {
@@ -133,6 +110,52 @@ public class Player extends Entity {
         }
         previousState = currentState;
         return region;
+    }
+
+    /**
+     * Returns the current frame of the player based on player's movement.
+     * @return the current animation frame of the player as a TextureRegion.
+     */
+    private TextureRegion getCurrentAnimationFrame() {
+        switch (currentState) {
+            case HIT:
+                return handleHitState();
+            case MOVE:
+                return AssetsLoader.getInstance().getPlayerAssets().moveAnimation.getKeyFrame(stateTimer, true);
+            case JUMP:
+                return AssetsLoader.getInstance().getPlayerAssets().jumpAnimation.getKeyFrame(stateTimer, true);
+            case IDLE:
+            default:
+                return AssetsLoader.getInstance().getPlayerAssets().idleAnimation.getKeyFrame(stateTimer, true);
+        }
+    }
+
+    /**
+     * Handles the player's state when hit by a mushroom.
+     * @return the animation frame of the player when hit by a mushroom.
+     */
+    private TextureRegion handleHitState() {
+        TextureRegion region = AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.getKeyFrame(stateTimer,
+                false);
+        if (AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.isAnimationFinished(stateTimer)) {
+            isHit = false;
+            currentState = PlayerMode.IDLE;
+        }
+        return region;
+    }
+
+    /**
+     * Flips the player's texture if it is not facing the same direction that it is moving.
+     * @param region the texture of the player.
+     */
+    private void flipPlayerTextureOnDirection(final TextureRegion region) {
+        if ((body.getLinearVelocity().x > 0 || moveRight) && !region.isFlipX()) {
+            region.flip(true, false);
+            moveRight = true;
+        } else if ((body.getLinearVelocity().x < 0 || !moveRight) && region.isFlipX()) {
+            region.flip(true, false);
+            moveRight = false;
+        }
     }
 
     /**
@@ -257,7 +280,6 @@ public class Player extends Entity {
             isHit = true;
             currentState = PlayerMode.HIT;
             applyKnockback();
-//            disableMovementTemporarily();
         }
     }
 
@@ -267,15 +289,5 @@ public class Player extends Entity {
     private void applyKnockback() {
         Vector2 knockbackDirection = new Vector2(-1, 1);
         body.applyLinearImpulse(knockbackDirection.scl(Constants.KNOCK_BACK_INTENSITY), body.getWorldCenter(), true);
-    }
-
-    private void disableMovementTemporarily() {
-        canMove = false;
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                canMove = true;
-            }
-        }, Constants.SLOWER_FRAME_DURATION);
     }
 }

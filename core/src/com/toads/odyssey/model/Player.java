@@ -307,6 +307,7 @@ public final class Player extends Entity {
             isHit = true;
             currentState = PlayerMode.HIT;
             applyKnockback();
+            loseLife();
         }
     }
 

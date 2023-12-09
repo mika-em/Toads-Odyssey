@@ -19,6 +19,8 @@ import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.LevelManager;
 
 import static com.toads.odyssey.ToadsOdyssey.PPM;
+import static com.toads.odyssey.util.AssetsLoader.CoinAssets.getCoinAnimation;
+import static com.toads.odyssey.util.AssetsLoader.MushroomAssets.getMushroomAnimation;
 
 public class Level1 extends LevelBase {
 
@@ -71,7 +73,7 @@ public class Level1 extends LevelBase {
                 float width = originalWidth * 2; // Make mushroom twice as wide
                 float height = originalHeight * 2; // Make mushroom twice as tall
 
-                Mushroom mushroom = new Mushroom(mushroomAssets.mushroomAnimation, world, x, y, width, height);
+                Mushroom mushroom = new Mushroom(getMushroomAnimation(), world, x, y, width, height);
                 mushrooms.add(mushroom);
             }
         }
@@ -96,7 +98,7 @@ public class Level1 extends LevelBase {
                 float width = ((rectangle.width * 2) / PPM ); // divide by 2 to make the box smaller
                 float height = ((rectangle.height * 2) / PPM);
 
-                Coin coin = new Coin(coinAssets.coinAnimation, world, x, y);
+                Coin coin = new Coin(getCoinAnimation(), world, x, y);
                 coins.add(coin);
 
                 if (coins.isEmpty()) {

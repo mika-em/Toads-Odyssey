@@ -56,6 +56,7 @@ public final class AssetsLoader implements Disposable {
 
     /**
      * Returns the AssetsLoader instance.
+     *
      * @return the AssetsLoader instance
      */
     public static AssetsLoader getInstance() {
@@ -64,6 +65,7 @@ public final class AssetsLoader implements Disposable {
 
     /**
      * Returns the CoinAssets.
+     *
      * @return the CoinAssets
      */
     public CoinAssets getCoinAssets() {
@@ -73,6 +75,7 @@ public final class AssetsLoader implements Disposable {
 
     /**
      * Returns the MushroomAssets.
+     *
      * @return the MushroomAssets
      */
     public MushroomAssets getMushroomAssets() {
@@ -82,6 +85,7 @@ public final class AssetsLoader implements Disposable {
 
     /**
      * Returns the TextureRegion for the number HUD.
+     *
      * @param number the number to get the TextureRegion for
      * @return the TextureRegion for the number
      */
@@ -97,6 +101,7 @@ public final class AssetsLoader implements Disposable {
 
     /**
      * Returns the Texture for the Heart.
+     *
      * @param full whether the heart is full or not
      * @return the full or empty heart Texture
      */
@@ -119,210 +124,6 @@ public final class AssetsLoader implements Disposable {
         }
         if (emptyHeartTexture != null) {
             emptyHeartTexture.dispose();
-        }
-    }
-
-    /**
-     * Hurt Assets for the Player.
-     */
-    public static class PlayerHurtAssets {
-        /**
-         * Hurt Animation for the Player.
-         */
-        public final Animation<TextureAtlas.AtlasRegion> hurtAnimation;
-
-        /**
-         * Constructs the PlayerHurtAssets.
-         * @param atlas the TextureAtlas
-         */
-        public PlayerHurtAssets(final TextureAtlas atlas) {
-            Array<TextureAtlas.AtlasRegion> hurtFrames = new Array<>();
-            for (int i = 1; i <= Constants.FOUR; i++) {
-                TextureAtlas.AtlasRegion region = atlas.findRegion("frog_hurt" + i);
-                if (region != null) {
-                    hurtFrames.add(region);
-                    System.out.println("Hurt frame " + i + " found.");
-                } else {
-                    System.out.println("Hurt frame " + i + " not found.");
-                }
-            }
-            hurtAnimation = new Animation<>(Constants.SLOWER_FRAME_DURATION, hurtFrames, Animation.PlayMode.LOOP);
-        }
-    }
-
-    /**
-     * Assets for the Player.
-     */
-    public static class PlayerAssets {
-        /**
-         * Idle animation for the Player.
-         */
-        public final Animation<TextureAtlas.AtlasRegion> idleAnimation;
-        /**
-         * Movement animation for the Player.
-         */
-        public final Animation<TextureAtlas.AtlasRegion> moveAnimation;
-        /**
-         * Jump animation for the Player.
-         */
-        public final Animation<TextureAtlas.AtlasRegion> jumpAnimation;
-
-        /**
-         * Constructs the PlayerAssets.
-         * @param atlas the TextureAtlas
-         */
-        public PlayerAssets(final TextureAtlas atlas) {
-            Array<TextureAtlas.AtlasRegion> idleFrames = new Array<>();
-            for (int i = 1; i <= Constants.FOUR; i++) {
-                idleFrames.add(atlas.findRegion("frog_idle", i));
-            }
-            idleAnimation = new Animation<>(Constants.MEDIUM_FRAME_DURATION, idleFrames, Animation.PlayMode.LOOP);
-
-            Array<TextureAtlas.AtlasRegion> moveFrames = new Array<>();
-            for (int i = 1; i <= Constants.SIX; i++) {
-                moveFrames.add(atlas.findRegion("frog_walk", i));
-            }
-            moveAnimation = new Animation<>(Constants.MEDIUM_FRAME_DURATION, moveFrames, Animation.PlayMode.LOOP);
-
-            Array<TextureAtlas.AtlasRegion> jumpFrames = new Array<>();
-            for (int i = 1; i <= 2; i++) {
-                jumpFrames.add(atlas.findRegion("frog_jump", i));
-            }
-            jumpAnimation = new Animation<>(Constants.MEDIUM_FRAME_DURATION, jumpFrames, Animation.PlayMode.LOOP);
-        }
-    }
-
-    /**
-     * Assets for the Coin.
-     */
-    public static class CoinAssets {
-        /**
-         * Animation for the Coin.
-         */
-        public static Animation<TextureAtlas.AtlasRegion> coinAnimation = null;
-
-        /**
-         * Constructs the CoinAssets.
-         * @param atlas the TextureAtlas
-         */
-        public CoinAssets(final TextureAtlas atlas) {
-            Array<TextureAtlas.AtlasRegion> coinFrames = new Array<>();
-            for (int i = 1; i <= Constants.FOUR; i++) {
-                coinFrames.add(atlas.findRegion("coin_yellow", i));
-            }
-            coinAnimation = new Animation<>(Constants.FAST_FRAME_DURATION, coinFrames, Animation.PlayMode.LOOP);
-        }
-
-        /**
-         * Returns the TextureRegion for the Coin.
-         * @return the TextureRegion for the Coin
-         */
-        public static TextureRegion getCoinTexture() {
-            return coinAnimation.getKeyFrame(0);
-        }
-
-    }
-
-    /**
-     * Assets for the Mushroom.
-     */
-    public static class MushroomAssets {
-        /**
-         * Animation for the Mushroom.
-         */
-        public static Animation<TextureAtlas.AtlasRegion> mushroomAnimation = null;
-
-        /**
-         * Constructs the MushroomAssets.
-         * @param atlas the TextureAtlas
-         */
-        public MushroomAssets(final TextureAtlas atlas) {
-            Array<TextureAtlas.AtlasRegion> mushroomFrames = new Array<>();
-            for (int i = 1; i <= Constants.ELEVEN; i++) {
-                TextureAtlas.AtlasRegion region = atlas.findRegion("mushroom" + i);
-                if (region != null) {
-                    mushroomFrames.add(region);
-                } else {
-                    System.out.println("Mushroom frame " + i + " not found.");
-                }
-            }
-            mushroomAnimation = new Animation<>(Constants.FAST_FRAME_DURATION, mushroomFrames, Animation.PlayMode.LOOP);
-        }
-
-        /**
-         * Returns the TextureRegion for the Mushroom.
-         * @return the TextureRegion for the Mushroom
-         */
-        public static TextureRegion getMushroomTexture() {
-            return mushroomAnimation.getKeyFrame(0);
-        }
-    }
-
-    /**
-     * Assets for the IntroScreen.
-     */
-    public static class IntroScreenAssets {
-        /**
-         * Animation for the IntroScreen.
-         */
-        public final Animation<TextureAtlas.AtlasRegion> introAnimation;
-
-        /**
-         * Constructs the IntroScreenAssets.
-         * @param atlas the TextureAtlas
-         */
-        public IntroScreenAssets(final TextureAtlas atlas) {
-            Array<TextureAtlas.AtlasRegion> introFrames = new Array<>();
-            for (int i = 0; i <= Constants.EIGHTEEN; i++) {
-                introFrames.add(atlas.findRegion("frame", i));
-            }
-            introAnimation = new Animation<>(Constants.MEDIUM_FRAME_DURATION, introFrames, Animation.PlayMode.LOOP);
-        }
-    }
-
-    /**
-     * Assets for the GameOverScreen.
-     */
-    public static class GameOverScreenAssets {
-        /**
-         * Animation for the GameOverScreen.
-         */
-        public final Animation<TextureAtlas.AtlasRegion> gameOverAnimation;
-
-        /**
-         * Constructs the GameOverScreenAssets.
-         * @param atlas the TextureAtlas
-         */
-        public GameOverScreenAssets(final TextureAtlas atlas) {
-            Array<TextureAtlas.AtlasRegion> gameOverFrames = new Array<>();
-            for (int i = 0; i <= Constants.FIFTEEN; i++) {
-                gameOverFrames.add(atlas.findRegion("frame", i));
-            }
-            gameOverAnimation = new Animation<>(Constants.MEDIUM_FRAME_DURATION, gameOverFrames,
-                    Animation.PlayMode.NORMAL);
-        }
-    }
-
-    /**
-     * Assets for the GameWonScreen.
-     */
-    public static class GameWonScreenAssets {
-        /**
-         * Animation for the GameWonScreen.
-         */
-        public final Animation<TextureAtlas.AtlasRegion> gameWonAnimation;
-
-        /**
-         * Constructs the GameWonScreenAssets.
-         * @param atlas the TextureAtlas
-         */
-        public GameWonScreenAssets(final TextureAtlas atlas) {
-            Array<TextureAtlas.AtlasRegion> gameWonFrames = new Array<>();
-            for (int i = 0; i <= Constants.EIGHTEEN; i++) {
-                gameWonFrames.add(atlas.findRegion("frame", i));
-            }
-            gameWonAnimation = new Animation<>(Constants.MEDIUM_FRAME_DURATION, gameWonFrames,
-                    Animation.PlayMode.NORMAL);
         }
     }
 
@@ -369,6 +170,227 @@ public final class AssetsLoader implements Disposable {
      */
     public PlayerHurtAssets getPlayerHurtAssets() {
         return playerHurtAssets;
+    }
+
+    /**
+     * Hurt Assets for the Player.
+     */
+    public static class PlayerHurtAssets {
+        /**
+         * Hurt Animation for the Player.
+         */
+        public final Animation<TextureAtlas.AtlasRegion> hurtAnimation;
+
+        /**
+         * Constructs the PlayerHurtAssets.
+         *
+         * @param atlas the TextureAtlas
+         */
+        public PlayerHurtAssets(final TextureAtlas atlas) {
+            Array<TextureAtlas.AtlasRegion> hurtFrames = new Array<>();
+            for (int i = 1; i <= Constants.FOUR; i++) {
+                TextureAtlas.AtlasRegion region = atlas.findRegion("frog_hurt" + i);
+                if (region != null) {
+                    hurtFrames.add(region);
+                    System.out.println("Hurt frame " + i + " found.");
+                } else {
+                    System.out.println("Hurt frame " + i + " not found.");
+                }
+            }
+            hurtAnimation = new Animation<>(Constants.SLOWER_FRAME_DURATION, hurtFrames, Animation.PlayMode.LOOP);
+        }
+    }
+
+    /**
+     * Assets for the Player.
+     */
+    public static class PlayerAssets {
+        /**
+         * Idle animation for the Player.
+         */
+        public final Animation<TextureAtlas.AtlasRegion> idleAnimation;
+        /**
+         * Movement animation for the Player.
+         */
+        public final Animation<TextureAtlas.AtlasRegion> moveAnimation;
+        /**
+         * Jump animation for the Player.
+         */
+        public final Animation<TextureAtlas.AtlasRegion> jumpAnimation;
+
+        /**
+         * Constructs the PlayerAssets.
+         *
+         * @param atlas the TextureAtlas
+         */
+        public PlayerAssets(final TextureAtlas atlas) {
+            Array<TextureAtlas.AtlasRegion> idleFrames = new Array<>();
+            for (int i = 1; i <= Constants.FOUR; i++) {
+                idleFrames.add(atlas.findRegion("frog_idle", i));
+            }
+            idleAnimation = new Animation<>(Constants.MEDIUM_FRAME_DURATION, idleFrames, Animation.PlayMode.LOOP);
+
+            Array<TextureAtlas.AtlasRegion> moveFrames = new Array<>();
+            for (int i = 1; i <= Constants.SIX; i++) {
+                moveFrames.add(atlas.findRegion("frog_walk", i));
+            }
+            moveAnimation = new Animation<>(Constants.MEDIUM_FRAME_DURATION, moveFrames, Animation.PlayMode.LOOP);
+
+            Array<TextureAtlas.AtlasRegion> jumpFrames = new Array<>();
+            for (int i = 1; i <= 2; i++) {
+                jumpFrames.add(atlas.findRegion("frog_jump", i));
+            }
+            jumpAnimation = new Animation<>(Constants.MEDIUM_FRAME_DURATION, jumpFrames, Animation.PlayMode.LOOP);
+        }
+    }
+
+    /**
+     * Assets for the Coin.
+     */
+    public static class CoinAssets {
+        /**
+         * Animation for the Coin.
+         */
+        private static Animation<TextureAtlas.AtlasRegion> coinAnimation = null;
+
+        /**
+         * Constructs the CoinAssets.
+         *
+         * @param atlas the TextureAtlas
+         */
+        public CoinAssets(final TextureAtlas atlas) {
+            Array<TextureAtlas.AtlasRegion> coinFrames = new Array<>();
+            for (int i = 1; i <= Constants.FOUR; i++) {
+                coinFrames.add(atlas.findRegion("coin_yellow", i));
+            }
+            coinAnimation = new Animation<>(Constants.FAST_FRAME_DURATION, coinFrames, Animation.PlayMode.LOOP);
+        }
+
+        /**
+         * Returns the TextureRegion for the Coin.
+         *
+         * @return the TextureRegion for the Coin
+         */
+        public static TextureRegion getCoinTexture() {
+            return coinAnimation.getKeyFrame(0);
+        }
+
+        /**
+         * Returns the Animation for the Coin.
+         *
+         * @return the Animation for the Coin
+         */
+        public static Animation<TextureAtlas.AtlasRegion> getCoinAnimation() {
+            return coinAnimation;
+        }
+    }
+
+    /**
+     * Assets for the Mushroom.
+     */
+    public static class MushroomAssets {
+        /**
+         * Animation for the Mushroom.
+         */
+        private static Animation<TextureAtlas.AtlasRegion> mushroomAnimation = null;
+
+        /**
+         * Constructs the MushroomAssets.
+         *
+         * @param atlas the TextureAtlas
+         */
+        public MushroomAssets(final TextureAtlas atlas) {
+            Array<TextureAtlas.AtlasRegion> mushroomFrames = new Array<>();
+            for (int i = 1; i <= Constants.ELEVEN; i++) {
+                TextureAtlas.AtlasRegion region = atlas.findRegion("mushroom" + i);
+                if (region != null) {
+                    mushroomFrames.add(region);
+                } else {
+                    System.out.println("Mushroom frame " + i + " not found.");
+                }
+            }
+            mushroomAnimation = new Animation<>(Constants.FAST_FRAME_DURATION, mushroomFrames, Animation.PlayMode.LOOP);
+        }
+        /**
+         * Returns the Animation for the Mushroom.
+         *
+         * @return the Animation for the Mushroom
+         */
+        public static Animation<TextureAtlas.AtlasRegion> getMushroomAnimation() {
+            return mushroomAnimation;
+        }
+
+    }
+
+    /**
+     * Assets for the IntroScreen.
+     */
+    public static class IntroScreenAssets {
+        /**
+         * Animation for the IntroScreen.
+         */
+        public final Animation<TextureAtlas.AtlasRegion> introAnimation;
+
+        /**
+         * Constructs the IntroScreenAssets.
+         *
+         * @param atlas the TextureAtlas
+         */
+        public IntroScreenAssets(final TextureAtlas atlas) {
+            Array<TextureAtlas.AtlasRegion> introFrames = new Array<>();
+            for (int i = 0; i <= Constants.EIGHTEEN; i++) {
+                introFrames.add(atlas.findRegion("frame", i));
+            }
+            introAnimation = new Animation<>(Constants.MEDIUM_FRAME_DURATION, introFrames, Animation.PlayMode.LOOP);
+        }
+    }
+
+    /**
+     * Assets for the GameOverScreen.
+     */
+    public static class GameOverScreenAssets {
+        /**
+         * Animation for the GameOverScreen.
+         */
+        public final Animation<TextureAtlas.AtlasRegion> gameOverAnimation;
+
+        /**
+         * Constructs the GameOverScreenAssets.
+         *
+         * @param atlas the TextureAtlas
+         */
+        public GameOverScreenAssets(final TextureAtlas atlas) {
+            Array<TextureAtlas.AtlasRegion> gameOverFrames = new Array<>();
+            for (int i = 0; i <= Constants.FIFTEEN; i++) {
+                gameOverFrames.add(atlas.findRegion("frame", i));
+            }
+            gameOverAnimation = new Animation<>(Constants.MEDIUM_FRAME_DURATION, gameOverFrames,
+                    Animation.PlayMode.NORMAL);
+        }
+    }
+
+    /**
+     * Assets for the GameWonScreen.
+     */
+    public static class GameWonScreenAssets {
+        /**
+         * Animation for the GameWonScreen.
+         */
+        public final Animation<TextureAtlas.AtlasRegion> gameWonAnimation;
+
+        /**
+         * Constructs the GameWonScreenAssets.
+         *
+         * @param atlas the TextureAtlas
+         */
+        public GameWonScreenAssets(final TextureAtlas atlas) {
+            Array<TextureAtlas.AtlasRegion> gameWonFrames = new Array<>();
+            for (int i = 0; i <= Constants.EIGHTEEN; i++) {
+                gameWonFrames.add(atlas.findRegion("frame", i));
+            }
+            gameWonAnimation = new Animation<>(Constants.MEDIUM_FRAME_DURATION, gameWonFrames,
+                    Animation.PlayMode.NORMAL);
+        }
     }
 
 }

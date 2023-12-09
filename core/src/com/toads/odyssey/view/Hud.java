@@ -19,7 +19,7 @@ import com.toads.odyssey.util.AssetsLoader;
  * @author Joanne, Mika
  * @version 2023
  */
-public class Hud {
+public final class Hud {
     private static final float NUMBER_SCALE = 1.3f;
     private static final float DIGIT_SPACING = 2;
     private static final float PAUSE_TEXT_SCALE = 0.3f;

@@ -31,7 +31,7 @@ import static com.toads.odyssey.ToadsOdyssey.PPM;
  * @author Joanne, Mika
  * @version 2023
  */
-public class Level1 extends LevelBase {
+public final class Level1 extends LevelBase {
     private static final String MAP_PATH = "maps/map.tmx";
     private static final float COIN_X_OFFSET = 4f;
     private static final float COIN_Y_OFFSET = 5f;

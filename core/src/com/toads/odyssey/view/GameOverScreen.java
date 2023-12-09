@@ -15,7 +15,7 @@ import com.toads.odyssey.util.AssetsLoader;
  * @author Mika, Joanne
  * @version 2023
  */
-public class GameOverScreen implements Screen {
+public final class GameOverScreen implements Screen {
     private final ToadsOdyssey game;
     private final Viewport viewport;
     private TextureRegion region;

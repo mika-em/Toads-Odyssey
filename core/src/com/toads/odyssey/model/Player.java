@@ -290,4 +290,15 @@ public class Player extends Entity {
         Vector2 knockbackDirection = new Vector2(-1, 1);
         body.applyLinearImpulse(knockbackDirection.scl(Constants.KNOCK_BACK_INTENSITY), body.getWorldCenter(), true);
     }
+
+    /**
+     * Returns the string representation of the player's state.
+     * @return a string
+     */
+    @Override
+    public String toString() {
+        return "Player{" + "body=" + body + ", currentState=" + currentState + ", previousState=" + previousState
+                + ", stateTimer=" + stateTimer + ", moveRight=" + moveRight + ", maxJumpHeight=" + maxJumpHeight
+                + ", canMove=" + canMove + ", isHit=" + isHit + '}';
+    }
 }

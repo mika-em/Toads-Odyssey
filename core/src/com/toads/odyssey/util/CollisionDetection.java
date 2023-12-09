@@ -175,5 +175,15 @@ public final class CollisionDetection implements ContactListener {
     public boolean isDoorReached() {
         return isDoorReached;
     }
+
+    /**
+     * Returns the string representation of CollisionDetection.
+     * @return a string
+     */
+    @Override
+    public String toString() {
+        return "CollisionDetection{" + "groundContacts=" + groundContacts + ", playerHasFallen=" + playerHasFallen
+                + ", isDoorReached=" + isDoorReached + '}';
+    }
 }
 

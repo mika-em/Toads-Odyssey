@@ -109,4 +109,14 @@ public class StartScreen implements Screen {
     public void dispose() {
         region.getTexture().dispose();
     }
+
+    /**
+     * Returns the start screen as a string.
+     * @return a string
+     */
+    @Override
+    public String toString() {
+        return "StartScreen{" + "game=" + game + ", viewport=" + viewport + ", region=" + region + ", stateTimer="
+                + stateTimer + '}';
+    }
 }

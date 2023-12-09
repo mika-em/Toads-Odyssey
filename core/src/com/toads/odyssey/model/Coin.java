@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.Array;
  * @author Joanne, Mika
  * @version 2023
  */
-public class Coin {
+public final class Coin {
     private static final float COIN_SIZE = 18;
     private static final float DENSITY = 1.0f;
     private static final float FRICTION = 0.5f;

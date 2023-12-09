@@ -5,8 +5,11 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.toads.odyssey.ToadsOdyssey;
 import com.toads.odyssey.util.AssetsLoader;
 import com.toads.odyssey.util.CollisionDetection;
@@ -18,7 +21,7 @@ import com.toads.odyssey.util.Constants;
  * @author Mika, Joane
  * @version 2023
  */
-public class Player extends Entity {
+public final class Player extends Entity {
     /**
      * Default number of lives of the player.
      */
@@ -35,7 +38,7 @@ public class Player extends Entity {
     /**
      * Constructs a player entity.
      *
-     * @param world a Box2D world
+     * @param world    a Box2D world
      * @param position the initial position of the player
      */
     public Player(final World world, final Vector2 position) {
@@ -47,6 +50,27 @@ public class Player extends Entity {
         setBounds(0, 0, Constants.THIRTY_TWO / ToadsOdyssey.PPM, Constants.THIRTY_TWO / ToadsOdyssey.PPM);
         setRegion(AssetsLoader.getInstance().getPlayerAssets().idleAnimation.getKeyFrame(stateTimer, true));
         isHit = false;
+    }
+
+    /**
+     * Decrement player's lives by 1.
+     */
+    public static void loseLife() {
+        lives--;
+        System.out.println("Lives: " + lives);
+        if (lives <= 0) {
+            System.out.println("Game Over");
+
+        }
+    }
+
+    /**
+     * Checks if the player is alive.
+     *
+     * @return true if the player is alive, false otherwise.
+     */
+    public static boolean isAlive() {
+        return lives > 0;
     }
 
     /**
@@ -68,6 +92,7 @@ public class Player extends Entity {
 
     /**
      * Updates player's state and position based on the Box2D physics simulation.
+     *
      * @param delta the time between frames
      */
     @Override
@@ -93,50 +118,88 @@ public class Player extends Entity {
 
     /**
      * Returns the animation frame of the player.
+     *
      * @param delta the time between frames
      * @return the animation frame of the player.
      */
     private TextureRegion getFrame(final float delta) {
         currentState = getState();
-        TextureRegion region;
-        switch (currentState) {
-            case HIT:
-                region = AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.getKeyFrame(stateTimer, false);
-                if (currentState == PlayerMode.HIT
-                        && AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.isAnimationFinished(stateTimer)) {
-                    isHit = false;
-                    currentState = PlayerMode.IDLE;
-                }
-                break;
-            case MOVE:
-                region = AssetsLoader.getInstance().getPlayerAssets().moveAnimation.getKeyFrame(stateTimer, true);
-                break;
-            case JUMP:
-                region = AssetsLoader.getInstance().getPlayerAssets().jumpAnimation.getKeyFrame(stateTimer, true);
-                break;
-            case IDLE:
-            default:
-                region = AssetsLoader.getInstance().getPlayerAssets().idleAnimation.getKeyFrame(stateTimer, true);
-                break;
-        }
+
+        TextureRegion region = getAnimationRegion();
+
         if ((body.getLinearVelocity().x > 0 || moveRight) && !region.isFlipX()) {
-            region.flip(true, false);
+            flipRegion(region);
             moveRight = true;
         } else if ((body.getLinearVelocity().x < 0 || !moveRight) && region.isFlipX()) {
-            region.flip(true, false);
+            flipRegion(region);
             moveRight = false;
         }
+
+        updateStateTimer(delta);
+
+        return region;
+    }
+
+    /**
+     * Returns the animation frame of the player.
+     *
+     * @return the animation frame of the player.
+     */
+    private TextureRegion getAnimationRegion() {
+        switch (currentState) {
+            case HIT:
+                return getHitAnimation();
+            case MOVE:
+                return AssetsLoader.getInstance().getPlayerAssets().moveAnimation.getKeyFrame(stateTimer, true);
+            case JUMP:
+                return AssetsLoader.getInstance().getPlayerAssets().jumpAnimation.getKeyFrame(stateTimer, true);
+            case IDLE:
+            default:
+                return AssetsLoader.getInstance().getPlayerAssets().idleAnimation.getKeyFrame(stateTimer, true);
+        }
+    }
+
+    /**
+     * Returns the animation frame of the player when hit by a mushroom.
+     *
+     * @return the animation frame of the player when hit by a mushroom.
+     */
+    private TextureRegion getHitAnimation() {
+        TextureRegion region = AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.
+                getKeyFrame(stateTimer, false);
+        if (AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.isAnimationFinished(stateTimer)) {
+            isHit = false;
+            currentState = PlayerMode.IDLE;
+        }
+        return region;
+    }
+
+    /**
+     * Flips the region.
+     *
+     * @param region the region to flip.
+     */
+    private void flipRegion(final TextureRegion region) {
+        region.flip(true, false);
+    }
+
+    /**
+     * Updates the state timer.
+     *
+     * @param delta the time between frames.
+     */
+    private void updateStateTimer(final float delta) {
         if (currentState == previousState) {
             stateTimer += delta;
         } else {
             stateTimer = 0;
         }
         previousState = currentState;
-        return region;
     }
 
     /**
      * Returns the state of the player movement.
+     *
      * @return the state of the player movement.
      */
     private PlayerMode getState() {
@@ -154,6 +217,7 @@ public class Player extends Entity {
 
     /**
      * Returns the position of the player.
+     *
      * @return the position of the player as a Vector2.
      */
     public Vector2 getPosition() {
@@ -188,6 +252,7 @@ public class Player extends Entity {
 
     /**
      * Draws the player.
+     *
      * @param batch the batch to draw the player.
      */
     public void draw(final SpriteBatch batch) {
@@ -197,6 +262,7 @@ public class Player extends Entity {
 
     /**
      * Returns the body of the player.
+     *
      * @return the body of the player.
      */
     public Body getBody() {
@@ -205,6 +271,7 @@ public class Player extends Entity {
 
     /**
      * Sets the canMove variable.
+     *
      * @param canMove true if the player can move, false otherwise.
      */
     public void setCanMove(final boolean canMove) {
@@ -212,27 +279,8 @@ public class Player extends Entity {
     }
 
     /**
-     * Decrement player's lives by 1.
-     */
-    public static void loseLife() {
-        lives--;
-        System.out.println("Lives: " + lives);
-        if (lives <= 0) {
-            System.out.println("Game Over");
-
-        }
-    }
-
-    /**
-     * Checks if the player is alive.
-     * @return true if the player is alive, false otherwise.
-     */
-    public static boolean isAlive() {
-        return lives > 0;
-    }
-
-    /**
      * Resets the position of the player.
+     *
      * @param newPosition the new position of the player.
      */
     public void resetPosition(final Vector2 newPosition) {
@@ -242,6 +290,7 @@ public class Player extends Entity {
 
     /**
      * Returns the number of lives of the player.
+     *
      * @return the number of lives of the player.
      */
     public int getLives() {
@@ -250,6 +299,7 @@ public class Player extends Entity {
 
     /**
      * Checks if the player is hit by a mushroom.
+     *
      * @param hit true if the player is hit by a mushroom, false otherwise.
      */
     public void hitByMushroom(final boolean hit) {
@@ -257,7 +307,6 @@ public class Player extends Entity {
             isHit = true;
             currentState = PlayerMode.HIT;
             applyKnockback();
-//            disableMovementTemporarily();
         }
     }
 
@@ -269,13 +318,4 @@ public class Player extends Entity {
         body.applyLinearImpulse(knockbackDirection.scl(Constants.KNOCK_BACK_INTENSITY), body.getWorldCenter(), true);
     }
 
-    private void disableMovementTemporarily() {
-        canMove = false;
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                canMove = true;
-            }
-        }, Constants.SLOWER_FRAME_DURATION);
-    }
 }

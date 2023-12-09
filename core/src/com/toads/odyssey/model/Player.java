@@ -33,7 +33,7 @@ public class Player extends Entity implements Serializable {
         stateTimer = 0;
         moveRight = true;
         setBounds(0, 0, 32 / ToadsOdyssey.PPM, 32 / ToadsOdyssey.PPM);
-        setRegion(AssetsLoader.instance.playerAssets.idleAnimation.getKeyFrame(stateTimer, true));
+        setRegion(AssetsLoader.instance.getPlayerAssets().idleAnimation.getKeyFrame(stateTimer, true));
         isHit = false;
     }
 
@@ -75,21 +75,21 @@ public class Player extends Entity implements Serializable {
         TextureRegion region;
         switch (currentState) {
             case HIT:
-                region = AssetsLoader.instance.playerHurtAssets.hurtAnimation.getKeyFrame(stateTimer, false);
-                if (currentState == PlayerMode.HIT && AssetsLoader.instance.playerHurtAssets.hurtAnimation.isAnimationFinished(stateTimer)) {
+                region = AssetsLoader.instance.getPlayerHurtAssets().hurtAnimation.getKeyFrame(stateTimer, false);
+                if (currentState == PlayerMode.HIT && AssetsLoader.instance.getPlayerHurtAssets().hurtAnimation.isAnimationFinished(stateTimer)) {
                     isHit = false;
                     currentState = PlayerMode.IDLE;
                 }
                 break;
             case MOVE:
-                region = AssetsLoader.instance.playerAssets.moveAnimation.getKeyFrame(stateTimer, true);
+                region = AssetsLoader.instance.getPlayerAssets().moveAnimation.getKeyFrame(stateTimer, true);
                 break;
             case JUMP:
-                region = AssetsLoader.instance.playerAssets.jumpAnimation.getKeyFrame(stateTimer, true);
+                region = AssetsLoader.instance.getPlayerAssets().jumpAnimation.getKeyFrame(stateTimer, true);
                 break;
             case IDLE:
             default:
-                region = AssetsLoader.instance.playerAssets.idleAnimation.getKeyFrame(stateTimer, true);
+                region = AssetsLoader.instance.getPlayerAssets().idleAnimation.getKeyFrame(stateTimer, true);
                 break;
         }
         if ((body.getLinearVelocity().x > 0 || moveRight) && !region.isFlipX()) {

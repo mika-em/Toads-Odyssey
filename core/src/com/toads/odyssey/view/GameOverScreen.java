@@ -21,12 +21,12 @@ public class GameOverScreen implements Screen {
         this.viewport = new StretchViewport(ToadsOdyssey.SCREEN_WIDTH / ToadsOdyssey.PPM, ToadsOdyssey.SCREEN_HEIGHT / ToadsOdyssey.PPM);
         viewport.apply();
         stateTimer = 0;
-        region = AssetsLoader.instance.gameOverScreenAssets.gameOverAnimation.getKeyFrame(stateTimer, false);
+        region = AssetsLoader.instance.getGameOverScreenAssets().gameOverAnimation.getKeyFrame(stateTimer, false);
     }
 
     private TextureRegion getFrame(float delta) {
         stateTimer += delta;
-        return AssetsLoader.instance.gameOverScreenAssets.gameOverAnimation.getKeyFrame(stateTimer, false);
+        return AssetsLoader.instance.getGameOverScreenAssets().gameOverAnimation.getKeyFrame(stateTimer, false);
     }
     private void update(float deltaTime) {
         region = getFrame(deltaTime);

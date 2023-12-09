@@ -1,6 +1,5 @@
 package com.toads.odyssey.util;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -11,18 +10,17 @@ import com.badlogic.gdx.utils.Disposable;
 
 public class AssetsLoader implements Disposable {
     public static final AssetsLoader instance = new AssetsLoader();
-    public final PlayerAssets playerAssets;
-    public final CoinAssets coinAssets;
-    public final IntroScreenAssets introScreenAssets;
-    public final GameOverScreenAssets gameOverScreenAssets;
-    public final GameWonScreenAssets gameWonScreenAssets;
-    public final TextureAtlas numberAtlas;
-    public final MushroomAssets mushroomAssets;
-    public AssetManager manager;
+    private final PlayerAssets playerAssets;
+    private final CoinAssets coinAssets;
+    private final IntroScreenAssets introScreenAssets;
+    private final GameOverScreenAssets gameOverScreenAssets;
+    private final GameWonScreenAssets gameWonScreenAssets;
+    private final TextureAtlas numberAtlas;
+    private final MushroomAssets mushroomAssets;
+    private AssetManager manager;
     private Texture fullHeartTexture;
     private Texture emptyHeartTexture;
-
-    public PlayerHurtAssets playerHurtAssets;
+    private PlayerHurtAssets playerHurtAssets;
 
     public AssetsLoader() {
         this.manager = new AssetManager();
@@ -77,17 +75,19 @@ public class AssetsLoader implements Disposable {
         return full ? fullHeartTexture : emptyHeartTexture;
     }
 
-
     @Override
     public void dispose() {
         manager.dispose();
-        if (fullHeartTexture != null) fullHeartTexture.dispose();
-        if (emptyHeartTexture != null) emptyHeartTexture.dispose();
+        if (fullHeartTexture != null) {
+            fullHeartTexture.dispose();
+        }
+        if (emptyHeartTexture != null) {
+            emptyHeartTexture.dispose();
+        }
     }
 
     public static class PlayerHurtAssets {
         public final Animation<TextureAtlas.AtlasRegion> hurtAnimation;
-
         public PlayerHurtAssets(final TextureAtlas atlas) {
             Array<TextureAtlas.AtlasRegion> hurtFrames = new Array<>();
             for (int i = 1; i <= 4; i++) {
@@ -168,7 +168,6 @@ public class AssetsLoader implements Disposable {
         }
     }
 
-
     public static class IntroScreenAssets {
         public final Animation<TextureAtlas.AtlasRegion> introAnimation;
 
@@ -205,4 +204,23 @@ public class AssetsLoader implements Disposable {
         }
     }
 
+    public PlayerAssets getPlayerAssets() {
+        return playerAssets;
+    }
+
+    public IntroScreenAssets getIntroScreenAssets() {
+        return introScreenAssets;
+    }
+
+    public GameOverScreenAssets getGameOverScreenAssets() {
+        return gameOverScreenAssets;
+    }
+
+    public GameWonScreenAssets getGameWonScreenAssets() {
+        return gameWonScreenAssets;
+    }
+
+    public PlayerHurtAssets getPlayerHurtAssets() {
+        return playerHurtAssets;
+    }
 }

@@ -19,11 +19,11 @@ public class StartScreen implements Screen {
         this.viewport = new StretchViewport(ToadsOdyssey.SCREEN_WIDTH / ToadsOdyssey.PPM, ToadsOdyssey.SCREEN_HEIGHT / ToadsOdyssey.PPM);
         viewport.apply();
         stateTimer = 0;
-        region = AssetsLoader.instance.introScreenAssets.introAnimation.getKeyFrame(stateTimer, true);
+        region = AssetsLoader.instance.getIntroScreenAssets().introAnimation.getKeyFrame(stateTimer, true);
     }
     private TextureRegion getFrame(float delta) {
         stateTimer += delta;
-        return AssetsLoader.instance.introScreenAssets.introAnimation.getKeyFrame(stateTimer, true);
+        return AssetsLoader.instance.getIntroScreenAssets().introAnimation.getKeyFrame(stateTimer, true);
     }
 
     private void update(float deltaTime) {

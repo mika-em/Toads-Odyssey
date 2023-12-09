@@ -33,19 +33,21 @@ public final class Constants {
     };
     public static final String FULL_HEART_TEXTURE_PATH = "assets/tiles/full_heart.png";
     public static final String EMPTY_HEART_TEXTURE_PATH = "assets/tiles/empty_heart.png";
-    public static final String[] TEXTURE_PATHS = {
-            FULL_HEART_TEXTURE_PATH,
-            EMPTY_HEART_TEXTURE_PATH
-    };
     public static final float FAST_FRAME_DURATION = 0.15f;
     public static final float MEDIUM_FRAME_DURATION = 0.4f;
     public static final float SLOWER_FRAME_DURATION = 0.5f;
+    public static final float HORIZONTAL_LINEAR_IMPULSE = 1.5f;
+    public static final float VERTICAL_LINEAR_IMPULSE = 4f;
+    public static final float KNOCK_BACK_INTENSITY = 7f;
+    public static final int DEFAULT_LIVES = 3;
+    public static final int TWO = 2;
     public static final int FOUR = 4;
-    public static final int FIVE = 5;
     public static final int SIX = 6;
     public static final int ELEVEN = 11;
     public static final int FIFTEEN = 15;
+    public static final int SEVENTEEN = 17;
     public static final int EIGHTEEN = 18;
+    public static final int THIRTY_TWO = 32;
 
 
 

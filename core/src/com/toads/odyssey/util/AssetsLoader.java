@@ -355,4 +355,16 @@ public final class AssetsLoader implements Disposable {
         return playerHurtAssets;
     }
 
+    /**
+     * Returns the string representation of the AssetsLoader.
+     * @return a string
+     */
+    @Override
+    public String toString() {
+        return "AssetsLoader{" + "playerAssets=" + playerAssets + ", coinAssets=" + coinAssets + ", introScreenAssets="
+                + introScreenAssets + ", gameOverScreenAssets=" + gameOverScreenAssets + ", gameWonScreenAssets="
+                + gameWonScreenAssets + ", numberAtlas=" + numberAtlas + ", mushroomAssets=" + mushroomAssets
+                + ", manager=" + manager + ", fullHeartTexture=" + fullHeartTexture + ", emptyHeartTexture="
+                + emptyHeartTexture + ", playerHurtAssets=" + playerHurtAssets + '}';
+    }
 }

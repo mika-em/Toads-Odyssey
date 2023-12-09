@@ -109,4 +109,14 @@ public final class GameWonScreen implements Screen {
     public void dispose() {
         region.getTexture().dispose();
     }
+
+    /**
+     * Returns the string representation of the game won screen.
+     * @return a string
+     */
+    @Override
+    public String toString() {
+        return "GameWonScreen{" + "game=" + game + ", viewport=" + viewport + ", region=" + region + ", stateTimer="
+                + stateTimer + '}';
+    }
 }

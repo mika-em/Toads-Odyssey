@@ -38,7 +38,7 @@ public final class Player extends Entity {
     /**
      * Constructs a player entity.
      *
-     * @param world    a Box2D world
+     * @param world a Box2D world
      * @param position the initial position of the player
      */
     public Player(final World world, final Vector2 position) {
@@ -119,36 +119,31 @@ public final class Player extends Entity {
     /**
      * Returns the animation frame of the player.
      *
+     * Returns the animation frame of the player per unit time.
      * @param delta the time between frames
      * @return the animation frame of the player.
      */
     private TextureRegion getFrame(final float delta) {
         currentState = getState();
-
-        TextureRegion region = getAnimationRegion();
-
-        if ((body.getLinearVelocity().x > 0 || moveRight) && !region.isFlipX()) {
-            flipRegion(region);
-            moveRight = true;
-        } else if ((body.getLinearVelocity().x < 0 || !moveRight) && region.isFlipX()) {
-            flipRegion(region);
-            moveRight = false;
+        TextureRegion region = getCurrentAnimationFrame();
+        flipPlayerTextureOnDirection(region);
+        if (currentState == previousState) {
+            stateTimer += delta;
+        } else {
+            stateTimer = 0;
         }
-
-        updateStateTimer(delta);
-
+        previousState = currentState;
         return region;
     }
 
     /**
-     * Returns the animation frame of the player.
-     *
-     * @return the animation frame of the player.
+     * Returns the current frame of the player based on player's movement.
+     * @return the current animation frame of the player as a TextureRegion.
      */
-    private TextureRegion getAnimationRegion() {
+    private TextureRegion getCurrentAnimationFrame() {
         switch (currentState) {
             case HIT:
-                return getHitAnimation();
+                return handleHitState();
             case MOVE:
                 return AssetsLoader.getInstance().getPlayerAssets().moveAnimation.getKeyFrame(stateTimer, true);
             case JUMP:
@@ -160,13 +155,12 @@ public final class Player extends Entity {
     }
 
     /**
-     * Returns the animation frame of the player when hit by a mushroom.
-     *
+     * Handles the player's state when hit by a mushroom.
      * @return the animation frame of the player when hit by a mushroom.
      */
-    private TextureRegion getHitAnimation() {
-        TextureRegion region = AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.
-                getKeyFrame(stateTimer, false);
+    private TextureRegion handleHitState() {
+        TextureRegion region = AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.getKeyFrame(stateTimer,
+                false);
         if (AssetsLoader.getInstance().getPlayerHurtAssets().hurtAnimation.isAnimationFinished(stateTimer)) {
             isHit = false;
             currentState = PlayerMode.IDLE;
@@ -175,26 +169,17 @@ public final class Player extends Entity {
     }
 
     /**
-     * Flips the region.
-     *
-     * @param region the region to flip.
+     * Flips the player's texture if it is not facing the same direction that it is moving.
+     * @param region the texture of the player.
      */
-    private void flipRegion(final TextureRegion region) {
-        region.flip(true, false);
-    }
-
-    /**
-     * Updates the state timer.
-     *
-     * @param delta the time between frames.
-     */
-    private void updateStateTimer(final float delta) {
-        if (currentState == previousState) {
-            stateTimer += delta;
-        } else {
-            stateTimer = 0;
+    private void flipPlayerTextureOnDirection(final TextureRegion region) {
+        if ((body.getLinearVelocity().x > 0 || moveRight) && !region.isFlipX()) {
+            region.flip(true, false);
+            moveRight = true;
+        } else if ((body.getLinearVelocity().x < 0 || !moveRight) && region.isFlipX()) {
+            region.flip(true, false);
+            moveRight = false;
         }
-        previousState = currentState;
     }
 
     /**
@@ -319,4 +304,14 @@ public final class Player extends Entity {
         body.applyLinearImpulse(knockbackDirection.scl(Constants.KNOCK_BACK_INTENSITY), body.getWorldCenter(), true);
     }
 
+    /**
+     * Returns the string representation of the player's state.
+     * @return a string
+     */
+    @Override
+    public String toString() {
+        return "Player{" + "body=" + body + ", currentState=" + currentState + ", previousState=" + previousState
+                + ", stateTimer=" + stateTimer + ", moveRight=" + moveRight + ", maxJumpHeight=" + maxJumpHeight
+                + ", canMove=" + canMove + ", isHit=" + isHit + '}';
+    }
 }

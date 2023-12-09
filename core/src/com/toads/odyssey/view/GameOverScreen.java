@@ -107,4 +107,14 @@ public final class GameOverScreen implements Screen {
     public void dispose() {
         region.getTexture().dispose();
     }
+
+    /**
+     * Returns the game over screen as a string.
+     * @return a string
+     */
+    @Override
+    public String toString() {
+        return "GameOverScreen{" + "game=" + game + ", viewport=" + viewport + ", region=" + region + ", stateTimer="
+                + stateTimer + '}';
+    }
 }

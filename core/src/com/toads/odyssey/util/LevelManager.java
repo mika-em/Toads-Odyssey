@@ -58,4 +58,12 @@ public final class LevelManager {
         player.handleKeyPressed();
     }
 
+    /**
+     * Returns the string representation of LevelManager.
+     * @return a string
+     */
+    @Override
+    public String toString() {
+        return "LevelManager{" + "world=" + world + ", player=" + player + '}';
+    }
 }

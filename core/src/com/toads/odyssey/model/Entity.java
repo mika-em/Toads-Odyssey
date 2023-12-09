@@ -54,4 +54,13 @@ public abstract class Entity extends Sprite {
     protected void setSpritePosition(final Vector2 spritePosition) {
         this.spritePosition = spritePosition;
     }
+
+    /**
+     * String representation of Entity.
+     * @return the string representation of Entity.
+     */
+    @Override
+    public String toString() {
+        return "Entity{" + "world=" + world + ", spritePosition=" + spritePosition + '}';
+    }
 }

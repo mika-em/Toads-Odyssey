@@ -121,7 +121,7 @@ public final class Constants {
      */
     public static final int THIRTY_TWO = 32;
     /**
-     * The duration of each time step in the phsyical simulation.
+     * The duration of each time step in the physical simulation.
      * Smaller value = more precise but higher computation load and vice versa.
      */
     public static final float TIME_STEP = 1 / 60f;

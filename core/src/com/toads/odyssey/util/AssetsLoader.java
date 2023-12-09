@@ -24,14 +24,9 @@ public class AssetsLoader implements Disposable {
 
     public AssetsLoader() {
         this.manager = new AssetManager();
-        manager.load("atlas_files/spriteSheet.atlas", TextureAtlas.class);
-        manager.load("atlas_files/coin.atlas", TextureAtlas.class);
-        manager.load("atlas_files/numbers.atlas", TextureAtlas.class);
-        manager.load("screens/intro.atlas", TextureAtlas.class);
-        manager.load("screens/gameover.atlas", TextureAtlas.class);
-        manager.load("screens/gamewon.atlas", TextureAtlas.class);
-        manager.load("atlas_files/mushroom.atlas", TextureAtlas.class);
-        manager.load("atlas_files/frog_hurt.atlas", TextureAtlas.class);
+        for (String path : Constants.ATLAS_PATHS) {
+            manager.load(path, TextureAtlas.class);
+        }
         manager.finishLoading();
         TextureAtlas atlas = manager.get("atlas_files/spriteSheet.atlas", TextureAtlas.class);
         TextureAtlas coinAtlas = manager.get("atlas_files/coin.atlas", TextureAtlas.class);

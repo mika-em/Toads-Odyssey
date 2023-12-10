@@ -1,26 +1,27 @@
-# Toad's Odyssey
+# Toad's Odyssey: Leap Into Adventure
 
 ## Description
-Toad's Odyssey is a captivating 2D platformer game built using the LibGDX framework. Follow the adventures of a brave toad as he embarks on a journey through various enchanting environments, overcoming obstacles and enemies.
+Toad's Odyssey is an immersive 2D platformer game developed with the LibGDX framework.
 
+Join a lively toad on their adventure through an enchanting landscapes, filled with both treasures and dangers.
+Your goal: to reach a mysterious door whose secrets are yet to be revealed.
 
 ## How to Play
-Reach the door at the end of the map to win! Each player has 3 lives.
+Your goal is simple: reach the door at the end of the map. Be cautious, you only have 3 lives to spare!
 
-#### Controls
-- Use the arrow keys to move left and right
-- Use the up arrow key to jump
+## Controls
+- **Move Left/Right:** Use the left and right arrow keys.
+- **Jump:** Press the up arrow key.
 
+## Obstacles
+- **Mushrooms:** Avoid them! They will cost you a life.
+- **Falling Off Platforms:** Stay on the platforms to avoid losing a life.
 
-#### Obstacles
-- Avoid mushrooms as they will cause you to lose a life
-- Avoid falling off the platforms as you will lose a life
-
-#### Gameplay
-- Collect coins to increase your score
+## Gameplay
+- **Collect Coins:** Boost your score by collecting coins throughout your journey.
 
 ## Requirements
-- Java JDK 8 or higher
-- LibGDX dependencies (automatically handled by Gradle)
+- **Java JDK 8 or higher**
+- **LibGDX dependencies**
 
 ---

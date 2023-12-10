@@ -298,7 +298,7 @@ public final class Player extends Entity {
      * Applies knock back force to the player.
      */
     private void applyKnockback() {
-        Vector2 knockbackDirection = new Vector2(-2, 2);
+        Vector2 knockbackDirection = new Vector2(-(Constants.TWO), Constants.TWO);
         body.applyLinearImpulse(knockbackDirection.scl(Constants.KNOCK_BACK_INTENSITY), body.getWorldCenter(), true);
     }
 

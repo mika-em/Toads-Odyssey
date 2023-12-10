@@ -451,4 +451,19 @@ public abstract class LevelBase implements Screen {
         debugRenderer.dispose();
         hud.dispose();
     }
+
+    /**
+     * Returns the string representation of LevelBase.
+     *
+     * @return a string representation of LevelBase
+     */
+    @Override
+    public String toString() {
+        return "LevelBase{" + "player=" + player + ", map=" + map + ", debugRenderer=" + debugRenderer + ", world="
+                + world + ", coins=" + coins + ", mushrooms=" + mushrooms + ", hud=" + hud + ", game=" + game
+                + ", camera=" + camera + ", renderer=" + renderer + ", gamePort=" + gamePort
+                + ", originalPlayerPosition=" + originalPlayerPosition + ", grayTexture=" + grayTexture
+                + ", coinCount=" + coinCount + ", gameState=" + gameState + ", respawnTimer=" + respawnTimer
+                + ", awaitingRespawn=" + awaitingRespawn + ", stateTime=" + stateTime + '}';
+    }
 }

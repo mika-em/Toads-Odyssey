@@ -97,4 +97,15 @@ public final class Mushroom {
         TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
         batch.draw(currentFrame, x, y, width, height);
     }
+
+    /**
+     * A string representation of the mushroom.
+     *
+     * @return the string representation of the mushroom
+     */
+    @Override
+    public String toString() {
+        return "Mushroom{" + "animation=" + animation + ", width=" + width + ", height=" + height + ", x=" + x
+                + ", y=" + y + ", world=" + world + ", body=" + body + ", stateTime=" + stateTime + '}';
+    }
 }

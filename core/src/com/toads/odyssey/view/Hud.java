@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.toads.odyssey.util.AssetsLoader;
 
 /**
- * The HUD is the Heads-Up Display that shows the player's score, lives, and other information.
+ * The HUD is the Heads-Up Display that shows the player's score, lives, and the pause button.
  *
  * @author Joanne, Mika
  * @version 2023

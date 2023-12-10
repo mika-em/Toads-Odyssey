@@ -160,4 +160,17 @@ public final class Coin {
      */
     public void dispose() {
     }
+
+    /**
+     * A string representation of the coin.
+     *
+     * @return a string representation of the coin
+     */
+    @Override
+    public String toString() {
+        return "Coin{"
+                + "animation=" + animation + ", width=" + width + ", height=" + height + ", x=" + x + ", y=" + y
+                + ", stateTime=" + stateTime + ", collected=" + collected + ", coinCount=" + coinCount
+                + ", collectedCoins=" + collectedCoins + ", body=" + body + '}';
+    }
 }

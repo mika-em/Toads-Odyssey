@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
- * Loads all the assets used in the game.
+ * A singleton class that loads all the assets for the game.
  *
  * @author Mika, Joanne
  * @version 2023

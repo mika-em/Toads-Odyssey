@@ -229,4 +229,15 @@ public final class Level1 extends LevelBase {
             }
         }
     }
+
+    /**
+     * A string representation of Level1.
+     *
+     * @return a string representation of Level1.
+     */
+    @Override
+    public String toString() {
+        return "Level1{" + "player=" + player + ", map=" + map + ", debugRenderer=" + debugRenderer + ", world="
+                + world + ", coins=" + coins + ", mushrooms=" + mushrooms + ", hud=" + hud + '}';
+    }
 }

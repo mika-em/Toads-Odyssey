@@ -117,8 +117,6 @@ public final class Player extends Entity {
     }
 
     /**
-     * Returns the animation frame of the player.
-     *
      * Returns the animation frame of the player per unit time.
      * @param delta the time between frames
      * @return the animation frame of the player.

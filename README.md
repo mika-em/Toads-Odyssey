@@ -7,16 +7,16 @@ Toad's Odyssey is a captivating 2D platformer game built using the LibGDX framew
 ## How to Play
 Reach the door at the end of the map to win! Each player has 3 lives.
 
-### Controls
+#### Controls
 - Use the arrow keys to move left and right
 - Use the up arrow key to jump
 
 
-### Obstacles
+#### Obstacles
 - Avoid mushrooms as they will cause you to lose a life
 - Avoid falling off the platforms as you will lose a life
 
-### Gameplay
+#### Gameplay
 - Collect coins to increase your score
 
 ## Requirements

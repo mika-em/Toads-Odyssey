@@ -218,4 +218,17 @@ public final class Hud {
         pauseFont.dispose();
         shapeRenderer.dispose();
     }
+
+    /**
+     * Returns the string representation of the HUD.
+     *
+     * @return a string
+     */
+    @Override
+    public String toString() {
+        return "Hud{"
+                + "assetsLoader=" + assetsLoader + ", spriteBatch=" + spriteBatch + ", maxCoinCountWidth="
+                + maxCoinCountWidth + ", shapeRenderer=" + shapeRenderer + ", pauseFont=" + pauseFont
+                + ", pauseTextBounds=" + pauseTextBounds + ", coinCount=" + coinCount + ", isPaused=" + isPaused + '}';
+    }
 }

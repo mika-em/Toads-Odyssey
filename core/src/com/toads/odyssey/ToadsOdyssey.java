@@ -69,4 +69,14 @@ public final class ToadsOdyssey extends Game {
     public SpriteBatch getBatch() {
         return batch;
     }
+
+    /**
+     * A string representation of ToadsOdyssey.
+     *
+     * @return a string representation of ToadsOdyssey.
+     */
+    @Override
+    public String toString() {
+        return "ToadsOdyssey{" + "batch=" + batch + ", assetsLoader=" + assetsLoader + ", screen=" + screen + '}';
+    }
 }

@@ -3,8 +3,8 @@
 ## Description
 Toad's Odyssey is an immersive 2D platformer game developed with the LibGDX framework.
 
-Join a lively toad on their adventure through an enchanting landscapes, filled with both treasures and dangers.
-Your goal: to reach a mysterious door whose secrets are yet to be revealed.
+Join a lively toad on their adventure through an enchanting landscape, filled with both treasures and dangers.
+Your goal: to reach a mysterious door, whose secrets are yet to be revealed.
 
 ## How to Play
 Your goal is simple: reach the door at the end of the map. Be cautious, you only have 3 lives to spare!

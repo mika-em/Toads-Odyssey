@@ -60,8 +60,8 @@ public final class GameOverScreen implements Screen {
      * Handles the key pressed event to exit the game.
      */
     private void handleKeyPressed() {
-        boolean spacePressed = Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE);
-        if (spacePressed) {
+        boolean escapePressed = Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE);
+        if (escapePressed) {
             Gdx.app.exit();
         }
     }

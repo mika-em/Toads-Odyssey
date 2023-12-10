@@ -117,8 +117,6 @@ public final class Player extends Entity {
     }
 
     /**
-     * Returns the animation frame of the player.
-     *
      * Returns the animation frame of the player per unit time.
      * @param delta the time between frames
      * @return the animation frame of the player.
@@ -225,9 +223,9 @@ public final class Player extends Entity {
             maxJumpHeight = startJumpY + 2;
             body.applyLinearImpulse(new Vector2(0, Constants.VERTICAL_LINEAR_IMPULSE), body.getWorldCenter(), true);
         } else if (rightPressed && body.getLinearVelocity().x <= 2) {
-            body.applyLinearImpulse(new Vector2(Constants.HORIZONTAL_LINEAR_IMPULSE, 1), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(Constants.HORIZONTAL_LINEAR_IMPULSE, 0), body.getWorldCenter(), true);
         } else if (leftPressed && body.getLinearVelocity().x >= -Constants.TWO) {
-            body.applyLinearImpulse(new Vector2(-Constants.HORIZONTAL_LINEAR_IMPULSE, 1), body.getWorldCenter(), true);
+            body.applyLinearImpulse(new Vector2(-Constants.HORIZONTAL_LINEAR_IMPULSE, 0), body.getWorldCenter(), true);
         }
         if (!leftPressed && !rightPressed) {
             body.setLinearVelocity(0, body.getLinearVelocity().y);
@@ -300,7 +298,7 @@ public final class Player extends Entity {
      * Applies knock back force to the player.
      */
     private void applyKnockback() {
-        Vector2 knockbackDirection = new Vector2(-1, 1);
+        Vector2 knockbackDirection = new Vector2(-2, 2);
         body.applyLinearImpulse(knockbackDirection.scl(Constants.KNOCK_BACK_INTENSITY), body.getWorldCenter(), true);
     }
 

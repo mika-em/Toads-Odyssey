@@ -83,7 +83,7 @@ public final class Constants {
     /**
      *The intensity of the knock back force applied to the player when hit with a mushroom.
      */
-    public static final float KNOCK_BACK_INTENSITY = 7f;
+    public static final float KNOCK_BACK_INTENSITY = 9f;
     /**
      * Player has 3 lives by default.
      */

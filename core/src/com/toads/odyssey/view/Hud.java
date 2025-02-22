@@ -57,7 +57,7 @@ public final class Hud {
     }
 
     private void initializePauseFont() {
-        pauseFont = new BitmapFont(Gdx.files.internal("assets/font.fnt"));
+        pauseFont = new BitmapFont(Gdx.files.internal("font.fnt"));
         pauseFont.getData().setScale(PAUSE_TEXT_SCALE);
         pauseFont.setColor(Color.DARK_GRAY);
         GlyphLayout layout = new GlyphLayout(pauseFont, "PAUSE");

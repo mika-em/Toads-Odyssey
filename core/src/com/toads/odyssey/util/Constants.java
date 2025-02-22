@@ -55,11 +55,11 @@ public final class Constants {
     /**
      * The path to the full_heart image.
      */
-    public static final String FULL_HEART_TEXTURE_PATH = "assets/tiles/full_heart.png";
+    public static final String FULL_HEART_TEXTURE_PATH = "tiles/full_heart.png";
     /**
      * The path to the empty_heart image.
      */
-    public static final String EMPTY_HEART_TEXTURE_PATH = "assets/tiles/empty_heart.png";
+    public static final String EMPTY_HEART_TEXTURE_PATH = "tiles/empty_heart.png";
     /**
      * Frame duration of 0.15f.
      */
